@@ -6,45 +6,48 @@ namespace Core
     public class Deck
     {
         public NumericColoredCard[] Cards { get; private set; }
-        public int MaxCount = 0;
+        private int maxCount = 0;
+        private int firstCardIndex = 0;
+        public int MaxCount => maxCount;
 
+        public int FirstCardIndex => firstCardIndex;
 
-        public int FirstCardIndex = 0;
+     
 
         public Deck(NumericColoredCard[] cards)
         {
             Cards = cards;
-            MaxCount = cards.Length;
+            maxCount = cards.Length;
         }
 
         public NumericColoredCard DrawCard()
         {
-            if (FirstCardIndex >= MaxCount)
+            if (firstCardIndex >= maxCount)
             {
                 throw new IndexOutOfRangeException("Deck Empty");
             }
 
-            var c = Cards[FirstCardIndex];
-            Cards[FirstCardIndex] = null;
-            FirstCardIndex++;
+            var c = Cards[firstCardIndex];
+            Cards[firstCardIndex] = null;
+            firstCardIndex = firstCardIndex + 1;
             return c;
         }
 
         public NumericColoredCard AddCard(NumericColoredCard card)
         {
-            if (FirstCardIndex - 1 < 0)
+            if (firstCardIndex - 1 < 0)
             {
                 throw new IndexOutOfRangeException("Deck Full");
             }
 
-            var c = Cards[FirstCardIndex - 1];
-            FirstCardIndex--;
+            var c = Cards[firstCardIndex - 1];
+            firstCardIndex = firstCardIndex - 1;
             return c;
         }
 
         public NumericColoredCard PeekCard(int index)
         {
-            if (index < FirstCardIndex && index >= MaxCount)
+            if (index < firstCardIndex && index >= maxCount)
             {
                 throw new IndexOutOfRangeException("Index Out Of Deck Range");
             }
@@ -55,7 +58,7 @@ namespace Core
 
         public void ReplaceCardWithJokerCard(int index, JokerCard card)
         {
-            if (index < FirstCardIndex && index >= MaxCount)
+            if (index < firstCardIndex && index >= maxCount)
             {
                 throw new IndexOutOfRangeException("Index Out Of Deck Range");
             }
@@ -67,7 +70,7 @@ namespace Core
         {
             var sb = new StringBuilder();
 
-            for (int i = 0; i < Cards.Length; i++)
+            for (int i = firstCardIndex; i < Cards.Length; i++)
             {
                 sb.Append(Cards[i].ToStringBuilder());
                 sb.Append("type");

@@ -18,10 +18,18 @@ public class Builder : MonoBehaviour
         mergedDeck.Cards.Shuffle();
 
         CreateJokerCards(4, mergedDeck);
-        
+
         mergedDeck.Cards.Shuffle();
 
-        Debug.Log(mergedDeck.ToStringBuilder());
+        var hand = new Hand(14);
+
+        for (int i = 0; i < hand.MaxCount; i++)
+        {
+            var c = mergedDeck.DrawCard();
+            hand.AddCard(c);
+        }
+
+        Debug.Log(hand.ToStringBuilder());
     }
 
     private static void CreateJokerCards(int jokerCount, Deck mergedDeck)
