@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Core
 {
     public class Hand
     {
-        private NumericColoredCard[] Cards;
+        public NumericColoredCard[] Cards;
         private int maxCount;
         private int currentCardCount;
 
@@ -20,6 +21,7 @@ namespace Core
             currentCardCount = 0;
             firstCardIndex = this.maxCount;
             Cards = new NumericColoredCard[maxCount];
+            
         }
 
         public void AddCard(NumericColoredCard card)
