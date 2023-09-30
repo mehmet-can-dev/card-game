@@ -1,9 +1,13 @@
-﻿public class CardBase
+﻿
+namespace Core
 {
-    public int Id { get; private set; }
-
-    public CardBase(int id)
+    public class CardBase
     {
-        this.Id = id;
+        public int Id { get; private set; }
+
+        public CardBase(int id)
+        {
+            this.Id = id;
+        }
     }
 }

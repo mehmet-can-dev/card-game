@@ -1,38 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
 public class Builder : MonoBehaviour
 {
     void Start()
     {
-        var builder = new DeckBuilder(2, 52, CardUtility.UsedColors);
+        RandomLogic.AssignRandomSeed();
+
+        var builder = new DeckBuilder(2, 52, ColorLogic.UsedColors);
 
         var decks = builder.Build();
 
-        // for (int i = 0; i < decks.Length; i++)
-        // {
-        //     for (int j = 0; j < decks[i].Cards.Length; j++)
-        //     {
-        //         string cardInfo = "i: " + i;
-        //         cardInfo += "j: " + j;
-        //         cardInfo += "id: " + decks[i].Cards[j].Id;
-        //         cardInfo += "no: " + decks[i].Cards[j].No;
-        //         cardInfo += "color: " + decks[i].Cards[j].Color;
-        //         
-        //         Debug.Log(cardInfo);
-        //     }
-        // }
-        
         var mergedDeck = builder.MergeDeck(decks);
 
-        for (int i = 0; i < mergedDeck.Cards.Length; i++)
-        {
-            string cardInfo = "index: " + i + " id: " + mergedDeck.Cards[i].Id + " no: " + mergedDeck.Cards[i].No +
-                              " Color: " + mergedDeck.Cards[i].Color + " type:" +
-                              mergedDeck.Cards[i].GetType();
+        mergedDeck.Cards.Shuffle();
+
+        CreateJokerCards(4, mergedDeck);
         
-               Debug.Log(cardInfo);
+        mergedDeck.Cards.Shuffle();
+
+        Debug.Log(mergedDeck.ToStringBuilder());
+    }
+
+    private static void CreateJokerCards(int jokerCount, Deck mergedDeck)
+    {
+        for (int i = 0; i < jokerCount; i++)
+        {
+            var c = mergedDeck.PeekCard(i);
+
+            var j = new JokerCard(c.Id, c.No, c.Color);
+            mergedDeck.ReplaceCardWithJokerCard(i, j);
         }
     }
 }
