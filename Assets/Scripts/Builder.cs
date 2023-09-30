@@ -29,13 +29,20 @@ public class Builder : MonoBehaviour
             hand.AddCard(c);
         }
 
-        SortLogic.SortByCardColor(hand.Cards);
+        var sortedCards = SortLogic.SortByNumeric(hand.Cards);
 
-        Debug.Log(hand.ToStringBuilder());
-        
-        SortLogic.SortByCardId(hand.Cards);
+        for (int i = 0; i < sortedCards.GetLength(0); i++)
+        {
+            SortLogic.SortByCardId(sortedCards[i]);
+        }
 
-        Debug.Log(hand.ToStringBuilder());
+        for (int i = 0; i < sortedCards.GetLength(0); i++)
+        {
+            for (int j = 0; j < sortedCards[i].Length; j++)
+            {
+                Debug.Log(sortedCards[i][j].ToStringBuilder());
+            }
+        }
     }
 
     private static void CreateJokerCards(int jokerCount, Deck mergedDeck)
@@ -43,7 +50,6 @@ public class Builder : MonoBehaviour
         for (int i = 0; i < jokerCount; i++)
         {
             var c = mergedDeck.PeekCard(i);
-
             var j = new JokerCard(c.Id, c.No, c.Color);
             mergedDeck.ReplaceCardWithJokerCard(i, j);
         }
