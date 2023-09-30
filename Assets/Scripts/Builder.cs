@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class Builder : MonoBehaviour
 {
+    public int handCount = 20;
+    public int deckCount = 2;
+    public int cardPerDeck = 52;
+    public int jokerCount = 4;
+
     void Start()
     {
         RandomLogic.AssignRandomSeed();
 
-        var builder = new DeckBuilder(2, 52, ColorLogic.UsedColors);
+        var builder = new DeckBuilder(deckCount, cardPerDeck, ColorLogic.UsedColors);
 
         var decks = builder.Build();
 
@@ -17,11 +22,11 @@ public class Builder : MonoBehaviour
 
         mergedDeck.Cards.Shuffle();
 
-        CreateJokerCards(4, mergedDeck);
+        CreateJokerCards(jokerCount, mergedDeck);
 
-        mergedDeck.Cards.Shuffle();
+        mergedDeck.Shuffle();
 
-        var hand = new Hand(14);
+        var hand = new Hand(handCount);
 
         for (int i = 0; i < hand.MaxCount; i++)
         {
@@ -29,12 +34,8 @@ public class Builder : MonoBehaviour
             hand.AddCard(c);
         }
 
-        var sortedCards = SortLogic.SortByNumeric(hand.Cards);
-
-        for (int i = 0; i < sortedCards.GetLength(0); i++)
-        {
-            SortLogic.SortByCardId(sortedCards[i]);
-        }
+        // var sortedCards = NumericSortLogic.SortByNumeric(hand.Cards);
+        var sortedCards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notMatches);
 
         for (int i = 0; i < sortedCards.GetLength(0); i++)
         {

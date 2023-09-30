@@ -12,12 +12,12 @@ namespace Core
 
         public int FirstCardIndex => firstCardIndex;
 
-     
 
         public Deck(NumericColoredCard[] cards)
         {
             Cards = cards;
             maxCount = cards.Length;
+            firstCardIndex = 0;
         }
 
         public NumericColoredCard DrawCard()
@@ -79,6 +79,11 @@ namespace Core
             }
 
             return sb;
+        }
+
+        public void Shuffle()
+        {
+            Cards.Shuffle(firstCardIndex);
         }
     }
 }

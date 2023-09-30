@@ -9,7 +9,7 @@ namespace Core
         {
             Random.InitState(DateTime.Now.Millisecond);
         }
-        
+
         public static void ShuffleWithRandomSeed<T>(this T[] array)
         {
             var rng = new global::System.Random(Random.Range(0, 1000));
@@ -22,17 +22,18 @@ namespace Core
             }
         }
 
-        public static void Shuffle<T>(this T[] array)
+        public static void Shuffle<T>(this T[] array, int startIndex = 0)
         {
             int n = array.Length;
-            while (n > 1)
+            while (n > startIndex + 1)
             {
-                int k = Random.Range(0, n--);
+                int k = Random.Range(startIndex, n--);
                 (array[n], array[k]) = (array[k], array[n]);
             }
         }
 
-        public static int RandomInteger(int min,int max)
+
+        public static int RandomInteger(int min, int max)
         {
             return Random.Range(min, max);
         }

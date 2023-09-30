@@ -2,7 +2,7 @@
 
 namespace Core
 {
-    public class IntComparer: IComparer<NumericColoredCard>
+    public class IdComparer: IComparer<NumericColoredCard>
     {
         public int Compare(NumericColoredCard x, NumericColoredCard y)
         {
