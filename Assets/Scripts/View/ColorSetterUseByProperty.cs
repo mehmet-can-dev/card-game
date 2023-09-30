@@ -6,7 +6,7 @@ namespace CardGame.View
 {
     public class ColorSetterUseByProperty : MonoBehaviour
     {
-        [SerializeField] private Renderer renderer;
+        [SerializeField] private Renderer targetRenderer;
         private MaterialPropertyBlock propertyBlock;
 
         public void SetColor(Color color)
@@ -14,7 +14,7 @@ namespace CardGame.View
             if (propertyBlock == null)
                 propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetColor("_Color", color);
-            renderer.SetPropertyBlock(propertyBlock);
+            targetRenderer.SetPropertyBlock(propertyBlock);
         }
     }
 }

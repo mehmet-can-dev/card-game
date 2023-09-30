@@ -42,6 +42,23 @@ namespace CardGame.Core
             return c1.b == c2.b && c1.g == c2.g && c1.r == c2.r;
         }
 
+        public override bool Equals(object obj)
+        {
+            var otherColor = (Color)obj;
+            if (ReferenceEquals(otherColor, this))
+                return true;
+
+            if (ReferenceEquals(this, null) || ReferenceEquals(otherColor, null))
+                return false;
+            
+            return otherColor.b == this.b && otherColor.g == this.g && otherColor.r == this.r;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public static bool operator !=(Color c1, Color c2)
         {
             if (ReferenceEquals(c1, c2))

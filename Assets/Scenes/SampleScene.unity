@@ -394,6 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deckViewBase: {fileID: 905423897}
+  handViewBase: {fileID: 0}
   deckColor: {r: 0.1359814, g: 0, b: 0.3490566, a: 1}
   handCount: 20
   deckCount: 2
@@ -533,7 +534,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 905423896}
-  - component: {fileID: 905423895}
   - component: {fileID: 905423897}
   m_Layer: 0
   m_Name: Deck
@@ -542,19 +542,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &905423895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905423894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9bfa706af24afd4682b682e840d224a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderer: {fileID: 1789528377}
 --- !u!4 &905423896
 Transform:
   m_ObjectHideFlags: 0
@@ -584,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f2e3d45c274fc0913f46339563592d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorSetter: {fileID: 905423895}
+  colorSetter: {fileID: 0}
   cardCountText: {fileID: 456828055}
 --- !u!1 &963194225
 GameObject:
@@ -682,6 +669,7 @@ GameObject:
   - component: {fileID: 1789528379}
   - component: {fileID: 1789528377}
   - component: {fileID: 1789528378}
+  - component: {fileID: 1789528381}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -768,3 +756,16 @@ Transform:
   m_Father: {fileID: 547557107}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1789528381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789528376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfa706af24afd4682b682e840d224a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 1789528377}
