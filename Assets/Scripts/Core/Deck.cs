@@ -9,9 +9,7 @@ namespace CardGame.Core
         private int maxCount = 0;
         private int firstCardIndex = 0;
         public int MaxCount => maxCount;
-
-        public int FirstCardIndex => firstCardIndex;
-
+        public int CurrentCardCount => maxCount - firstCardIndex;
 
         public Deck(NumericColoredCard[] cards)
         {
@@ -32,7 +30,7 @@ namespace CardGame.Core
             firstCardIndex = firstCardIndex + 1;
             return c;
         }
-
+        
         public NumericColoredCard AddCard(NumericColoredCard card)
         {
             if (firstCardIndex - 1 < 0)
@@ -44,8 +42,18 @@ namespace CardGame.Core
             firstCardIndex = firstCardIndex - 1;
             return c;
         }
+        
+        public void TurnCardToJokerCards(int jokerCount)
+        {
+            for (int i = 0; i < jokerCount; i++)
+            {
+                var c = PeekCard(i);
+                var j = new JokerCard(c.Id, c.No, c.Color);
+                ReplaceCardWithJokerCard(i, j);
+            }
+        }
 
-        public NumericColoredCard PeekCard(int index)
+        private NumericColoredCard PeekCard(int index)
         {
             if (index < firstCardIndex && index >= maxCount)
             {
@@ -56,7 +64,7 @@ namespace CardGame.Core
             return c;
         }
 
-        public void ReplaceCardWithJokerCard(int index, JokerCard card)
+        private void ReplaceCardWithJokerCard(int index, JokerCard card)
         {
             if (index < firstCardIndex && index >= maxCount)
             {

@@ -2,7 +2,7 @@
 
 namespace CardGame.Core
 {
-    public class NumericColoredCard : CardBase
+    public class NumericColoredCard : Card
     {
         public int No { get; private set; }
         public Color Color { get; private set; }

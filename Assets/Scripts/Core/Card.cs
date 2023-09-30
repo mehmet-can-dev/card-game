@@ -1,11 +1,11 @@
 ﻿
 namespace CardGame.Core
 {
-    public class CardBase
+    public class Card
     {
         public int Id { get; private set; }
 
-        public CardBase(int id)
+        public Card(int id)
         {
             this.Id = id;
         }
