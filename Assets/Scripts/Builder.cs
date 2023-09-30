@@ -34,16 +34,36 @@ public class Builder : MonoBehaviour
             hand.AddCard(c);
         }
 
-        // var sortedCards = NumericSortLogic.SortByNumeric(hand.Cards);
         var sortedCards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notMatches);
 
-        for (int i = 0; i < sortedCards.GetLength(0); i++)
-        {
-            for (int j = 0; j < sortedCards[i].Length; j++)
-            {
-                Debug.Log(sortedCards[i][j].ToStringBuilder());
-            }
-        }
+        // Debug.Log(notMatches.Length);
+        // for (int i = 0; i < notMatches.Length; i++)
+        // {
+        //     Debug.Log(notMatches[i].ToStringBuilder());
+        // }
+        //
+        // Debug.Log("");
+        //
+        // for (int i = 0; i < sortedCards.GetLength(0); i++)
+        // {
+        //     for (int j = 0; j < sortedCards[i].Length; j++)
+        //     {
+        //         Debug.Log(sortedCards[i][j].ToStringBuilder());
+        //     }
+        // }
+
+        sortedCards = NumericSortLogic.SortByNumeric(hand.Cards);
+
+
+        // Debug.Log("");
+        //
+        // for (int i = 0; i < sortedCards.GetLength(0); i++)
+        // {
+        //     for (int j = 0; j < sortedCards[i].Length; j++)
+        //     {
+        //         Debug.Log(sortedCards[i][j].ToStringBuilder());
+        //     }
+        // }
     }
 
     private static void CreateJokerCards(int jokerCount, Deck mergedDeck)

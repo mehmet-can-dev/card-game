@@ -12,8 +12,68 @@ namespace Core
             var cardCountPerNo = GetCardCountPerNoFromSortedByNo(cards, uniqNoCount);
             var groupByNoCards = GroupNoCardsFromSortedByNo(cards, uniqNoCount, cardCountPerNo);
 
+            var matchedSplitPickableCount =
+                MatchedSplitPickableCount(min, max, groupByNoCards, out var notMatchedCardCount);
+
+            NumericColoredCard[][] groupByUniqColorsNoCards = new NumericColoredCard[matchedSplitPickableCount][];
+            notSortableCard = new NumericColoredCard[notMatchedCardCount];
+
+            for (int i = 0, notMatchedIndex = 0, groupByUniqNoCardsIndex = 0; i < groupByNoCards.GetLength(0); i++)
+            {
+                var splitCards = groupByNoCards[i];
+
+                if (splitCards.Length >= min)
+                {
+                    SortLogic.SortByCardColor(splitCards);
+                    var numericSortPackage = NumericSortLogic.SortByNumeric(splitCards);
+                    if (numericSortPackage.Length >= min && numericSortPackage.Length <= max)
+                    {
+                        groupByUniqColorsNoCards[groupByUniqNoCardsIndex] =
+                            new NumericColoredCard[numericSortPackage.Length];
+
+                        for (int j = 0; j < numericSortPackage.Length; j++)
+                        {
+                            if (numericSortPackage[j].Length > 1)
+                            {
+                                for (int k = 1; k < numericSortPackage[j].Length; k++)
+                                {
+                                    notSortableCard[notMatchedIndex] = numericSortPackage[j][k];
+                                    notMatchedIndex++;
+                                }
+                            }
+
+                            groupByUniqColorsNoCards[groupByUniqNoCardsIndex][j] = numericSortPackage[j][0];
+                        }
+
+                        groupByUniqNoCardsIndex++;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < splitCards.Length; j++)
+                        {
+                            notSortableCard[notMatchedIndex] = splitCards[j];
+                            notMatchedIndex++;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < splitCards.Length; j++)
+                    {
+                        notSortableCard[notMatchedIndex] = splitCards[j];
+                        notMatchedIndex++;
+                    }
+                }
+            }
+
+            return groupByUniqColorsNoCards;
+        }
+
+        private static int MatchedSplitPickableCount(int min, int max, NumericColoredCard[][] groupByNoCards,
+            out int notMatchedCardCount)
+        {
             int matchedSplitPickableCount = 0;
-            int notMatchedCardCount = 0;
+            notMatchedCardCount = 0;
 
             for (int i = 0; i < groupByNoCards.GetLength(0); i++)
             {
@@ -48,10 +108,7 @@ namespace Core
                 }
             }
 
-            NumericColoredCard[][] groupByUniqColorsNoCards = new NumericColoredCard[matchedSplitPickableCount][];
-            notSortableCard = new NumericColoredCard[notMatchedCardCount];
-
-            return groupByNoCards;
+            return matchedSplitPickableCount;
         }
 
         private static int GetUniqNoCountFromSortedByCardNo(NumericColoredCard[] cards)
