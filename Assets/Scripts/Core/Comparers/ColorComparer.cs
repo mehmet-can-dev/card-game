@@ -7,7 +7,10 @@ namespace Core
     {
         public int Compare(NumericColoredCard x, NumericColoredCard y)
         {
-            return x.Color.CompareTo(y.Color);
+            if (ReferenceEquals(x, y)) return 0;
+            if (ReferenceEquals(null, y)) return 1;
+            if (ReferenceEquals(null, x)) return -1;
+            return Comparer<Color>.Default.Compare(x.Color, y.Color);
         }
     }
 }

@@ -29,7 +29,11 @@ public class Builder : MonoBehaviour
             hand.AddCard(c);
         }
 
-        SortLogic.SortByCardColor(hand);
+        SortLogic.SortByCardColor(hand.Cards);
+
+        Debug.Log(hand.ToStringBuilder());
+        
+        SortLogic.SortByCardId(hand.Cards);
 
         Debug.Log(hand.ToStringBuilder());
     }
