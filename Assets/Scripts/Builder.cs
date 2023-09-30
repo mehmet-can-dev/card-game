@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Core;
+using CardGame.Core;
+using CardGame.Core.Sort;
 using UnityEngine;
 
 public class Builder : MonoBehaviour

@@ -1,7 +1,7 @@
 ﻿using System;
-using UnityEngine;
+using CardGame.Core.Comparer;
 
-namespace Core
+namespace CardGame.Core.Sort
 {
     public static class SortLogic
     {

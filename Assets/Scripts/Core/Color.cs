@@ -1,6 +1,6 @@
 using System;
 
-namespace Core
+namespace CardGame.Core
 {
     public class Color : IComparable<Color>
     {

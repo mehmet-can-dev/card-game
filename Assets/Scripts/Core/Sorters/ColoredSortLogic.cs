@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-namespace Core
+﻿
+namespace CardGame.Core.Sort
 {
     public class ColoredSortLogic
     {

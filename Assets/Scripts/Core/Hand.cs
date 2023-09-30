@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Core
+namespace CardGame.Core
 {
     public class Hand
     {

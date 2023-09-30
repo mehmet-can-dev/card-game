@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Core
+namespace CardGame.Core
 {
     public class NumericColoredCard : CardBase
     {

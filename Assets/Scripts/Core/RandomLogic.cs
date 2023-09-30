@@ -1,7 +1,7 @@
 ﻿using System;
 using Random = UnityEngine.Random;
 
-namespace Core
+namespace CardGame.Core
 {
     public static class RandomLogic
     {

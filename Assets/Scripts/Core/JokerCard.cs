@@ -1,5 +1,5 @@
 ﻿
-namespace Core
+namespace CardGame.Core
 {
     public class JokerCard : NumericColoredCard
     {

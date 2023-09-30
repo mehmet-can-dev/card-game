@@ -1,4 +1,4 @@
-﻿namespace Core
+﻿namespace CardGame.Core.Sort
 {
     public static class NumericSortLogic
     {

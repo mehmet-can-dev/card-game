@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Core
+namespace CardGame.Core.Comparer
 {
     public class IdComparer: IComparer<NumericColoredCard>
     {
