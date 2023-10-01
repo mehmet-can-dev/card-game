@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 5528608772913498835}
   - component: {fileID: 5528608772913498832}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: text_cardNo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 5528608773066149999}
   - component: {fileID: 5528608773066149998}
   m_Layer: 0
-  m_Name: WorldCanvas
+  m_Name: canvas_world
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 5528608773330610332}
   - component: {fileID: 602543754140918680}
   m_Layer: 0
-  m_Name: BackSide
+  m_Name: quad_backSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 5528608773675411646}
   - component: {fileID: 2750153557011389674}
   m_Layer: 0
-  m_Name: FrontSide
+  m_Name: quad_frontSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,7 +491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5528608774475085899}
   m_Layer: 0
-  m_Name: ModelHolder
+  m_Name: model_holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

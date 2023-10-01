@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1776311042839402348}
   - component: {fileID: 942423450}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,6 @@ MonoBehaviour:
   sizeX: 14
   sizeY: 2
   tileParent: {fileID: 1776311042839402348}
-  boxCollider: {fileID: 0}
 --- !u!1 &1776311042953053713
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +59,7 @@ GameObject:
   - component: {fileID: 1776311042953053712}
   - component: {fileID: 1776311042953053715}
   m_Layer: 0
-  m_Name: Hand
+  m_Name: hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
