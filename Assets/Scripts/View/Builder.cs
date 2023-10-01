@@ -97,7 +97,7 @@ namespace CardGame.View
 
             var decks = builder.Build();
 
-            var mergedDeck = builder.MergeDeck(decks);
+            var mergedDeck = DeckBuilder.MergeDeck(decks);
 
             mergedDeck.Cards.Shuffle();
 

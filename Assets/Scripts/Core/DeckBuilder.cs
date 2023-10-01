@@ -56,7 +56,7 @@ namespace CardGame.Core
             return decks;
         }
 
-        public Deck MergeDeck(Deck[] decks)
+        public static Deck MergeDeck(Deck[] decks)
         {
             var totalLength = 0;
             for (int i = 0; i < decks.Length; i++)
