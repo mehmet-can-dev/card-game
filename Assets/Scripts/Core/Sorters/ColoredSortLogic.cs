@@ -14,12 +14,12 @@ namespace CardGame.Core.Sort
             var matchedSplitPickableCount =
                 MatchedSplitPickableCount(min, max, groupByNoCards, out var notMatchedCardCount);
 
-            var groupByUniqColorsNoCards = GroupByUniqColorsNoCards(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
+            var groupByUniqColorsNoCards = GroupByUniqColorsNoCardsWithLimitedSize(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
 
             return groupByUniqColorsNoCards;
         }
 
-        private static NumericColoredCard[][] GroupByUniqColorsNoCards(int min, int max,
+        private static NumericColoredCard[][] GroupByUniqColorsNoCardsWithLimitedSize(int min, int max,
             out NumericColoredCard[] notSortableCard, int matchedSplitPickableCount, int notMatchedCardCount,
             NumericColoredCard[][] groupByNoCards)
         {
@@ -32,12 +32,14 @@ namespace CardGame.Core.Sort
 
                 if (splitCards.Length >= min)
                 {
-                    SortLogic.SortByCardColor(splitCards);
-                    var numericSortPackage = NumericSortLogic.SortByNumeric(splitCards);
+                    var numericSortPackage = NumericSortLogic.SortByNumericWithoutSizeLimits(splitCards);
                     if (numericSortPackage.Length >= min && numericSortPackage.Length <= max)
                     {
                         groupByUniqColorsNoCards[groupByUniqNoCardsIndex] =
                             new NumericColoredCard[numericSortPackage.Length];
+                        
+                        //  numericSortPackage.SelectMany(subArray => subArray.Take(1)).ToArray();
+                        //  numericSortPackage.SelectMany(subArray => subArray.Skip(1)).ToArray();
 
                         for (int j = 0; j < numericSortPackage.Length; j++)
                         {
@@ -57,6 +59,8 @@ namespace CardGame.Core.Sort
                     }
                     else
                     {
+                        
+                        //Linq Concat
                         for (int j = 0; j < splitCards.Length; j++)
                         {
                             notSortableCard[notMatchedIndex] = splitCards[j];
@@ -66,6 +70,7 @@ namespace CardGame.Core.Sort
                 }
                 else
                 {
+                    //Linq Concat
                     for (int j = 0; j < splitCards.Length; j++)
                     {
                         notSortableCard[notMatchedIndex] = splitCards[j];
@@ -83,31 +88,31 @@ namespace CardGame.Core.Sort
             int matchedSplitPickableCount = 0;
             notMatchedCardCount = 0;
 
-            for (int i = 0; i < groupByNoCards.GetLength(0); i++)
+            for (var i = 0; i < groupByNoCards.Length; i++)
             {
                 var splitCards = groupByNoCards[i];
-
-                if (splitCards.Length >= min)
+                if (splitCards.Length < min)
                 {
-                    SortLogic.SortByCardColor(splitCards);
-                    var lenght = NumericSortLogic.GetUniqColorCountFromSortedByCardColor(splitCards);
-                    if (lenght >= min && lenght <= max)
-                    {
-                        matchedSplitPickableCount++;
-                        int[] countSplitLenghtPerPackage =
-                            NumericSortLogic.GetCardCountPerColorsFromSortedByColors(splitCards, lenght);
+                    notMatchedCardCount += splitCards.Length;
+                    continue;
+                }
 
-                        for (int j = 0; j < countSplitLenghtPerPackage.Length; j++)
-                        {
-                            if (countSplitLenghtPerPackage[j] > 1)
-                            {
-                                notMatchedCardCount += countSplitLenghtPerPackage[j] - 1;
-                            }
-                        }
-                    }
-                    else
+                SortLogic.SortByCardColor(splitCards);
+                int uniqueColorCount = NumericSortLogic.GetUniqColorCountFromSortedByCardColor(splitCards);
+
+                if (min <= uniqueColorCount && uniqueColorCount <= max)
+                {
+                    matchedSplitPickableCount++;
+
+                    var colorLengths = NumericSortLogic.GetCardCountPerColorsFromSortedByColors(splitCards,
+                                 uniqueColorCount);
+                    for (var j = 0; j < colorLengths.Length; j++)
                     {
-                        notMatchedCardCount += splitCards.Length;
+                        var count = colorLengths[j];
+                        if (count > 1)
+                        {
+                            notMatchedCardCount += count - 1;
+                        }
                     }
                 }
                 else

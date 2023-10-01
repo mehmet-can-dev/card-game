@@ -4,13 +4,7 @@
     {
         public static NumericColoredCard[][] SortByNumeric(NumericColoredCard[] cards)
         {
-            SortLogic.SortByCardColor(cards);
-
-            var uniqColorCount = GetUniqColorCountFromSortedByCardColor(cards);
-
-            var cardCountPerColors = GetCardCountPerColorsFromSortedByColors(cards, uniqColorCount);
-
-            var groupByColorCards = GroupColorCardsFromSortedByColors(cards, uniqColorCount, cardCountPerColors);
+            var groupByColorCards = SortByNumericWithoutSizeLimits(cards);
 
             for (int i = 0; i < groupByColorCards.Length; i++)
             {
@@ -20,6 +14,18 @@
             return groupByColorCards;
         }
 
+        public static NumericColoredCard[][] SortByNumericWithoutSizeLimits(NumericColoredCard[] cards)
+        {
+            SortLogic.SortByCardColor(cards);
+
+            var uniqColorCount = GetUniqColorCountFromSortedByCardColor(cards);
+
+            var cardCountPerColors = GetCardCountPerColorsFromSortedByColors(cards, uniqColorCount);
+
+            var groupByColorCards = GroupColorCardsFromSortedByColors(cards, uniqColorCount, cardCountPerColors);
+            return groupByColorCards;
+        }
+        
         private static NumericColoredCard[][] GroupColorCardsFromSortedByColors(NumericColoredCard[] cards,
             int uniqColorCount,
             int[] cardCountPerColors)

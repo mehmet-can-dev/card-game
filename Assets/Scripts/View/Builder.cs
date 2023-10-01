@@ -63,9 +63,14 @@ namespace CardGame.View
             // }
         }
 
-        public void SortHandByColor()
+        public void SortHandByNumeric()
         {
             handViewBase.SortHandByNumeric();
+        }
+
+        public void SortHandByColor()
+        {
+            handViewBase.SortHandByColored();
         }
 
         public void DealHand()

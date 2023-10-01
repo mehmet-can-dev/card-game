@@ -40,7 +40,7 @@ namespace CardGame.View
             }
         }
 
-        public void ReAssignCards(NumericColoredCard[][] cardContainer)
+        public void ReAssignCards(NumericColoredCard[][] cardContainer, NumericColoredCard[] notMatchedCards)
         {
             var tempContainer = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
 
@@ -75,6 +75,27 @@ namespace CardGame.View
                 }
 
                 tileHorizontalIndex++;
+            }
+
+            var currentIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
+            currentIndex++;
+
+            
+            for (int i = 0; i < notMatchedCards.Length; i++)
+            {
+                var card = notMatchedCards[i];
+                if (tempContainer.TryGetValue(card, out var value))
+                {
+                    var cardView = value.GetConnectedCard;
+                    var tempIndex = currentIndex;
+                    value.ResetConnectCard();
+                    cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
+                        () => tiles[tempIndex].ConnectCard(cardView));
+
+                    cardTileOwnershipContainer[card] = tiles[currentIndex];
+                }
+
+                currentIndex++;
             }
         }
 
