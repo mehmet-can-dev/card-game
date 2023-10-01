@@ -13,9 +13,10 @@ namespace CardGame.View
     {
         [SerializeField] private DeckViewBase deckViewBase;
         [SerializeField] private HandViewBase handViewBase;
-        [SerializeField] private Card cardPrefab;
-        
+
         [SerializeField] private BuilderSettingsSO builderSettingsSo;
+
+
         void Start()
         {
             RandomLogic.AssignRandomSeed();
@@ -23,16 +24,12 @@ namespace CardGame.View
             var mergedDeck = BuildDeck(builderSettingsSo.BuilderCountData);
 
             deckViewBase.Init(mergedDeck, builderSettingsSo.BuilderViewData.deckColor);
-            
+
+
             var hand = new Hand(builderSettingsSo.BuilderCountData.handCount);
 
             handViewBase.Init(hand);
 
-            for (int i = 0; i < hand.MaxCount; i++)
-            {
-                var c = mergedDeck.DrawCard();
-                hand.AddCard(c);
-            }
 
             // var sortedCards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notMatches);
 
@@ -66,9 +63,29 @@ namespace CardGame.View
             // }
         }
 
+
+        [ContextMenu("DealHand")]
+        public void DealHand()
+        {
+            StartCoroutine(DealHandAnimation());
+        }
+
+        private IEnumerator DealHandAnimation()
+        {
+            for (int i = 0; i < handViewBase.Hand.MaxCount; i++)
+            {
+                var spawnedCard = deckViewBase.DrawCard();
+                var connectTile = handViewBase.AddCardToTile(spawnedCard);
+                StartCoroutine(deckViewBase.DeckToPlayerHandAnimation(handViewBase, spawnedCard, connectTile));
+                yield return null;
+            }
+        }
+
+
         private Deck BuildDeck(BuilderCountData builderCountData)
         {
-            var builder = new DeckBuilder(builderCountData.deckCount, builderCountData.cardPerDeck, ColorLogic.UsedColors);
+            var builder = new DeckBuilder(builderCountData.deckCount, builderCountData.cardPerDeck,
+                ColorLogic.UsedColors);
 
             var decks = builder.Build();
 
