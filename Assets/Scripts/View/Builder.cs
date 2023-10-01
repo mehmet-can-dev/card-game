@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CardGame.Core;
 using CardGame.Core.Sort;
+using CardGame.View.DataModels;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Color = UnityEngine.Color;
@@ -13,23 +14,17 @@ namespace CardGame.View
         [SerializeField] private DeckViewBase deckViewBase;
         [SerializeField] private HandViewBase handViewBase;
         [SerializeField] private Card cardPrefab;
-
-        public Color deckColor;
-
-        public int handCount = 20;
-        public int deckCount = 2;
-        public int cardPerDeck = 52;
-        public int jokerCount = 4;
-
+        
+        [SerializeField] private BuilderSettingsSO builderSettingsSo;
         void Start()
         {
             RandomLogic.AssignRandomSeed();
 
-            var mergedDeck = BuildDeck();
+            var mergedDeck = BuildDeck(builderSettingsSo.BuilderCountData);
 
-            deckViewBase.Init(mergedDeck, deckColor);
-
-            var hand = new Hand(handCount);
+            deckViewBase.Init(mergedDeck, builderSettingsSo.BuilderViewData.deckColor);
+            
+            var hand = new Hand(builderSettingsSo.BuilderCountData.handCount);
 
             handViewBase.Init(hand);
 
@@ -71,9 +66,9 @@ namespace CardGame.View
             // }
         }
 
-        private Deck BuildDeck()
+        private Deck BuildDeck(BuilderCountData builderCountData)
         {
-            var builder = new DeckBuilder(deckCount, cardPerDeck, ColorLogic.UsedColors);
+            var builder = new DeckBuilder(builderCountData.deckCount, builderCountData.cardPerDeck, ColorLogic.UsedColors);
 
             var decks = builder.Build();
 
@@ -81,7 +76,7 @@ namespace CardGame.View
 
             mergedDeck.Cards.Shuffle();
 
-            mergedDeck.TurnCardToJokerCards(jokerCount);
+            mergedDeck.TurnCardToJokerCards(builderCountData.jokerCount);
 
             mergedDeck.Shuffle();
             return mergedDeck;
