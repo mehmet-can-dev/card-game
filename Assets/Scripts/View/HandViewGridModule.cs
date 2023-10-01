@@ -55,6 +55,8 @@ namespace CardGame.View
                         var tempIndex = tileIndex;
                         cardView.MoveTargetPosition(tiles[tileIndex].transform.position,
                             () => tiles[tempIndex].ConnectCard(cardView));
+
+                        cardTileOwnershipContainer[card] = tiles[tileIndex];
                     }
 
                     tileIndex++;
