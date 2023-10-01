@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using CardGame.Core;
 using UnityEngine;
+using Color = UnityEngine.Color;
 
 namespace CardGame.View
 {
@@ -10,18 +12,20 @@ namespace CardGame.View
         [SerializeField] private int sizeX;
         [SerializeField] private int sizeY;
         [SerializeField] private Transform tileParent;
-        
 
         private List<Tile> tiles;
+
+        private Dictionary<Card, Tile> cardTileOwnershipContainer;
 
         public void Init(Color tileColor)
         {
             tiles = new List<Tile>();
+            cardTileOwnershipContainer = new Dictionary<Card, Tile>();
 
             Vector2 tileSize = tilePrefab.transform.localScale;
             Vector2 offset = new Vector2(sizeX - tileSize.x, sizeY) * -0.5f;
 
-            for (int y = 0; y < sizeY; y++)
+            for (int y = sizeY - 1; y >= 0; y--)
             {
                 for (int x = 0; x < sizeX; x++)
                 {
@@ -36,8 +40,33 @@ namespace CardGame.View
             }
         }
 
+        public void ReAssignCards(NumericColoredCard[][] cardContainer)
+        {
+            var tempContainer = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
+            int tileIndex = 0;
+            for (int i = 0; i < cardContainer.Length; i++)
+            {
+                for (int j = 0; j < cardContainer[i].Length; j++)
+                {
+                    var card = cardContainer[i][j];
+                    if (tempContainer.TryGetValue(card, out var value))
+                    {
+                        var cardView = value.GetConnectedCard;
+                        var tempIndex = tileIndex;
+                        cardView.MoveTargetPosition(tiles[tileIndex].transform.position,
+                            () => tiles[tempIndex].ConnectCard(cardView));
+                    }
+
+                    tileIndex++;
+                }
+
+                tileIndex++;
+            }
+        }
+
         public void ConnectCardToTile(Tile tile, CardViewBase cardViewBase)
         {
+            cardTileOwnershipContainer.Add(cardViewBase.Card, tile);
             tile.ConnectCard(cardViewBase);
         }
 

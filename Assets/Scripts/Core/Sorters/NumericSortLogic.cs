@@ -12,6 +12,11 @@
 
             var groupByColorCards = GroupColorCardsFromSortedByColors(cards, uniqColorCount, cardCountPerColors);
 
+            for (int i = 0; i < groupByColorCards.Length; i++)
+            {
+                SortLogic.SortByCardNo(groupByColorCards[i]);
+            }
+
             return groupByColorCards;
         }
 

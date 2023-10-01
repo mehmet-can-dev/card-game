@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5528608772585193903}
   - component: {fileID: 7733610705397953404}
+  - component: {fileID: 8565237694429936352}
   m_Layer: 0
-  m_Name: Card
+  m_Name: card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,9 +47,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45312448be814d9cba81957af2011cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardViewAnimation: {fileID: 8565237694429936352}
   frontColorSetter: {fileID: 2750153557011389674}
   backColorSetter: {fileID: 602543754140918680}
   cardNoText: {fileID: 5528608772913498832}
+--- !u!114 &8565237694429936352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5528608772585193900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423a25b423954ac195b567cfaf6dc257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5528608772913498838
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,7 +37,7 @@ namespace CardGame.Core
 
                 for (int j = 0; j < usedColorsLenght; j++)
                 {
-                    var cardNo = 0;
+                    var cardNo = 1;
                     for (int k = 0; k < sameColorCardLenght; k++)
                     {
                         var numericCard = new NumericColoredCard(uniqCreatedCardCount, cardNo, Colors[j]);
@@ -63,7 +63,7 @@ namespace CardGame.Core
             {
                 totalLength += decks[i].Cards.Length;
             }
-            
+
             var cards = new NumericColoredCard[totalLength];
 
             for (int index = 0, i = 0; i < decks.Length; i++)

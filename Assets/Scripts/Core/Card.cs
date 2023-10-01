@@ -1,5 +1,4 @@
-﻿
-namespace CardGame.Core
+﻿namespace CardGame.Core
 {
     public class Card
     {

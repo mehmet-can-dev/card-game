@@ -63,8 +63,11 @@ namespace CardGame.View
             // }
         }
 
+        public void SortHandByColor()
+        {
+            handViewBase.SortHandByNumeric();
+        }
 
-        [ContextMenu("DealHand")]
         public void DealHand()
         {
             StartCoroutine(DealHandAnimation());

@@ -14,6 +14,15 @@ namespace CardGame.Core.Sort
             var matchedSplitPickableCount =
                 MatchedSplitPickableCount(min, max, groupByNoCards, out var notMatchedCardCount);
 
+            var groupByUniqColorsNoCards = GroupByUniqColorsNoCards(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
+
+            return groupByUniqColorsNoCards;
+        }
+
+        private static NumericColoredCard[][] GroupByUniqColorsNoCards(int min, int max,
+            out NumericColoredCard[] notSortableCard, int matchedSplitPickableCount, int notMatchedCardCount,
+            NumericColoredCard[][] groupByNoCards)
+        {
             NumericColoredCard[][] groupByUniqColorsNoCards = new NumericColoredCard[matchedSplitPickableCount][];
             notSortableCard = new NumericColoredCard[notMatchedCardCount];
 

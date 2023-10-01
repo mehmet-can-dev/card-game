@@ -1,4 +1,5 @@
-﻿using CardGame.Core;
+﻿using System;
+using CardGame.Core;
 using TMPro;
 using UnityEngine;
 using Color = UnityEngine.Color;
@@ -7,6 +8,8 @@ namespace CardGame.View
 {
     public class CardViewBase : MonoBehaviour
     {
+        [SerializeField] private CardViewAnimation cardViewAnimation;
+
         [SerializeField] private ColorSetterUseByProperty frontColorSetter;
         [SerializeField] private ColorSetterUseByProperty backColorSetter;
         [SerializeField] private TextMeshProUGUI cardNoText;
@@ -18,9 +21,16 @@ namespace CardGame.View
         public void Init(NumericColoredCard card, Color backColor)
         {
             this.card = card;
-            frontColorSetter.SetColor(Utilities.Utilities.CoreColorToUnityColor(card.Color));
+            frontColorSetter.SetColor(Utilities.ColorUtilities.CoreColorToUnityColor(card.Color));
             backColorSetter.SetColor(backColor);
             cardNoText.SetText(card.No.ToString());
+
+            cardViewAnimation.Init();
+        }
+
+        public void MoveTargetPosition(Vector3 targetPos, Action onComplete)
+        {
+            StartCoroutine(cardViewAnimation.MovePosition(targetPos, onComplete));
         }
     }
 }

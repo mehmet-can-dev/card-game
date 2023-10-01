@@ -10,6 +10,8 @@ namespace CardGame.View
 
         private CardViewBase connectedCard;
 
+        public CardViewBase GetConnectedCard => connectedCard;
+
         public void Init(Color tileColor)
         {
             colorSetter.SetColor(tileColor);

@@ -10,7 +10,8 @@ namespace CardGame.View.DebugUi
 
         private void Start()
         {
-            UiDebugFunctions.CreateDebugUIButton(canvas, builder.DealHand, 0, "DealHands");
+            UiDebugFunctions.CreateDebugUIButton(canvas, builder.DealHand, 0, "Deal Hands");
+            UiDebugFunctions.CreateDebugUIButton(canvas, builder.SortHandByColor, 1, "Numeric Sort");
         }
     }
 }

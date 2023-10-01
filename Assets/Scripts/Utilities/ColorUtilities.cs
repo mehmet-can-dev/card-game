@@ -2,7 +2,7 @@
 
 namespace Utilities
 {
-    public static class Utilities
+    public static class ColorUtilities
     {
         public static Color CoreColorToUnityColor(CardGame.Core.Color color)
         {
