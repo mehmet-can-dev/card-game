@@ -43,26 +43,38 @@ namespace CardGame.View
         public void ReAssignCards(NumericColoredCard[][] cardContainer)
         {
             var tempContainer = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
-            int tileIndex = 0;
+
+            int tileHorizontalIndex = 0;
+            int tileVerticalIndex = 0;
             for (int i = 0; i < cardContainer.Length; i++)
             {
+                if (tileHorizontalIndex + cardContainer[i].Length > sizeX)
+                {
+                    tileVerticalIndex++;
+                    tileHorizontalIndex = 0;
+                }
+
                 for (int j = 0; j < cardContainer[i].Length; j++)
                 {
                     var card = cardContainer[i][j];
                     if (tempContainer.TryGetValue(card, out var value))
                     {
+                        var tilesIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
+
                         var cardView = value.GetConnectedCard;
-                        var tempIndex = tileIndex;
-                        cardView.MoveTargetPosition(tiles[tileIndex].transform.position,
+                        var tempIndex = tilesIndex;
+                        value.ResetConnectCard();
+                        cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
                             () => tiles[tempIndex].ConnectCard(cardView));
 
-                        cardTileOwnershipContainer[card] = tiles[tileIndex];
+                        cardTileOwnershipContainer[card] = tiles[tilesIndex];
                     }
 
-                    tileIndex++;
+
+                    tileHorizontalIndex++;
                 }
 
-                tileIndex++;
+                tileHorizontalIndex++;
             }
         }
 

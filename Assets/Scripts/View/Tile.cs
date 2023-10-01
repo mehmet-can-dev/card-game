@@ -28,6 +28,12 @@ namespace CardGame.View
             connectedCard.transform.localPosition = Vector3.zero;
         }
 
+        public void ResetConnectCard()
+        {
+            connectedCard = null;
+        }
+
+
         public bool IsCardConnected()
         {
             return connectedCard != null;
