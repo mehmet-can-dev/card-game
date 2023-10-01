@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1776311042839402348}
+  - component: {fileID: 942423450}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -31,6 +32,23 @@ Transform:
   m_Father: {fileID: 1776311042953053712}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &942423450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776311042839402349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095160d5406849ce98a538408dba69c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 4807132645633789128, guid: 9b2e82e2f05b9de498e7f9eb6e597183, type: 3}
+  sizeX: 14
+  sizeY: 2
+  tileParent: {fileID: 1776311042839402348}
+  boxCollider: {fileID: 0}
 --- !u!1 &1776311042953053713
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +59,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1776311042953053712}
   - component: {fileID: 1776311042953053715}
-  - component: {fileID: 1776311042953053714}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -77,21 +94,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a6c6fae51c4aa885ca9f99d2b2f129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handViewGridModule: {fileID: 1776311042953053714}
+  handViewGridModule: {fileID: 942423450}
   tileColor: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
---- !u!114 &1776311042953053714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776311042953053713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095160d5406849ce98a538408dba69c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 4807132645633789128, guid: 9b2e82e2f05b9de498e7f9eb6e597183, type: 3}
-  sizeX: 14
-  sizeY: 2
-  tileParent: {fileID: 1776311042839402348}

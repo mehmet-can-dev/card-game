@@ -4,7 +4,7 @@ using Color = UnityEngine.Color;
 
 namespace CardGame.View
 {
-    public class Tile : MonoBehaviour
+    public class Tile : MonoBehaviour, IInteractable
     {
         [SerializeField] private ColorSetterUseByProperty colorSetter;
 
@@ -29,6 +29,38 @@ namespace CardGame.View
         public bool IsCardConnected()
         {
             return connectedCard != null;
+        }
+
+        public void OnInteractStarted(Vector3 pos)
+        {
+            if (!IsCardConnected())
+                return;
+
+            var cardPos = connectedCard.transform.position;
+            cardPos.x = pos.x;
+            cardPos.y = pos.y;
+            cardPos.z -= 1;
+            connectedCard.transform.position = cardPos;
+        }
+
+        public void OnDrag(Vector3 pos)
+        {
+            if (!IsCardConnected())
+                return;
+
+
+            var cardPos = connectedCard.transform.position;
+            cardPos.x = pos.x;
+            cardPos.y = pos.y;
+            connectedCard.transform.position = cardPos;
+        }
+
+        public void OnInteractEnded(Vector3 pos)
+        {
+            if (!IsCardConnected())
+                return;
+
+            //  if(Physics.BoxCastNonAlloc())
         }
     }
 }

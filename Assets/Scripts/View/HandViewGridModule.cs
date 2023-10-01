@@ -10,6 +10,7 @@ namespace CardGame.View
         [SerializeField] private int sizeX;
         [SerializeField] private int sizeY;
         [SerializeField] private Transform tileParent;
+        
 
         private List<Tile> tiles;
 
@@ -35,7 +36,7 @@ namespace CardGame.View
             }
         }
 
-        public void ConnectCardToTile(Tile tile,CardViewBase cardViewBase)
+        public void ConnectCardToTile(Tile tile, CardViewBase cardViewBase)
         {
             tile.ConnectCard(cardViewBase);
         }
@@ -51,7 +52,6 @@ namespace CardGame.View
             }
 
             return null;
-            
         }
     }
 }
