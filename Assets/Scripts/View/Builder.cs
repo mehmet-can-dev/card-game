@@ -25,7 +25,6 @@ namespace CardGame.View
 
             deckViewBase.Init(mergedDeck, builderSettingsSo.BuilderViewData.deckColor);
 
-
             var hand = new Hand(builderSettingsSo.BuilderCountData.handCount);
 
             handViewBase.Init(hand);

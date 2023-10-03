@@ -46,57 +46,58 @@ namespace CardGame.View
 
             int tileHorizontalIndex = 0;
             int tileVerticalIndex = 0;
-            for (int i = 0; i < cardContainer.Length; i++)
-            {
-                if (tileHorizontalIndex + cardContainer[i].Length > sizeX)
-                {
-                    tileVerticalIndex++;
-                    tileHorizontalIndex = 0;
-                }
 
-                for (int j = 0; j < cardContainer[i].Length; j++)
+            if (cardContainer != null)
+                for (int i = 0; i < cardContainer.Length; i++)
                 {
-                    var card = cardContainer[i][j];
-                    if (tempContainer.TryGetValue(card, out var value))
+                    if (tileHorizontalIndex + cardContainer[i].Length > sizeX)
                     {
-                        var tilesIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
-
-                        var cardView = value.GetConnectedCard;
-                        var tempIndex = tilesIndex;
-                        value.ResetConnectCard();
-                        cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
-                            () => tiles[tempIndex].ConnectCard(cardView));
-
-                        cardTileOwnershipContainer[card] = tiles[tilesIndex];
+                        tileVerticalIndex++;
+                        tileHorizontalIndex = 0;
                     }
 
+                    for (int j = 0; j < cardContainer[i].Length; j++)
+                    {
+                        var card = cardContainer[i][j];
+                        if (tempContainer.TryGetValue(card, out var value))
+                        {
+                            var tilesIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
+
+                            var cardView = value.GetConnectedCard;
+                            var tempIndex = tilesIndex;
+                            value.ResetConnectCard();
+                            cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
+                                () => tiles[tempIndex].ConnectCard(cardView));
+
+                            cardTileOwnershipContainer[card] = tiles[tilesIndex];
+                        }
+
+                        tileHorizontalIndex++;
+                    }
 
                     tileHorizontalIndex++;
                 }
 
-                tileHorizontalIndex++;
-            }
-
             var currentIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
             currentIndex++;
 
-            
-            for (int i = 0; i < notMatchedCards.Length; i++)
-            {
-                var card = notMatchedCards[i];
-                if (tempContainer.TryGetValue(card, out var value))
+            if (notMatchedCards != null)
+                for (int i = 0; i < notMatchedCards.Length; i++)
                 {
-                    var cardView = value.GetConnectedCard;
-                    var tempIndex = currentIndex;
-                    value.ResetConnectCard();
-                    cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
-                        () => tiles[tempIndex].ConnectCard(cardView));
+                    var card = notMatchedCards[i];
+                    if (tempContainer.TryGetValue(card, out var value))
+                    {
+                        var cardView = value.GetConnectedCard;
+                        var tempIndex = currentIndex;
+                        value.ResetConnectCard();
+                        cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
+                            () => tiles[tempIndex].ConnectCard(cardView));
 
-                    cardTileOwnershipContainer[card] = tiles[currentIndex];
+                        cardTileOwnershipContainer[card] = tiles[currentIndex];
+                    }
+
+                    currentIndex++;
                 }
-
-                currentIndex++;
-            }
         }
 
         public void ConnectCardToTile(Tile tile, CardViewBase cardViewBase)

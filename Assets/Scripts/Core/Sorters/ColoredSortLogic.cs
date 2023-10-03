@@ -14,12 +14,12 @@ namespace CardGame.Core.Sort
             var matchedSplitPickableCount =
                 MatchedSplitPickableCount(min, max, groupByNoCards, out var notMatchedCardCount);
 
-            var groupByUniqColorsNoCards = GroupByUniqColorsNoCardsWithLimitedSize(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
+            var groupByUniqColorsByCardsNo = GroupByUniqColorsByCardsNoWithLimitedSize(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
 
-            return groupByUniqColorsNoCards;
+            return groupByUniqColorsByCardsNo;
         }
 
-        private static NumericColoredCard[][] GroupByUniqColorsNoCardsWithLimitedSize(int min, int max,
+        private static NumericColoredCard[][] GroupByUniqColorsByCardsNoWithLimitedSize(int min, int max,
             out NumericColoredCard[] notSortableCard, int matchedSplitPickableCount, int notMatchedCardCount,
             NumericColoredCard[][] groupByNoCards)
         {
@@ -32,7 +32,7 @@ namespace CardGame.Core.Sort
 
                 if (splitCards.Length >= min)
                 {
-                    var numericSortPackage = NumericSortLogic.SortByNumericWithoutSizeLimits(splitCards);
+                    var numericSortPackage = NumericSortLogic.SortByNumericWithoutSizeLimitsAndUniqIds(splitCards);
                     if (numericSortPackage.Length >= min && numericSortPackage.Length <= max)
                     {
                         groupByUniqColorsNoCards[groupByUniqNoCardsIndex] =
@@ -104,7 +104,7 @@ namespace CardGame.Core.Sort
                 {
                     matchedSplitPickableCount++;
 
-                    var colorLengths = NumericSortLogic.GetCardCountPerColorsFromSortedByColors(splitCards,
+                    var colorLengths = NumericSortLogic.GetUniqCardCountsPerColorsFromSortedByColors(splitCards,
                                  uniqueColorCount);
                     for (var j = 0; j < colorLengths.Length; j++)
                     {

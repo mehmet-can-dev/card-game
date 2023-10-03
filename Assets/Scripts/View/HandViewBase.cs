@@ -30,14 +30,14 @@ namespace CardGame.View
 
         public void SortHandByNumeric()
         {
-            var cards = NumericSortLogic.SortByNumeric(hand.Cards);
-            handViewGridModule.ReAssignCards(cards,null);
+            var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCards,3);
+            handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
-        
+
         public void SortHandByColored()
         {
-            var cards = ColoredSortLogic.SortByColored(hand.Cards,3,4,out var notSortableCards);
-            handViewGridModule.ReAssignCards(cards,notSortableCards);
+            var cards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notSortableCards);
+            handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
     }
 }
