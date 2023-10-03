@@ -14,10 +14,10 @@ namespace Tests
         {
             NumericColoredCard[] testCards = new NumericColoredCard[]
             {
-                new NumericColoredCard(0, 1, ColorLogic.red),
+                new NumericColoredCard(0, 2, ColorLogic.red),
                 new NumericColoredCard(1, 2, ColorLogic.red),
                 new NumericColoredCard(2, 3, ColorLogic.red),
-                //new NumericColoredCard(3, 3, ColorLogic.red),
+                new NumericColoredCard(3, 3, ColorLogic.red),
                 new NumericColoredCard(4, 4, ColorLogic.red),
                 new NumericColoredCard(5, 5, ColorLogic.red),
                 new NumericColoredCard(6, 7, ColorLogic.red),
@@ -25,10 +25,14 @@ namespace Tests
                 new NumericColoredCard(8, 9, ColorLogic.red),
                 new NumericColoredCard(9, 10, ColorLogic.red),
                 new NumericColoredCard(10, 12, ColorLogic.red),
-                new NumericColoredCard(11, 13, ColorLogic.red),
                 new NumericColoredCard(12, 15, ColorLogic.red),
                 new NumericColoredCard(13, 16, ColorLogic.red),
-                new NumericColoredCard(14, 17, ColorLogic.red)
+                new NumericColoredCard(14, 17, ColorLogic.red),
+                new NumericColoredCard(15, 17, ColorLogic.blue),
+                new NumericColoredCard(16, 18, ColorLogic.blue),
+                new NumericColoredCard(17, 18, ColorLogic.blue),
+                new NumericColoredCard(18, 19, ColorLogic.blue),
+                new NumericColoredCard(19, 1, ColorLogic.black)
             };
 
             // mergedDeck.Shuffle();
@@ -49,6 +53,8 @@ namespace Tests
                 {
                     Debug.LogException(new Exception(cards[i][j].ToStringBuilder().ToString()));
                 }
+
+                Debug.LogException(new Exception("-"));
             }
 
             Assert.Pass();

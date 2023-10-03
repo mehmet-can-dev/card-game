@@ -15,22 +15,16 @@ namespace CardGame.Core.Sort
                 SortLogic.SortByCardNo(groupByColorCards[i]);
             }
 
-            for (int i = 0; i < groupByColorCards.Length; i++)
-            {
-                for (int j = 0; j < groupByColorCards[i].Length; j++)
-                {
-                    Debug.Log(groupByColorCards[i][j].ToStringBuilder());
-                }
-            }
-
-            Debug.Log("  - ");
+            // for (int i = 0; i < groupByColorCards.Length; i++)
+            // {
+            //     for (int j = 0; j < groupByColorCards[i].Length; j++)
+            //     {
+            //         Debug.Log(groupByColorCards[i][j].ToStringBuilder());
+            //     }
+            // }
 
             int packageCount = 0;
-            CheckOrderedPackages(min, groupByColorCards, (arg0) => { packageCount++; });
-
-            Debug.Log("packageCount");
-            Debug.Log(packageCount);
-
+            CheckOrderedPackages(groupByColorCards, (arg0) => { packageCount++; });
 
             if (packageCount <= 0)
             {
@@ -38,124 +32,126 @@ namespace CardGame.Core.Sort
                 return null;
             }
 
+            var packagedCards =
+                SplitByOrderedNumericWithoutSizeFromSortedByCardNo(packageCount, groupByColorCards,
+                    out var notSortableCards);
+
+            int packagedCardsCount = 0;
+            int notSortableCardCount = notSortableCards.Length;
+
+            for (int i = 0; i < packagedCards.Length; i++)
+            {
+                if (packagedCards[i].Length >= min)
+                {
+                    packagedCardsCount++;
+                }
+                else
+                {
+                    notSortableCardCount += packagedCards[i].Length;
+                }
+            }
+
+            var notSortableCardsAfterSizeLimited = new NumericColoredCard[notSortableCardCount];
+
+            int lastFilledIndex = 0;
+            for (int i = 0; i < notSortableCards.Length; i++)
+            {
+                notSortableCardsAfterSizeLimited[i] = notSortableCards[i];
+                lastFilledIndex++;
+            }
+
+            var packagedCardsWithSizeLimits = new NumericColoredCard[packagedCardsCount][];
+
+            int tempIndexPackageCards = 0;
+
+            for (int i = 0; i < packagedCards.Length; i++)
+            {
+                if (packagedCards[i].Length >= min)
+                {
+                    packagedCardsWithSizeLimits[tempIndexPackageCards] =
+                        new NumericColoredCard[packagedCards[i].Length];
+
+                    for (int j = 0; j < packagedCards[i].Length; j++)
+                    {
+                        packagedCardsWithSizeLimits[tempIndexPackageCards][j] = packagedCards[i][j];
+                    }
+
+                    tempIndexPackageCards++;
+                }
+                else
+                {
+                    for (int j = 0; j < packagedCards[i].Length; j++)
+                    {
+                        notSortableCardsAfterSizeLimited[lastFilledIndex] = packagedCards[i][j];
+                        lastFilledIndex++;
+                    }
+                }
+            }
+            
+            // int totalCardCount = 0;
+            // for (int i = 0; i < packagedCards.Length; i++)
+            // {
+            //     for (int j = 0; j < packagedCards[i].Length; j++)
+            //     {
+            //         totalCardCount++;
+            //     }
+            // }
+
+            // for (int i = 0; i < notSortableCards.Length; i++)
+            // {
+            //     Debug.Log(notSortableCards[i].ToStringBuilder());
+            // }
+
+            notSortedCards = notSortableCardsAfterSizeLimited;
+            return packagedCardsWithSizeLimits;
+        }
+
+        private static NumericColoredCard[][] SplitByOrderedNumericWithoutSizeFromSortedByCardNo(int packageCount,
+            NumericColoredCard[][] groupByColorCards, out NumericColoredCard[] notSortableCards)
+        {
             int[] packageCardsCounts = new int[packageCount];
+            int notSortableCardCount = 0;
             int tempIndex = 0;
 
-
-            CheckOrderedPackages(min, groupByColorCards, (arg0) =>
+            CheckOrderedPackages(groupByColorCards, (arg0) =>
             {
                 packageCardsCounts[tempIndex] = arg0;
                 tempIndex++;
-            });
+            }, null, card => { notSortableCardCount++; });
 
-            for (int i = 0; i < packageCardsCounts.Length; i++)
-            {
-                Debug.Log(packageCardsCounts[i]);
-            }
-            
             NumericColoredCard[][] packagedCards = new NumericColoredCard[packageCount][];
+            notSortableCards = new NumericColoredCard[notSortableCardCount];
 
-            int tempDimensionZero = 0;
-            int tempDimensionOne = 0;
+            packagedCards[0] = new NumericColoredCard[packageCardsCounts[0]];
 
+            int tempIndexPackagedDimensionZero = 0;
+            int tempIndexPackagedDimensionOne = 0;
+            int tempIndexNotSortable = 0;
 
-            // for (int i = 0; i < groupByColorCards.Length; i++)
-            // {
-            //     int sortedCardCount = 0;
-            //     int selectedNumber = groupByColorCards[i][0].No;
-            //
-            //     NumericColoredCard[] tempArray = new NumericColoredCard[groupByColorCards[i].Length];
-            //     Debug.Log("List Cleared");
-            //
-            //     for (int j = 0; j < groupByColorCards[i].Length; j++)
-            //     {
-            //         var cardNo = groupByColorCards[i][j].No;
-            //
-            //         if (selectedNumber + 1 == cardNo)
-            //         {
-            //             tempArray[sortedCardCount] = groupByColorCards[i][j - 1];
-            //
-            //             Debug.Log("first " + groupByColorCards[i][j - 1].ToStringBuilder());
-            //
-            //             if (j == groupByColorCards[i].Length - 1)
-            //             {
-            //                 tempArray[sortedCardCount + 1] = groupByColorCards[i][j];
-            //                 Debug.Log("sec " + groupByColorCards[i][j].ToStringBuilder());
-            //             }
-            //
-            //             sortedCardCount++;
-            //         }
-            //         else
-            //         {
-            //             if (sortedCardCount >= min)
-            //             {
-            //                 if (packagedCards[tempDimensionZero] == null)
-            //                 {
-            //                     packagedCards[tempDimensionZero] =
-            //                         new NumericColoredCard[packageCardsCounts[tempDimensionZero]];
-            //                     tempDimensionOne = 0;
-            //                 }
-            //
-            //                 for (int k = 0; k < tempArray.Length; k++)
-            //                 {
-            //                     if (tempArray[k] != null)
-            //                     {
-            //                         packagedCards[tempDimensionZero][tempDimensionOne] = tempArray[k];
-            //                         tempDimensionOne++;
-            //                     }
-            //                 }
-            //
-            //                 tempDimensionZero++;
-            //
-            //                 //  onPackageFounded?.Invoke(sortedCardCount + 1, tempArray);
-            //                 Debug.Log("List Cleared");
-            //                 tempArray = new NumericColoredCard[groupByColorCards[i].Length];
-            //             }
-            //
-            //             sortedCardCount = 0;
-            //         }
-            //
-            //         selectedNumber = cardNo;
-            //     }
-            //
-            //     if (sortedCardCount >= min)
-            //     {
-            //         if (packagedCards[tempDimensionZero] == null)
-            //         {
-            //             packagedCards[tempDimensionZero] =
-            //                 new NumericColoredCard[packageCardsCounts[tempDimensionZero]];
-            //             tempDimensionOne = 0;
-            //         }
-            //
-            //         for (int k = 0; k < tempArray.Length; k++)
-            //         {
-            //             if (tempArray[k] != null)
-            //             {
-            //                 packagedCards[tempDimensionZero][tempDimensionOne] = tempArray[k];
-            //                 tempDimensionOne++;
-            //             }
-            //         }
-            //
-            //         tempDimensionZero++;
-            //     }
-            // }
+            var cards = notSortableCards;
+            CheckOrderedPackages(groupByColorCards, (packageCount) =>
+            {
+                tempIndexPackagedDimensionZero++;
 
-
-            // for (int i = 0; i < packagedCards.Length; i++)
-            // {
-            //     Debug.Log("");
-            //     for (int j = 0; j < packagedCards[i].Length; j++)
-            //     {
-            //         Debug.Log(packagedCards[i][j].ToStringBuilder());
-            //     }
-            // }
-
-            notSortedCards = null;
+                if (tempIndexPackagedDimensionZero < packagedCards.Length)
+                    packagedCards[tempIndexPackagedDimensionZero] =
+                        new NumericColoredCard[packageCardsCounts[tempIndexPackagedDimensionZero]];
+                tempIndexPackagedDimensionOne = 0;
+            }, card =>
+            {
+                packagedCards[tempIndexPackagedDimensionZero][tempIndexPackagedDimensionOne] = card;
+                tempIndexPackagedDimensionOne++;
+            }, card =>
+            {
+                cards[tempIndexNotSortable] = card;
+                tempIndexNotSortable++;
+            });
             return packagedCards;
         }
 
-        private static void CheckOrderedPackages(int min, NumericColoredCard[][] groupByColorCards,
-            Action<int> onPackageFounded, Action onPackageCardAdded = null)
+        private static void CheckOrderedPackages(NumericColoredCard[][] groupByColorCards,
+            Action<int> onPackageFounded, Action<NumericColoredCard> onPackageCardAdded = null,
+            Action<NumericColoredCard> onNotMatchedCardFind = null)
         {
             for (int i = 0; i < groupByColorCards.Length; i++)
             {
@@ -163,37 +159,41 @@ namespace CardGame.Core.Sort
                 int selectedNumber = groupByColorCards[i][0].No;
                 bool isLastLookingOrdered = false;
 
-                Action CheckAndProcessSortedCount = () =>
+                void CheckAndProcessSortedCount()
                 {
-                    if (sortedCardCount >= min)
+                    if (sortedCardCount != 0)
                     {
                         onPackageFounded?.Invoke(sortedCardCount);
                     }
 
                     isLastLookingOrdered = false;
                     sortedCardCount = 0;
-                };
-                
-                for (int j = 0; j < groupByColorCards[i].Length; j++)
+                }
+
+                void IncreaseSortedCardCount(NumericColoredCard card)
+                {
+                    sortedCardCount++;
+                    onPackageCardAdded?.Invoke(card);
+                }
+
+                for (int j = 1; j < groupByColorCards[i].Length; j++)
                 {
                     var cardNumber = groupByColorCards[i][j].No;
 
                     if (selectedNumber + 1 == cardNumber)
                     {
-                        sortedCardCount++;
-                        onPackageCardAdded?.Invoke();
+                        IncreaseSortedCardCount(groupByColorCards[i][j - 1]);
                         isLastLookingOrdered = true;
                     }
                     else if (isLastLookingOrdered)
                     {
-                        sortedCardCount++;
-                        onPackageCardAdded?.Invoke();
-
+                        IncreaseSortedCardCount(groupByColorCards[i][j - 1]);
                         CheckAndProcessSortedCount();
                     }
                     else
                     {
                         CheckAndProcessSortedCount();
+                        onNotMatchedCardFind?.Invoke(groupByColorCards[i][j - 1]);
                     }
 
                     selectedNumber = cardNumber;
@@ -201,38 +201,15 @@ namespace CardGame.Core.Sort
 
                 if (isLastLookingOrdered)
                 {
-                    sortedCardCount++;
-                    onPackageCardAdded?.Invoke();
+                    IncreaseSortedCardCount(groupByColorCards[i][^1]);
+                    CheckAndProcessSortedCount();
                 }
-                CheckAndProcessSortedCount();
+                else
+                {
+                    onNotMatchedCardFind?.Invoke(groupByColorCards[i][^1]);
+                }
             }
         }
-
-        // private static int[] UniqCardCountsPerCardNumbers(NumericColoredCard[][] groupByColorCards,
-        //     out int sameCardCount)
-        // {
-        //     int[] uniqCardCountsPerCardNos = new int[groupByColorCards.Length];
-        //     int tempNo = Int32.MinValue;
-        //     sameCardCount = 0;
-        //     for (int i = 0; i < groupByColorCards.Length; i++)
-        //     {
-        //         for (int j = 0; j < groupByColorCards[i].Length; j++)
-        //         {
-        //             var cardNo = groupByColorCards[i][j].No;
-        //             if (cardNo != tempNo)
-        //             {
-        //                 tempNo = cardNo;
-        //                 uniqCardCountsPerCardNos[i]++;
-        //             }
-        //             else
-        //             {
-        //                 sameCardCount++;
-        //             }
-        //         }
-        //     }
-        //
-        //     return uniqCardCountsPerCardNos;
-        // }
 
         public static NumericColoredCard[][] SortByNumericWithoutSizeLimitsAndUniqIds(NumericColoredCard[] cards)
         {

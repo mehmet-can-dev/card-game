@@ -78,26 +78,28 @@ namespace CardGame.View
                     tileHorizontalIndex++;
                 }
 
-            var currentIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
-            currentIndex++;
 
             if (notMatchedCards != null)
-                for (int i = 0; i < notMatchedCards.Length; i++)
+
+                tempContainer = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
+            var currentIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
+
+            for (int i = 0; i < notMatchedCards.Length; i++)
+            {
+                var card = notMatchedCards[i];
+                if (tempContainer.TryGetValue(card, out var value))
                 {
-                    var card = notMatchedCards[i];
-                    if (tempContainer.TryGetValue(card, out var value))
-                    {
-                        var cardView = value.GetConnectedCard;
-                        var tempIndex = currentIndex;
-                        value.ResetConnectCard();
-                        cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
-                            () => tiles[tempIndex].ConnectCard(cardView));
+                    var cardView = value.GetConnectedCard;
+                    var tempIndex = currentIndex;
+                    value.ResetConnectCard();
+                    cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
+                        () => tiles[tempIndex].ConnectCard(cardView));
 
-                        cardTileOwnershipContainer[card] = tiles[currentIndex];
-                    }
-
-                    currentIndex++;
+                    cardTileOwnershipContainer[card] = tiles[currentIndex];
                 }
+
+                currentIndex++;
+            }
         }
 
         public void ConnectCardToTile(Tile tile, CardViewBase cardViewBase)

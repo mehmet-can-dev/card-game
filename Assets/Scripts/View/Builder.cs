@@ -28,38 +28,6 @@ namespace CardGame.View
             var hand = new Hand(builderSettingsSo.BuilderCountData.handCount);
 
             handViewBase.Init(hand);
-
-
-            // var sortedCards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notMatches);
-
-            // Debug.Log(notMatches.Length);
-            // for (int i = 0; i < notMatches.Length; i++)
-            // {
-            //     Debug.Log(notMatches[i].ToStringBuilder());
-            // }
-            //
-            // Debug.Log("");
-            //
-            // for (int i = 0; i < sortedCards.GetLength(0); i++)
-            // {
-            //     for (int j = 0; j < sortedCards[i].Length; j++)
-            //     {
-            //         Debug.Log(sortedCards[i][j].ToStringBuilder());
-            //     }
-            // }
-            //
-            // sortedCards = NumericSortLogic.SortByNumeric(hand.Cards);
-
-
-            // Debug.Log("");
-            //
-            // for (int i = 0; i < sortedCards.GetLength(0); i++)
-            // {
-            //     for (int j = 0; j < sortedCards[i].Length; j++)
-            //     {
-            //         Debug.Log(sortedCards[i][j].ToStringBuilder());
-            //     }
-            // }
         }
 
         public void SortHandByNumeric()
@@ -98,10 +66,8 @@ namespace CardGame.View
 
             var mergedDeck = DeckBuilder.MergeDeck(decks);
 
-            mergedDeck.Cards.Shuffle();
-
+            mergedDeck.Shuffle();
             mergedDeck.TurnCardToJokerCards(builderCountData.jokerCount);
-
             mergedDeck.Shuffle();
             return mergedDeck;
         }
