@@ -528,6 +528,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 905423898, guid: 5581151351e25a54eb45f65655bed516, type: 3}
+      propertyPath: deckViewDealHandAnimation
+      value: 
+      objectReference: {fileID: 11400000, guid: e0a279847b6bc554c8243e4df3563a54, type: 2}
     - target: {fileID: 3727079927656155425, guid: 5581151351e25a54eb45f65655bed516, type: 3}
       propertyPath: m_RootOrder
       value: 2

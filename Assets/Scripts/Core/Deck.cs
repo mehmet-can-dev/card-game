@@ -30,19 +30,18 @@ namespace CardGame.Core
             firstCardIndex = firstCardIndex + 1;
             return c;
         }
-        
-        public NumericColoredCard AddCard(NumericColoredCard card)
+
+        public void AddCard(NumericColoredCard card)
         {
             if (firstCardIndex - 1 < 0)
             {
                 throw new IndexOutOfRangeException("Deck Full");
             }
 
-            var c = Cards[firstCardIndex - 1];
+            Cards[firstCardIndex - 1] = card;
             firstCardIndex = firstCardIndex - 1;
-            return c;
         }
-        
+
         public void TurnCardToJokerCards(int jokerCount)
         {
             for (int i = 0; i < jokerCount; i++)

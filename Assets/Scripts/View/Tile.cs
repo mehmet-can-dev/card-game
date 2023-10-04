@@ -32,8 +32,7 @@ namespace CardGame.View
         {
             connectedCard = null;
         }
-
-
+        
         public bool IsCardConnected()
         {
             return connectedCard != null;

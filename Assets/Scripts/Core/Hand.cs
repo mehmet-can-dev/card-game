@@ -13,13 +13,14 @@ namespace CardGame.Core
 
         public int MaxCount => maxCount;
 
+        public int CurrentCardCount => currentCardCount;
+
         public Hand(int maxCount)
         {
             this.maxCount = maxCount;
             currentCardCount = 0;
             firstCardIndex = this.maxCount;
             Cards = new NumericColoredCard[maxCount];
-            
         }
 
         public void AddCard(NumericColoredCard card)
@@ -32,6 +33,19 @@ namespace CardGame.Core
             Cards[MaxCount - currentCardCount - 1] = card;
             firstCardIndex--;
             currentCardCount++;
+        }
+
+        public NumericColoredCard DrawCard()
+        {
+            if (currentCardCount < 0)
+            {
+                throw new IndexOutOfRangeException("Hand Empty");
+            }
+
+            var card = Cards[MaxCount - currentCardCount];
+            firstCardIndex++;
+            currentCardCount--;
+            return card;
         }
 
         public StringBuilder ToStringBuilder()

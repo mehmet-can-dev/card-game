@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CardGame.Core;
 using UnityEngine;
 using Color = UnityEngine.Color;
@@ -108,17 +109,41 @@ namespace CardGame.View
             tile.ConnectCard(cardViewBase);
         }
 
+        public void RemoveConnectionCardFromTile(NumericColoredCard card,Tile tile)
+        {
+            cardTileOwnershipContainer.Remove(card);
+            tile.ResetConnectCard();
+        }
+
         public Tile GetEmptyTile()
+        {
+            Func<Tile, bool> prediction = (tile) => !tile.IsCardConnected();
+            if (CheckTiles(prediction, out var tile)) return tile;
+            return null;
+        }
+
+        public Tile GetConnectedTile(NumericColoredCard card)
+        {
+            if (cardTileOwnershipContainer.TryGetValue(card, out Tile tile))
+            {
+                return tile;
+            }
+            return null;
+        }
+
+        private bool CheckTiles(Func<Tile, bool> prediction, out Tile tile)
         {
             for (int i = 0; i < tiles.Count; i++)
             {
-                if (!tiles[i].IsCardConnected())
+                if (prediction(tiles[i]))
                 {
-                    return tiles[i];
+                    tile = tiles[i];
+                    return true;
                 }
             }
 
-            return null;
+            tile = null;
+            return false;
         }
     }
 }

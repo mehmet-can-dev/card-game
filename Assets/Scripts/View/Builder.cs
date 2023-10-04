@@ -11,11 +11,13 @@ namespace CardGame.View
 {
     public class Builder : MonoBehaviour
     {
-        [SerializeField] private DeckViewBase deckViewBase;
+        [Header("Scene References")] [SerializeField]
+        private DeckViewBase deckViewBase;
+
         [SerializeField] private HandViewBase handViewBase;
 
-        [SerializeField] private BuilderSettingsSO builderSettingsSo;
-
+        [Header("Project References")] [SerializeField]
+        private BuilderSettingsSO builderSettingsSo;
 
         void Start()
         {
@@ -45,6 +47,11 @@ namespace CardGame.View
             StartCoroutine(DealHandAnimation());
         }
 
+        public void ClearHand()
+        {
+            StartCoroutine(ClearHandAnimation());
+        }
+
         private IEnumerator DealHandAnimation()
         {
             for (int i = 0; i < handViewBase.Hand.MaxCount; i++)
@@ -54,6 +61,22 @@ namespace CardGame.View
                 StartCoroutine(deckViewBase.DeckToPlayerHandAnimation(handViewBase, spawnedCard, connectTile));
                 yield return null;
             }
+        }
+
+        private IEnumerator ClearHandAnimation()
+        {
+            var handCount = handViewBase.Hand.CurrentCardCount;
+            for (int i = 0; i < handCount; i++)
+            {
+                var spawnedCard = handViewBase.RemoveCardFromTile();
+                var numericCard = spawnedCard.Card;
+                deckViewBase.AddCard(numericCard);
+                spawnedCard.MoveTargetPosition(deckViewBase.transform.position, () => Destroy(spawnedCard.gameObject));
+
+                yield return null;
+            }
+
+            deckViewBase.Shuffle();
         }
 
 

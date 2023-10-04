@@ -9,7 +9,9 @@ namespace CardGame.View
 {
     public class DeckViewCardSpawnerModule : MonoBehaviour
     {
+        [Header("Project References")]
         [SerializeField] private CardViewBase cardPrefab;
+        [Header("Child References")]
         [SerializeField] private Transform cardSpawnTransform;
 
         private Quaternion cardSpawnRotation = Quaternion.AngleAxis(180, Vector3.up);

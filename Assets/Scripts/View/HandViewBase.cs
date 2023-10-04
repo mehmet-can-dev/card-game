@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CardGame.Core;
 using CardGame.Core.Sort;
 using UnityEngine;
@@ -28,9 +29,18 @@ namespace CardGame.View
             return tile;
         }
 
+        public CardViewBase RemoveCardFromTile()
+        {
+            var card = hand.DrawCard();
+            var tile = handViewGridModule.GetConnectedTile(card);
+            var cardView = tile.GetConnectedCard;
+            handViewGridModule.RemoveConnectionCardFromTile(card, tile);
+            return cardView;
+        }
+
         public void SortHandByNumeric()
         {
-            var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCards,3);
+            var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCards, 3);
             handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
 

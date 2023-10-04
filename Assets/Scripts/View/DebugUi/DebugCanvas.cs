@@ -11,8 +11,9 @@ namespace CardGame.View.DebugUi
         private void Start()
         {
             UiDebugFunctions.CreateDebugUIButton(canvas, builder.DealHand, 0, "Deal Hands");
-            UiDebugFunctions.CreateDebugUIButton(canvas, builder.SortHandByNumeric, 1, "Numeric Sort");
-            UiDebugFunctions.CreateDebugUIButton(canvas, builder.SortHandByColor, 2, "Colored Sort");
+            UiDebugFunctions.CreateDebugUIButton(canvas, builder.ClearHand, 1, "Clear Hands");
+            UiDebugFunctions.CreateDebugUIButton(canvas, builder.SortHandByNumeric, 2, "Numeric Sort");
+            UiDebugFunctions.CreateDebugUIButton(canvas, builder.SortHandByColor, 3, "Colored Sort");
         }
     }
 }

@@ -2,17 +2,21 @@
 using CardGame.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Color = UnityEngine.Color;
 
 namespace CardGame.View
 {
     public class CardViewBase : MonoBehaviour
     {
-        [SerializeField] private CardViewAnimation cardViewAnimation;
+        [Header("Module References")]
+        [SerializeField] private CardViewAnimationModule cardViewAnimationModule;
 
+        [Header("Child References")]
         [SerializeField] private ColorSetterUseByProperty frontColorSetter;
         [SerializeField] private ColorSetterUseByProperty backColorSetter;
         [SerializeField] private TextMeshProUGUI cardNoText;
+        [SerializeField] private TextMeshProUGUI jokerText;
 
         private NumericColoredCard card;
 
@@ -25,12 +29,17 @@ namespace CardGame.View
             backColorSetter.SetColor(backColor);
             cardNoText.SetText(card.No.ToString());
 
-            cardViewAnimation.Init();
+            cardViewAnimationModule.Init();
+
+            if (card is JokerCard)
+                jokerText.gameObject.SetActive(true);
+            else
+                jokerText.gameObject.SetActive(false);
         }
 
         public void MoveTargetPosition(Vector3 targetPos, Action onComplete)
         {
-            StartCoroutine(cardViewAnimation.MovePosition(targetPos, onComplete));
+            StartCoroutine(cardViewAnimationModule.MovePosition(targetPos, onComplete));
         }
     }
 }

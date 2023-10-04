@@ -9,11 +9,16 @@ namespace CardGame.View
 {
     public class DeckViewBase : MonoBehaviour
     {
-        [SerializeField] private ColorSetterUseByProperty colorSetter;
+        [Header("Module References")] [SerializeField]
+        private DeckViewCardSpawnerModule deckViewCardSpawnerModule;
+
+        [SerializeField] private DeckViewAnimationModule deckViewAnimationModule;
+
+        [Header("Child References")] [SerializeField]
+        private ColorSetterUseByProperty colorSetter;
+
         [SerializeField] private TextMeshProUGUI cardCountText;
 
-        [SerializeField] private DeckViewCardSpawnerModule deckViewCardSpawnerModule;
-        [SerializeField] private DeckViewAnimationModule deckViewAnimationModule;
         private Deck deck;
         private Color deckColor;
 
@@ -40,11 +45,22 @@ namespace CardGame.View
             return spawnCard;
         }
 
+        public void AddCard(NumericColoredCard card)
+        {
+            deck.AddCard(card);
+            UpdateText(deck);
+        }
+
         public IEnumerator DeckToPlayerHandAnimation(HandViewBase targetHand, CardViewBase spawnedCard,
             Tile connectTile)
         {
             var targetPos = connectTile.transform.position;
             yield return deckViewAnimationModule.CardSpawnAnimation(spawnedCard, targetPos);
+        }
+
+        public void Shuffle()
+        {
+            deck.Shuffle();
         }
     }
 }
