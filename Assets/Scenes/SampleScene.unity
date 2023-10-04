@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 562339212}
   - component: {fileID: 562339213}
   m_Layer: 0
-  m_Name: builder
+  m_Name: view_controller_builder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 659566089}
-  builder: {fileID: 562339213}
+  builderViewController: {fileID: 562339213}
 --- !u!114 &905423897 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3727079927656155424, guid: 5581151351e25a54eb45f65655bed516, type: 3}
@@ -528,10 +528,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 905423898, guid: 5581151351e25a54eb45f65655bed516, type: 3}
-      propertyPath: deckViewDealHandAnimation
-      value: 
-      objectReference: {fileID: 11400000, guid: e0a279847b6bc554c8243e4df3563a54, type: 2}
     - target: {fileID: 3727079927656155425, guid: 5581151351e25a54eb45f65655bed516, type: 3}
       propertyPath: m_RootOrder
       value: 2

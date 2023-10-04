@@ -5,6 +5,7 @@ namespace CardGame.View
 {
     public class InputRaycaster : MonoBehaviour
     {
+        [Header("Scene References")]
         [SerializeField] private Camera mainCamera;
 
         private bool isPressed = false;

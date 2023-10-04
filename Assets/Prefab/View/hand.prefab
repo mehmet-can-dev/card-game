@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 4807132645633789128, guid: 9b2e82e2f05b9de498e7f9eb6e597183, type: 3}
-  sizeX: 14
-  sizeY: 2
+  handViewGridData:
+    sizeX: 14
+    sizeY: 2
+    tileColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
   tileParent: {fileID: 1776311042839402348}
 --- !u!1 &1776311042953053713
 GameObject:
@@ -94,4 +96,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handViewGridModule: {fileID: 942423450}
-  tileColor: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}

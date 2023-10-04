@@ -9,8 +9,8 @@ namespace CardGame.View
 {
     public class HandViewBase : MonoBehaviour
     {
+        [Header("Module References")]
         [SerializeField] private HandViewGridModule handViewGridModule;
-        [SerializeField] private Color tileColor;
 
         private Hand hand;
         public Hand Hand => hand;
@@ -18,7 +18,7 @@ namespace CardGame.View
         public void Init(Hand hand)
         {
             this.hand = hand;
-            handViewGridModule.Init(tileColor);
+            handViewGridModule.Init();
         }
 
         public Tile AddCardToTile(CardViewBase cardViewBase)

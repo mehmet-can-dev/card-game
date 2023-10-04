@@ -6,7 +6,8 @@ namespace CardGame.View
 {
     public class Tile : MonoBehaviour, IInteractable
     {
-        [SerializeField] private ColorSetterUseByProperty colorSetter;
+        [Header("Child References")] [SerializeField]
+        private ColorSetterUseByProperty colorSetter;
 
         private CardViewBase connectedCard;
 
@@ -32,7 +33,7 @@ namespace CardGame.View
         {
             connectedCard = null;
         }
-        
+
         public bool IsCardConnected()
         {
             return connectedCard != null;

@@ -6,6 +6,7 @@ namespace CardGame.View
 {
     public class ColorSetterUseByProperty : MonoBehaviour
     {
+        [Header("Child Reference")]
         [SerializeField] private Renderer targetRenderer;
         private MaterialPropertyBlock propertyBlock;
 

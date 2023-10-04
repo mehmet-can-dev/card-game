@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CardGame.Core;
+using CardGame.View.DataModels;
 using UnityEngine;
 using Color = UnityEngine.Color;
 
@@ -8,33 +9,36 @@ namespace CardGame.View
 {
     public class HandViewGridModule : MonoBehaviour
     {
-        [SerializeField] private Tile tilePrefab;
+        [Header("Project References")] [SerializeField]
+        private Tile tilePrefab;
 
-        [SerializeField] private int sizeX;
-        [SerializeField] private int sizeY;
-        [SerializeField] private Transform tileParent;
+        [Header("Variable References")] [SerializeField]
+        private HandViewGridData handViewGridData;
+
+        [Header("Child References")] [SerializeField]
+        private Transform tileParent;
 
         private List<Tile> tiles;
 
         private Dictionary<Card, Tile> cardTileOwnershipContainer;
 
-        public void Init(Color tileColor)
+        public void Init()
         {
             tiles = new List<Tile>();
             cardTileOwnershipContainer = new Dictionary<Card, Tile>();
 
             Vector2 tileSize = tilePrefab.transform.localScale;
-            Vector2 offset = new Vector2(sizeX - tileSize.x, sizeY) * -0.5f;
+            Vector2 offset = new Vector2(handViewGridData.sizeX - tileSize.x, handViewGridData.sizeY) * -0.5f;
 
-            for (int y = sizeY - 1; y >= 0; y--)
+            for (int y = handViewGridData.sizeY - 1; y >= 0; y--)
             {
-                for (int x = 0; x < sizeX; x++)
+                for (int x = 0; x < handViewGridData.sizeX; x++)
                 {
                     var tile = Instantiate(tilePrefab, tileParent);
                     var pos = new Vector2(x, y);
                     pos *= tileSize;
                     tile.transform.localScale *= 0.98f;
-                    tile.Init(tileColor);
+                    tile.Init(handViewGridData.tileColor);
                     tile.transform.localPosition = pos + offset;
                     tiles.Add(tile);
                 }
@@ -51,7 +55,7 @@ namespace CardGame.View
             if (cardContainer != null)
                 for (int i = 0; i < cardContainer.Length; i++)
                 {
-                    if (tileHorizontalIndex + cardContainer[i].Length > sizeX)
+                    if (tileHorizontalIndex + cardContainer[i].Length > handViewGridData.sizeX)
                     {
                         tileVerticalIndex++;
                         tileHorizontalIndex = 0;
@@ -62,15 +66,9 @@ namespace CardGame.View
                         var card = cardContainer[i][j];
                         if (tempContainer.TryGetValue(card, out var value))
                         {
-                            var tilesIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
+                            var tilesIndex = tileHorizontalIndex + tileVerticalIndex * handViewGridData.sizeX;
 
-                            var cardView = value.GetConnectedCard;
-                            var tempIndex = tilesIndex;
-                            value.ResetConnectCard();
-                            cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
-                                () => tiles[tempIndex].ConnectCard(cardView));
-
-                            cardTileOwnershipContainer[card] = tiles[tilesIndex];
+                            AssignCardToTile(value, tilesIndex, card);
                         }
 
                         tileHorizontalIndex++;
@@ -83,24 +81,29 @@ namespace CardGame.View
             if (notMatchedCards != null)
 
                 tempContainer = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
-            var currentIndex = tileHorizontalIndex + tileVerticalIndex * sizeX;
+            var currentIndex = tileHorizontalIndex + tileVerticalIndex * handViewGridData.sizeX;
 
             for (int i = 0; i < notMatchedCards.Length; i++)
             {
                 var card = notMatchedCards[i];
                 if (tempContainer.TryGetValue(card, out var value))
                 {
-                    var cardView = value.GetConnectedCard;
-                    var tempIndex = currentIndex;
-                    value.ResetConnectCard();
-                    cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
-                        () => tiles[tempIndex].ConnectCard(cardView));
-
-                    cardTileOwnershipContainer[card] = tiles[currentIndex];
+                    AssignCardToTile(value, currentIndex, card);
                 }
 
                 currentIndex++;
             }
+        }
+
+        private void AssignCardToTile(Tile value, int tilesIndex, NumericColoredCard card)
+        {
+            var cardView = value.GetConnectedCard;
+            var tempIndex = tilesIndex;
+            value.ResetConnectCard();
+            cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
+                () => tiles[tempIndex].ConnectCard(cardView));
+
+            cardTileOwnershipContainer[card] = tiles[tilesIndex];
         }
 
         public void ConnectCardToTile(Tile tile, CardViewBase cardViewBase)
@@ -109,7 +112,7 @@ namespace CardGame.View
             tile.ConnectCard(cardViewBase);
         }
 
-        public void RemoveConnectionCardFromTile(NumericColoredCard card,Tile tile)
+        public void RemoveConnectionCardFromTile(NumericColoredCard card, Tile tile)
         {
             cardTileOwnershipContainer.Remove(card);
             tile.ResetConnectCard();
@@ -128,6 +131,7 @@ namespace CardGame.View
             {
                 return tile;
             }
+
             return null;
         }
 

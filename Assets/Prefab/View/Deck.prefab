@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f2e3d45c274fc0913f46339563592d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorSetter: {fileID: 3727079929212480516}
-  cardCountText: {fileID: 3727079928431247790}
   deckViewCardSpawnerModule: {fileID: 905423899}
   deckViewAnimationModule: {fileID: 905423898}
+  colorSetter: {fileID: 3727079929212480516}
+  cardCountText: {fileID: 3727079928431247790}
 --- !u!114 &905423898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d8e034b04042319079ed90aacb4e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deckViewDealHandAnimation: {fileID: 11400000, guid: e0a279847b6bc554c8243e4df3563a54, type: 2}
 --- !u!114 &905423899
 MonoBehaviour:
   m_ObjectHideFlags: 0

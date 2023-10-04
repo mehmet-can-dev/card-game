@@ -9,7 +9,7 @@ using Color = UnityEngine.Color;
 
 namespace CardGame.View
 {
-    public class Builder : MonoBehaviour
+    public class BuilderViewController : MonoBehaviour
     {
         [Header("Scene References")] [SerializeField]
         private DeckViewBase deckViewBase;
@@ -71,7 +71,8 @@ namespace CardGame.View
                 var spawnedCard = handViewBase.RemoveCardFromTile();
                 var numericCard = spawnedCard.Card;
                 deckViewBase.AddCard(numericCard);
-                spawnedCard.MoveTargetPosition(deckViewBase.transform.position, () => Destroy(spawnedCard.gameObject));
+                spawnedCard.MoveTargetPosition(deckViewBase.transform.position + Vector3.forward,
+                    () => Destroy(spawnedCard.gameObject));
 
                 yield return null;
             }
