@@ -38,11 +38,21 @@ namespace CardGame.View
                     var pos = new Vector2(x, y);
                     pos *= tileSize;
                     tile.transform.localScale *= 0.98f;
-                    tile.Init(handViewGridData.tileColor);
+                    tile.Init(handViewGridData.tileColor, OnCardConnectedTile, OnCardDisconnectedTile);
                     tile.transform.localPosition = pos + offset;
                     tiles.Add(tile);
                 }
             }
+        }
+
+        private void OnCardConnectedTile(Tile tile, CardViewBase cardViewBase)
+        {
+            cardTileOwnershipContainer.Add(cardViewBase.Card, tile);
+        }
+
+        private void OnCardDisconnectedTile(Tile tile, CardViewBase cardViewBase)
+        {
+            cardTileOwnershipContainer.Remove(cardViewBase.Card);
         }
 
         public void ReAssignCards(NumericColoredCard[][] cardContainer, NumericColoredCard[] notMatchedCards)
@@ -99,9 +109,9 @@ namespace CardGame.View
         {
             var cardView = value.GetConnectedCard;
             var tempIndex = tilesIndex;
-            value.ResetConnectCard();
+            value.ResetConnectCardWithoutNotify();
             cardView.MoveTargetPosition(tiles[tempIndex].transform.position,
-                () => tiles[tempIndex].ConnectCard(cardView));
+                () => tiles[tempIndex].ConnectCardWithoutNotify(cardView));
 
             cardTileOwnershipContainer[card] = tiles[tilesIndex];
         }
@@ -109,13 +119,13 @@ namespace CardGame.View
         public void ConnectCardToTile(Tile tile, CardViewBase cardViewBase)
         {
             cardTileOwnershipContainer.Add(cardViewBase.Card, tile);
-            tile.ConnectCard(cardViewBase);
+            tile.ConnectCardWithoutNotify(cardViewBase);
         }
 
         public void RemoveConnectionCardFromTile(NumericColoredCard card, Tile tile)
         {
             cardTileOwnershipContainer.Remove(card);
-            tile.ResetConnectCard();
+            tile.ResetConnectCardWithoutNotify();
         }
 
         public Tile GetEmptyTile()
