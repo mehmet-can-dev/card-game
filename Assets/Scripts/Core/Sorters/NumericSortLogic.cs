@@ -12,16 +12,9 @@ namespace CardGame.Core.Sort
 
             for (int i = 0; i < groupByColorCards.Length; i++)
             {
-                SortLogic.SortByCardNo(groupByColorCards[i]);
+                SortUtilities.SortByCardNo(groupByColorCards[i]);
             }
-
-            // for (int i = 0; i < groupByColorCards.Length; i++)
-            // {
-            //     for (int j = 0; j < groupByColorCards[i].Length; j++)
-            //     {
-            //         Debug.Log(groupByColorCards[i][j].ToStringBuilder());
-            //     }
-            // }
+            
 
             int packageCount = 0;
             CheckOrderedPackages(groupByColorCards, (arg0) => { packageCount++; });
@@ -52,6 +45,7 @@ namespace CardGame.Core.Sort
             }
 
             var notSortableCardsAfterSizeLimited = new NumericColoredCard[notSortableCardCount];
+            var packagedCardsWithSizeLimits = new NumericColoredCard[packagedCardsCount][];
 
             int lastFilledIndex = 0;
             for (int i = 0; i < notSortableCards.Length; i++)
@@ -59,8 +53,6 @@ namespace CardGame.Core.Sort
                 notSortableCardsAfterSizeLimited[i] = notSortableCards[i];
                 lastFilledIndex++;
             }
-
-            var packagedCardsWithSizeLimits = new NumericColoredCard[packagedCardsCount][];
 
             int tempIndexPackageCards = 0;
 
@@ -87,20 +79,6 @@ namespace CardGame.Core.Sort
                     }
                 }
             }
-            
-            // int totalCardCount = 0;
-            // for (int i = 0; i < packagedCards.Length; i++)
-            // {
-            //     for (int j = 0; j < packagedCards[i].Length; j++)
-            //     {
-            //         totalCardCount++;
-            //     }
-            // }
-
-            // for (int i = 0; i < notSortableCards.Length; i++)
-            // {
-            //     Debug.Log(notSortableCards[i].ToStringBuilder());
-            // }
 
             notSortedCards = notSortableCardsAfterSizeLimited;
             return packagedCardsWithSizeLimits;
@@ -213,7 +191,7 @@ namespace CardGame.Core.Sort
 
         public static NumericColoredCard[][] SortByNumericWithoutSizeLimitsAndUniqIds(NumericColoredCard[] cards)
         {
-            SortLogic.SortByCardColor(cards);
+            SortUtilities.SortByCardColor(cards);
 
             var uniqColorCount = GetUniqColorCountFromSortedByCardColor(cards);
 

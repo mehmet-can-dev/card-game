@@ -9,8 +9,8 @@ namespace CardGame.View
 {
     public class HandViewBase : MonoBehaviour
     {
-        [Header("Module References")]
-        [SerializeField] private HandViewGridModule handViewGridModule;
+        [Header("Module References")] [SerializeField]
+        private HandViewGridModule handViewGridModule;
 
         private Hand hand;
         public Hand Hand => hand;
@@ -47,6 +47,12 @@ namespace CardGame.View
         public void SortHandByColored()
         {
             var cards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notSortableCards);
+            handViewGridModule.ReAssignCards(cards, notSortableCards);
+        }
+
+        public void SortHandBySmart()
+        {
+            var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCards, 3, 4);
             handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
     }

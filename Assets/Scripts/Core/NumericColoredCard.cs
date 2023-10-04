@@ -13,7 +13,7 @@ namespace CardGame.Core
             Color = color;
         }
 
-        public StringBuilder ToStringBuilder()
+        public virtual StringBuilder ToStringBuilder()
         {
             var sb = new StringBuilder();
             sb.Append(nameof(Id));

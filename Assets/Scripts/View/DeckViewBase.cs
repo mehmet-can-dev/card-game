@@ -17,7 +17,7 @@ namespace CardGame.View
         [Header("Child References")] [SerializeField]
         private ColorSetterUseByProperty colorSetter;
 
-        [SerializeField] private TextMeshProUGUI cardCountText;
+        [SerializeField] private SpriteText cardCountSpriteText;
 
         private Deck deck;
         private Color deckColor;
@@ -34,7 +34,7 @@ namespace CardGame.View
 
         private void UpdateText(Deck deck)
         {
-            cardCountText.SetText(deck.CurrentCardCount.ToString());
+            cardCountSpriteText.SetNumber(deck.CurrentCardCount);
         }
 
         public CardViewBase DrawCard()
@@ -54,7 +54,7 @@ namespace CardGame.View
         public IEnumerator DeckToPlayerHandAnimation(HandViewBase targetHand, CardViewBase spawnedCard,
             Tile connectTile)
         {
-            var targetPos = connectTile.transform.position;
+            var targetPos = connectTile.transform.position + Vector3.forward * -0.05f;
             yield return deckViewAnimationModule.CardSpawnAnimation(spawnedCard, targetPos);
         }
 

@@ -15,6 +15,7 @@ namespace CardGame.View.DebugUi
             UiDebugFunctions.CreateDebugUIButton(canvas, builderViewController.ClearHand, 1, "Clear Hands");
             UiDebugFunctions.CreateDebugUIButton(canvas, builderViewController.SortHandByNumeric, 2, "Numeric Sort");
             UiDebugFunctions.CreateDebugUIButton(canvas, builderViewController.SortHandByColor, 3, "Colored Sort");
+            UiDebugFunctions.CreateDebugUIButton(canvas, builderViewController.SortHandBySmartSort, 4, "Smart Sort");
         }
     }
 }

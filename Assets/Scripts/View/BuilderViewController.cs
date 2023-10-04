@@ -42,6 +42,11 @@ namespace CardGame.View
             handViewBase.SortHandByColored();
         }
 
+        public void SortHandBySmartSort()
+        {
+            handViewBase.SortHandBySmart();
+        }
+
         public void DealHand()
         {
             StartCoroutine(DealHandAnimation());

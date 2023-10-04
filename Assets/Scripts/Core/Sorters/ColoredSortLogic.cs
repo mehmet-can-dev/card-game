@@ -6,13 +6,19 @@ namespace CardGame.Core.Sort
         public static NumericColoredCard[][] SortByColored(NumericColoredCard[] cards, int min, int max,
             out NumericColoredCard[] notSortableCard)
         {
-            SortLogic.SortByCardNo(cards);
+            SortUtilities.SortByCardNo(cards);
             var uniqNoCount = GetUniqNoCountFromSortedByCardNo(cards);
             var cardCountPerNo = GetCardCountPerNoFromSortedByNo(cards, uniqNoCount);
             var groupByNoCards = GroupNoCardsFromSortedByNo(cards, uniqNoCount, cardCountPerNo);
 
             var matchedSplitPickableCount =
                 MatchedSplitPickableCount(min, max, groupByNoCards, out var notMatchedCardCount);
+
+            if (matchedSplitPickableCount <= 0)
+            {
+                notSortableCard = cards;
+                return null;
+            }
 
             var groupByUniqColorsByCardsNo = GroupByUniqColorsByCardsNoWithLimitedSize(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
 
@@ -97,7 +103,7 @@ namespace CardGame.Core.Sort
                     continue;
                 }
 
-                SortLogic.SortByCardColor(splitCards);
+                SortUtilities.SortByCardColor(splitCards);
                 int uniqueColorCount = NumericSortLogic.GetUniqColorCountFromSortedByCardColor(splitCards);
 
                 if (min <= uniqueColorCount && uniqueColorCount <= max)

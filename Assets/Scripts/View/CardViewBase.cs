@@ -19,8 +19,8 @@ namespace CardGame.View
 
         [SerializeField] private ColorSetterUseByProperty backColorSetter;
         [SerializeField] private ColorSetterUseByProperty outLineColorSetter;
-        [SerializeField] private TextMeshProUGUI cardNoText;
-        [SerializeField] private TextMeshProUGUI jokerText;
+        [SerializeField] private SpriteText cardNoSpriteText;
+        [SerializeField] private GameObject jokerGameObject;
 
         private NumericColoredCard card;
 
@@ -32,14 +32,14 @@ namespace CardGame.View
             frontColorSetter.SetColor(Utilities.ColorUtilities.CoreColorToUnityColor(card.Color));
             backColorSetter.SetColor(backColor);
             outLineColorSetter.SetColor(Color.cyan);
-            cardNoText.SetText(card.No.ToString());
+            cardNoSpriteText.SetNumber(card.No);
 
             cardViewAnimationModule.Init();
 
             if (card is JokerCard)
-                jokerText.gameObject.SetActive(true);
+                jokerGameObject.SetActive(true);
             else
-                jokerText.gameObject.SetActive(false);
+                jokerGameObject.SetActive(false);
 
             outLineColorSetter.gameObject.SetActive(false);
         }
