@@ -54,7 +54,7 @@ namespace CardGame.View
         public IEnumerator DeckToPlayerHandAnimation(HandViewBase targetHand, CardViewBase spawnedCard,
             Tile connectTile)
         {
-            var targetPos = connectTile.transform.position + Vector3.forward * -0.05f;
+            var targetPos = connectTile.transform.position + Vector3.forward * LayerData.CARDLAYER;
             yield return deckViewAnimationModule.CardSpawnAnimation(spawnedCard, targetPos);
         }
 

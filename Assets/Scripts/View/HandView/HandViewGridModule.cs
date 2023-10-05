@@ -128,7 +128,7 @@ namespace CardGame.View
             var cardView = value.GetConnectedCard;
             var tempIndex = tilesIndex;
             value.ResetConnectCardWithoutNotify();
-            cardView.MoveTargetPosition(tiles[tempIndex].transform.position + Vector3.forward * -0.01f,
+            cardView.MoveTargetPosition(tiles[tempIndex].transform.position + Vector3.forward * LayerData.SELECTEDCARDLAYER,
                 () => tiles[tempIndex].ConnectCardWithoutNotify(cardView));
 
             cardTileOwnershipContainer[card] = tiles[tilesIndex];

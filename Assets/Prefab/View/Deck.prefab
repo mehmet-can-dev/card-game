@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 4863905207921076595}
   - component: {fileID: 5607240249084036290}
   m_Layer: 0
-  m_Name: textSpriteHolder
+  m_Name: textSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

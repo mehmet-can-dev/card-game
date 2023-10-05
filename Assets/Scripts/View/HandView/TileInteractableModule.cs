@@ -7,8 +7,6 @@ namespace CardGame.View
         private Tile tile;
         private Vector3 offset;
 
-        [Header("Variable References")] private float zOffset = -1.5f;
-
         public void Init(Tile tile)
         {
             this.tile = tile;
@@ -27,7 +25,7 @@ namespace CardGame.View
 
             cardPos.x = pos.x;
             cardPos.y = pos.y;
-            cardPos.z = zOffset;
+            cardPos.z = LayerData.SELECTEDCARDLAYER;
             tile.GetConnectedCard.transform.position = cardPos + offset;
         }
 
