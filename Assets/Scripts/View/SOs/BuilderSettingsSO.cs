@@ -8,5 +8,6 @@ namespace CardGame.View
     {
         public BuilderCountData BuilderCountData;
         public BuilderViewData BuilderViewData;
+        public SortViewData SortViewData;
     }
 }

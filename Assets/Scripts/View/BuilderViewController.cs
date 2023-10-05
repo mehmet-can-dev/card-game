@@ -34,17 +34,17 @@ namespace CardGame.View
 
         public void SortHandByNumeric()
         {
-            handViewBase.SortHandByNumeric();
+            handViewBase.SortHandByNumeric(builderSettingsSo.SortViewData);
         }
 
         public void SortHandByColor()
         {
-            handViewBase.SortHandByColored();
+            handViewBase.SortHandByColored(builderSettingsSo.SortViewData);
         }
 
         public void SortHandBySmartSort()
         {
-            handViewBase.SortHandBySmart();
+            handViewBase.SortHandBySmart(builderSettingsSo.SortViewData);
         }
 
         public void DealHand()

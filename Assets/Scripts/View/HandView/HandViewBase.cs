@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CardGame.Core;
 using CardGame.Core.Sort;
+using CardGame.View.DataModels;
 using UnityEngine;
 using Color = UnityEngine.Color;
 
@@ -38,21 +39,23 @@ namespace CardGame.View
             return cardView;
         }
 
-        public void SortHandByNumeric()
+        public void SortHandByNumeric(SortViewData sortViewData)
         {
-            var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCards, 3);
+            var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCards, sortViewData.min);
             handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
 
-        public void SortHandByColored()
+        public void SortHandByColored(SortViewData sortViewData)
         {
-            var cards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notSortableCards);
+            var cards = ColoredSortLogic.SortByColored(hand.Cards, sortViewData.min, sortViewData.max,
+                out var notSortableCards);
             handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
 
-        public void SortHandBySmart()
+        public void SortHandBySmart(SortViewData sortViewData)
         {
-            var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCards, 3, 4);
+            var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCards, sortViewData.min,
+                sortViewData.max);
             handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
     }
