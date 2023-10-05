@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +17,7 @@ public class SpriteTextPooler : Singleton<SpriteTextPooler>
 
         for (int i = 0; i < maxCount; i++)
         {
-            var sRend = Instantiate(emptySpriteRendererPrefab, transform);
+            var sRend = Instantiate(emptySpriteRendererPrefab);
             sRend.gameObject.SetActive(false);
             spriteRenderersQueue.Enqueue(sRend);
         }
@@ -47,7 +45,7 @@ public class SpriteTextPooler : Singleton<SpriteTextPooler>
         }
 
         spriteRend.gameObject.SetActive(false);
-        spriteRend.transform.SetParent(transform);
+        spriteRend.transform.SetParent(null);
         spriteRenderersQueue.Enqueue(spriteRend);
     }
 }

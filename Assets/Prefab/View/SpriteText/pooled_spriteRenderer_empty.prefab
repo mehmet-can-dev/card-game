@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6995674738778763323}
   - component: {fileID: 8600047752858601914}
   m_Layer: 0
-  m_Name: spriteRenderer_empty
+  m_Name: pooled_spriteRenderer_empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

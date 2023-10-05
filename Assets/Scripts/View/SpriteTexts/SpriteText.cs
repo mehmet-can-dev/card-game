@@ -92,6 +92,9 @@ public class SpriteText : MonoBehaviour
 
     private void ClearOldStates()
     {
+        if(SpriteTextPooler.Instance==null)
+            return;
+        
         for (int i = 0; i < spawnedRenderer.Count; i++)
         {
             SpriteTextPooler.Instance.PutBack(spawnedRenderer[i]);
