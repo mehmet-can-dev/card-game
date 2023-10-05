@@ -7,12 +7,12 @@ namespace CardGame.Core.Sort
             out NumericColoredCard[] notSortableCard)
         {
             SortUtilities.SortByCardNo(cards);
-            var uniqNoCount = GetUniqNoCountFromSortedByCardNo(cards);
-            var cardCountPerNo = GetCardCountPerNoFromSortedByNo(cards, uniqNoCount);
-            var groupByNoCards = GroupNoCardsFromSortedByNo(cards, uniqNoCount, cardCountPerNo);
+            var uniqNoCount = GetUniqNumberCountFromSortedByNumber(cards);
+            var cardCountPerNo = GetCardCountPerNumberFromSortedByNumber(cards, uniqNoCount);
+            var groupByNoCards = GroupByNumbersFromSortedByNumber(cards, uniqNoCount, cardCountPerNo);
 
             var matchedSplitPickableCount =
-                MatchedSplitPickableCount(min, max, groupByNoCards, out var notMatchedCardCount);
+                MatchedSplitPickablePackageCount(min, max, groupByNoCards, out var notMatchedCardCount);
 
             if (matchedSplitPickableCount <= 0)
             {
@@ -20,12 +20,12 @@ namespace CardGame.Core.Sort
                 return null;
             }
 
-            var groupByUniqColorsByCardsNo = GroupByUniqColorsByCardsNoWithLimitedSize(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
+            var groupByUniqColorsByCardsNo = GroupByUniqColorsByCardsNumberWithLimitedSize(min, max, out notSortableCard, matchedSplitPickableCount, notMatchedCardCount, groupByNoCards);
 
             return groupByUniqColorsByCardsNo;
         }
 
-        private static NumericColoredCard[][] GroupByUniqColorsByCardsNoWithLimitedSize(int min, int max,
+        private static NumericColoredCard[][] GroupByUniqColorsByCardsNumberWithLimitedSize(int min, int max,
             out NumericColoredCard[] notSortableCard, int matchedSplitPickableCount, int notMatchedCardCount,
             NumericColoredCard[][] groupByNoCards)
         {
@@ -88,7 +88,7 @@ namespace CardGame.Core.Sort
             return groupByUniqColorsNoCards;
         }
 
-        private static int MatchedSplitPickableCount(int min, int max, NumericColoredCard[][] groupByNoCards,
+        private static int MatchedSplitPickablePackageCount(int min, int max, NumericColoredCard[][] groupByNoCards,
             out int notMatchedCardCount)
         {
             int matchedSplitPickableCount = 0;
@@ -104,13 +104,13 @@ namespace CardGame.Core.Sort
                 }
 
                 SortUtilities.SortByCardColor(splitCards);
-                int uniqueColorCount = NumericSortLogic.GetUniqColorCountFromSortedByCardColor(splitCards);
+                int uniqueColorCount = NumericSortLogic.GetUniqColorCountFromSortedByColor(splitCards);
 
                 if (min <= uniqueColorCount && uniqueColorCount <= max)
                 {
                     matchedSplitPickableCount++;
 
-                    var colorLengths = NumericSortLogic.GetUniqCardCountsPerColorsFromSortedByColors(splitCards,
+                    var colorLengths = NumericSortLogic.GetUniqCardCountPerColorsFromSortedByColors(splitCards,
                                  uniqueColorCount);
                     for (var j = 0; j < colorLengths.Length; j++)
                     {
@@ -130,7 +130,7 @@ namespace CardGame.Core.Sort
             return matchedSplitPickableCount;
         }
 
-        private static int GetUniqNoCountFromSortedByCardNo(NumericColoredCard[] cards)
+        private static int GetUniqNumberCountFromSortedByNumber(NumericColoredCard[] cards)
         {
             int uniqNoCount = 0;
             int? tempNo = null;
@@ -155,7 +155,7 @@ namespace CardGame.Core.Sort
             return uniqNoCount;
         }
 
-        private static int[] GetCardCountPerNoFromSortedByNo(NumericColoredCard[] cards, int uniqNoCount)
+        private static int[] GetCardCountPerNumberFromSortedByNumber(NumericColoredCard[] cards, int uniqNoCount)
         {
             int? tempNo = null;
 
@@ -182,7 +182,7 @@ namespace CardGame.Core.Sort
             return cardCountPerNo;
         }
 
-        private static NumericColoredCard[][] GroupNoCardsFromSortedByNo(NumericColoredCard[] cards,
+        private static NumericColoredCard[][] GroupByNumbersFromSortedByNumber(NumericColoredCard[] cards,
             int uniqNoCount,
             int[] cardCountPerNo)
         {

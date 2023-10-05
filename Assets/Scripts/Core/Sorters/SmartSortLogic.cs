@@ -34,7 +34,7 @@ namespace CardGame.Core.Sort
                     selectedCards = numericSortedCards;
                 else
                     selectedCards =
-                        ArrayUtilities.Merge2DimensionArray(numericSortedCards, coloredSortedCardsAfterSortedNumeric);
+                        CardArrayUtilities.Merge2DimensionArray(numericSortedCards, coloredSortedCardsAfterSortedNumeric);
             }
             else
             {
@@ -46,7 +46,7 @@ namespace CardGame.Core.Sort
                     selectedCards = coloredSortedCards;
                 else
                     selectedCards =
-                        ArrayUtilities.Merge2DimensionArray(coloredSortedCards, numericSortedCardsAfterSortedColor);
+                        CardArrayUtilities.Merge2DimensionArray(coloredSortedCards, numericSortedCardsAfterSortedColor);
                 // SortUtilities.AddJokerCardsToNumericCardsArray(notSortableCardsAfterSortedColor, jokerCards);
             }
 

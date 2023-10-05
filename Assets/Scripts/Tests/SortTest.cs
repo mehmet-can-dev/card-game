@@ -153,9 +153,9 @@ namespace CardGame.Core.Test
 
             var cards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notSortableCard);
 
-            ArrayUtilities.Log2DimensionNumericArray(cards);
+            CardArrayUtilities.Log2DimensionNumericArray(cards);
 
-            ArrayUtilities.LogNumericArray(notSortableCard);
+            CardArrayUtilities.LogNumericArray(notSortableCard);
 
             Assert.Pass();
         }
@@ -173,9 +173,9 @@ namespace CardGame.Core.Test
 
             var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCard, 3, 4);
 
-            ArrayUtilities.Log2DimensionNumericArray(cards);
+            CardArrayUtilities.Log2DimensionNumericArray(cards);
 
-            ArrayUtilities.LogNumericArray(notSortableCard);
+            CardArrayUtilities.LogNumericArray(notSortableCard);
 
             Assert.Pass();
         }
@@ -193,7 +193,7 @@ namespace CardGame.Core.Test
 
             var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCard, 3);
 
-            ArrayUtilities.Log2DimensionNumericArray(cards);
+            CardArrayUtilities.Log2DimensionNumericArray(cards);
 
             Assert.Pass();
         }

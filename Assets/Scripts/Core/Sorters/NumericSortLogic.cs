@@ -15,7 +15,6 @@ namespace CardGame.Core.Sort
                 SortUtilities.SortByCardNo(groupByColorCards[i]);
             }
             
-
             int packageCount = 0;
             CheckOrderedPackages(groupByColorCards, (arg0) => { packageCount++; });
 
@@ -44,8 +43,21 @@ namespace CardGame.Core.Sort
                 }
             }
 
+            var notSortableCardsAfterSizeLimited = SplitByOrderedNumericWithSizeFromSortedByNumber(min,
+                notSortableCardCount, packagedCardsCount, notSortableCards, packagedCards,
+                out var packagedCardsWithSizeLimits);
+
+            notSortedCards = notSortableCardsAfterSizeLimited;
+            return packagedCardsWithSizeLimits;
+        }
+
+        private static NumericColoredCard[] SplitByOrderedNumericWithSizeFromSortedByNumber(int min,
+            int notSortableCardCount,
+            int packagedCardsCount, NumericColoredCard[] notSortableCards, NumericColoredCard[][] packagedCards,
+            out NumericColoredCard[][] packagedCardsWithSizeLimits)
+        {
             var notSortableCardsAfterSizeLimited = new NumericColoredCard[notSortableCardCount];
-            var packagedCardsWithSizeLimits = new NumericColoredCard[packagedCardsCount][];
+            packagedCardsWithSizeLimits = new NumericColoredCard[packagedCardsCount][];
 
             int lastFilledIndex = 0;
             for (int i = 0; i < notSortableCards.Length; i++)
@@ -80,8 +92,7 @@ namespace CardGame.Core.Sort
                 }
             }
 
-            notSortedCards = notSortableCardsAfterSizeLimited;
-            return packagedCardsWithSizeLimits;
+            return notSortableCardsAfterSizeLimited;
         }
 
         private static NumericColoredCard[][] SplitByOrderedNumericWithoutSizeFromSortedByCardNo(int packageCount,
@@ -193,16 +204,16 @@ namespace CardGame.Core.Sort
         {
             SortUtilities.SortByCardColor(cards);
 
-            var uniqColorCount = GetUniqColorCountFromSortedByCardColor(cards);
+            var uniqColorCount = GetUniqColorCountFromSortedByColor(cards);
 
-            var cardCountsPerColors = GetUniqCardCountsPerColorsFromSortedByColors(cards, uniqColorCount);
+            var cardCountsPerColors = GetUniqCardCountPerColorsFromSortedByColors(cards, uniqColorCount);
 
-            var groupByColorCards = GroupColorCardsFromSortedByColors(cards, uniqColorCount, cardCountsPerColors);
+            var groupByColorCards = GroupByColorFromSortedByColors(cards, uniqColorCount, cardCountsPerColors);
 
             return groupByColorCards;
         }
 
-        private static NumericColoredCard[][] GroupColorCardsFromSortedByColors(NumericColoredCard[] cards,
+        private static NumericColoredCard[][] GroupByColorFromSortedByColors(NumericColoredCard[] cards,
             int uniqColorCount,
             int[] cardCountPerColors)
         {
@@ -227,7 +238,7 @@ namespace CardGame.Core.Sort
             return groupByColorCards;
         }
 
-        public static int[] GetUniqCardCountsPerColorsFromSortedByColors(NumericColoredCard[] cards, int uniqColorCount)
+        public static int[] GetUniqCardCountPerColorsFromSortedByColors(NumericColoredCard[] cards, int uniqColorCount)
         {
             Color tempColor = null;
 
@@ -254,7 +265,7 @@ namespace CardGame.Core.Sort
             return cardCountPerColors;
         }
 
-        public static int GetUniqColorCountFromSortedByCardColor(NumericColoredCard[] cards)
+        public static int GetUniqColorCountFromSortedByColor(NumericColoredCard[] cards)
         {
             int uniqColorCount = 0;
             Color tempColor = null;

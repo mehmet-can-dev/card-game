@@ -4,25 +4,24 @@ namespace CardGame.Core
 {
     public class Color : IComparable<Color>
     {
-        public byte r;
-        public byte g;
-        public byte b;
+        public byte R { get; }
 
-        public string RGB =>r.ToString() + g.ToString() + b.ToString();
-      
+        public byte G { get; }
 
-
+        public byte B { get; }
+        
+        public string RGB =>R.ToString() + G.ToString() + B.ToString();
+        
         public Color(byte r, byte g, byte b)
         {
-            this.r = r;
-            this.g = g;
-            this.b = b;
+            this.R = r;
+            this.G = g;
+            this.B = b;
         }
-
 
         public override string ToString()
         {
-            return "r:" + r + "g:" + g + "b:" + b;
+            return "r:" + R + "g:" + G + "b:" + B;
         }
 
         public int CompareTo(Color obj)
@@ -39,7 +38,7 @@ namespace CardGame.Core
                 return false;
                 
             
-            return c1.b == c2.b && c1.g == c2.g && c1.r == c2.r;
+            return c1.B == c2.B && c1.G == c2.G && c1.R == c2.R;
         }
 
         public override bool Equals(object obj)
@@ -51,7 +50,7 @@ namespace CardGame.Core
             if (ReferenceEquals(this, null) || ReferenceEquals(otherColor, null))
                 return false;
             
-            return otherColor.b == this.b && otherColor.g == this.g && otherColor.r == this.r;
+            return otherColor.B == this.B && otherColor.G == this.G && otherColor.R == this.R;
         }
 
         public override int GetHashCode()

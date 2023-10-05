@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,22 +14,35 @@ public class SpriteText : MonoBehaviour
 
     public void SetNumber(int number)
     {
-        for (int i = 0; i < spawnedRenderer.Count; i++)
-        {
-            Destroy(spawnedRenderer[i].gameObject);
-        }
+        ClearOldStates();
 
-        spawnedRenderer.Clear();
-        positionList.Clear();
-
-        SpriteRenderer rendererPrefab = SpriteTextReferenceHolder.Instance.emptySpriteRendererPrefab;
-        var numberList = SpriteTextReferenceHolder.Instance.numberSprites;
+        var numberList = SpriteTextPooler.Instance.numberSprites;
         var array = IntUtilities.GetIntArray(number);
 
+        var size = CalculateSize(array);
 
-        float size = 1 / (float)array.Length;
-        size = Mathf.Min(size, MAX_SIZE);
+        CalculateSpritePosition(array, size);
 
+        positionList = positionList.OrderBy(p => p.x).ToList();
+
+        CreateSpriteRenderers(array, numberList, size);
+    }
+
+    private void CreateSpriteRenderers(int[] array, List<Sprite> numberList, float size)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            var sRend = SpriteTextPooler.Instance.GetSpriteRendererFromPool(transform);
+            sRend.sprite = numberList[array[i]];
+            sRend.transform.localScale = Vector3.one * size;
+            sRend.transform.localPosition = positionList[i];
+            sRend.transform.localRotation = Quaternion.identity;
+            spawnedRenderer.Add(sRend);
+        }
+    }
+
+    private void CalculateSpritePosition(int[] array, float size)
+    {
         bool isEvenLenght = array.Length % 2 == 0;
 
         if (!isEvenLenght)
@@ -62,16 +76,28 @@ public class SpriteText : MonoBehaviour
 
             positionList.Add(pos);
         }
+    }
 
-        positionList = positionList.OrderBy(p => p.x).ToList();
+    private static float CalculateSize(int[] array)
+    {
+        float size = 1 / (float)array.Length;
+        size = Mathf.Min(size, MAX_SIZE);
+        return size;
+    }
 
-        for (int i = 0; i < array.Length; i++)
+    private void OnDisable()
+    {
+        ClearOldStates();
+    }
+
+    private void ClearOldStates()
+    {
+        for (int i = 0; i < spawnedRenderer.Count; i++)
         {
-            var sRend = Instantiate(rendererPrefab, transform);
-            sRend.sprite = numberList[array[i]];
-            sRend.transform.localScale = Vector3.one * size;
-            sRend.transform.localPosition = positionList[i];
-            spawnedRenderer.Add(sRend);
+            SpriteTextPooler.Instance.PutBack(spawnedRenderer[i]);
         }
+
+        spawnedRenderer.Clear();
+        positionList.Clear();
     }
 }

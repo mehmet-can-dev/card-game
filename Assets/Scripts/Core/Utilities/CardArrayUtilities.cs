@@ -2,7 +2,7 @@
 
 namespace CardGame.Core
 {
-    public class ArrayUtilities
+    public class CardArrayUtilities
     {
         public static T[][] Merge2DimensionArray<T>(T[][] arr1, T[][] arr2)
         {

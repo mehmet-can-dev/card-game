@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BuilderSettings
   m_EditorClassIdentifier: 
   BuilderCountData:
-    handCount: 15
+    handCount: 14
     deckCount: 2
     cardPerDeck: 52
     jokerCount: 4
