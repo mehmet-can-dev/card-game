@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//ToDo Not Sizeable Pooler, Must be runtime sizeable
+// Can be connect Depency Injection System
 public class SpriteTextPooler : Singleton<SpriteTextPooler>
 {
     [Header("Projects References")] public List<Sprite> numberSprites;
@@ -45,7 +48,9 @@ public class SpriteTextPooler : Singleton<SpriteTextPooler>
         }
 
         spriteRend.gameObject.SetActive(false);
-        spriteRend.transform.SetParent(null);
+        
+        //ToDo Avoid On Disable
+        spriteRend.transform.parent=null;
         spriteRenderersQueue.Enqueue(spriteRend);
     }
 }

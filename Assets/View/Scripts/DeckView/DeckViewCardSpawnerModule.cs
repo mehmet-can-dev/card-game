@@ -14,6 +14,7 @@ namespace CardGame.View
         [Header("Child References")]
         [SerializeField] private Transform cardSpawnTransform;
 
+        // Can be transfer another script for memory allocate
         private Quaternion cardSpawnRotation = Quaternion.AngleAxis(180, Vector3.up);
 
         public void Init()

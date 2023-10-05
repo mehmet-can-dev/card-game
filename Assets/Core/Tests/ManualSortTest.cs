@@ -132,15 +132,9 @@ namespace CardGame.Core.Test
         private static void ColoredTest(NumericColoredCard[] testCards)
         {
             LogAssert.Expect(LogType.Log, "Log");
+            
 
-            var hand = new Hand(testCards.Length);
-
-            for (int i = 0; i < testCards.Length; i++)
-            {
-                hand.AddCard(testCards[i]);
-            }
-
-            var cards = ColoredSortLogic.SortByColored(hand.Cards, 3, 4, out var notSortableCard);
+            var cards = ColoredSortLogic.SortByColored(testCards, 3, 4, out var notSortableCard);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 
@@ -152,15 +146,9 @@ namespace CardGame.Core.Test
         private static void SmartTest(NumericColoredCard[] testCards)
         {
             LogAssert.Expect(LogType.Log, "Log");
+            
 
-            var hand = new Hand(testCards.Length);
-
-            for (int i = 0; i < testCards.Length; i++)
-            {
-                hand.AddCard(testCards[i]);
-            }
-
-            var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCard, 3, 4);
+            var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, 4);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 
@@ -180,7 +168,7 @@ namespace CardGame.Core.Test
                 hand.AddCard(testCards[i]);
             }
 
-            var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCard, 3);
+            var cards = NumericSortLogic.SortByNumeric(testCards, out var notSortableCard, 3);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 

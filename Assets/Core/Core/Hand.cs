@@ -35,6 +35,16 @@ namespace CardGame.Core
             currentCardCount++;
         }
 
+        public bool IsFull()
+        {
+            return currentCardCount >= maxCount;
+        }
+
+        public bool IsEmpty()
+        {
+            return currentCardCount < 0;
+        }
+
         public NumericColoredCard DrawCard()
         {
             if (currentCardCount < 0)

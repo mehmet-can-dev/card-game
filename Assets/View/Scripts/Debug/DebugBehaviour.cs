@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections;
+using CardGame.Core;
+using UnityEngine;
+
+namespace CardGame.View.DebugUi
+{
+    public class DebugBehaviour : MonoBehaviour
+    {
+        private Hand hand;
+        private Deck deck;
+        private HandViewBase handViewBase;
+        private DeckViewBase deckViewBase;
+
+        private BuilderSettingsSO builderSettingsSo;
+
+        public void Init(BuilderSettingsSO builderSettingsSo,Hand hand, Deck deck, HandViewBase handViewBase, DeckViewBase deckViewBase)
+        {
+            this.hand = hand;
+            this.deck = deck;
+            this.handViewBase = handViewBase;
+            this.deckViewBase = deckViewBase;
+            this.builderSettingsSo = builderSettingsSo;
+        }
+
+        public void SortHandByNumeric()
+        {
+            handViewBase.SortHandByNumeric(builderSettingsSo.SortViewData);
+        }
+
+        public void SortHandByColor()
+        {
+            handViewBase.SortHandByColored(builderSettingsSo.SortViewData);
+        }
+
+        public void SortHandBySmartSort()
+        {
+            handViewBase.SortHandBySmart(builderSettingsSo.SortViewData);
+        }
+
+        public void DealHand()
+        {
+            if (hand.IsFull())
+                return;
+
+            StartCoroutine(DealHandAnimation(null));
+        }
+
+        public void ClearHand()
+        {
+            if (hand.IsEmpty())
+                return;
+
+            StartCoroutine(ClearHandAnimation(null));
+        }
+
+
+        // Can move another script for animations
+        private IEnumerator DealHandAnimation(Action onComplete)
+        {
+            int count = handViewBase.Hand.MaxCount;
+            for (int i = 0; i < count; i++)
+            {
+                var spawnedCard = deckViewBase.DrawCard();
+                var connectTile = handViewBase.AddCardToTile(spawnedCard);
+                if (i != count - 1)
+                    StartCoroutine(deckViewBase.DeckToPlayerHandAnimation(handViewBase, spawnedCard, connectTile));
+                else
+                    yield return StartCoroutine(
+                        deckViewBase.DeckToPlayerHandAnimation(handViewBase, spawnedCard, connectTile));
+
+                yield return null;
+            }
+
+            onComplete?.Invoke();
+        }
+
+        // Can move another script for animations
+        private IEnumerator ClearHandAnimation(Action onComplete)
+        {
+            var handCount = handViewBase.Hand.CurrentCardCount;
+            for (int i = 0; i < handCount; i++)
+            {
+                var spawnedCard = handViewBase.RemoveCardFromTile();
+                var numericCard = spawnedCard.Card;
+                deckViewBase.AddCard(numericCard);
+                if (i != handCount - 1)
+                    spawnedCard.MoveTargetPosition(deckViewBase.transform.position + Vector3.forward,
+                        () => Destroy(spawnedCard.gameObject));
+                else
+                    spawnedCard.MoveTargetPosition(deckViewBase.transform.position + Vector3.forward,
+                        () =>
+                        {
+                            Destroy(spawnedCard.gameObject);
+                            onComplete?.Invoke();
+                        });
+
+
+                yield return null;
+            }
+
+            deckViewBase.Shuffle();
+        }
+    }
+}
