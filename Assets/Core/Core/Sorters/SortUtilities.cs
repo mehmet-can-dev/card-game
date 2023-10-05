@@ -17,7 +17,7 @@ namespace CardGame.Core.Sort
 
         public static void SortByCardNo(NumericColoredCard[] cards)
         {
-            Array.Sort(cards, new NoComparer());
+            Array.Sort(cards, new NumberComparer());
         }
 
         public static JokerCard[] SplitJokerCard(NumericColoredCard[] cards,

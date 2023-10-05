@@ -2,7 +2,7 @@
 
 namespace CardGame.Core.Comparer
 {
-    public class NoComparer : IComparer<NumericColoredCard>
+    public class NumberComparer : IComparer<NumericColoredCard>
     {
         public int Compare(NumericColoredCard x, NumericColoredCard y)
         {

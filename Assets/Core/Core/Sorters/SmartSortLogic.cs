@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-namespace CardGame.Core.Sort
+﻿namespace CardGame.Core.Sort
 {
     public class SmartSortLogic
     {
