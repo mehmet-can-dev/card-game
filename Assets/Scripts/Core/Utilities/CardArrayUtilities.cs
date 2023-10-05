@@ -32,6 +32,11 @@ namespace CardGame.Core
             return mergedArray;
         }
 
+        public static bool CheckEquality2DCardArray(NumericColoredCard[][] arr1, NumericColoredCard[][] arr2)
+        {
+            return arr1.Equals(arr2);
+        }
+
         public static void LogNumericArray(NumericColoredCard[] notSortableCard)
         {
             for (int i = 0; i < notSortableCard.Length; i++)

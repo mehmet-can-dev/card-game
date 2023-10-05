@@ -24,5 +24,22 @@ namespace CardGame.Core
             sb.Append(Color);
             return sb;
         }
+
+        public override bool Equals(object obj)
+        {
+            var otherCard = (NumericColoredCard)obj;
+            if (ReferenceEquals(otherCard, this))
+                return true;
+
+            if (ReferenceEquals(this, null) || ReferenceEquals(otherCard, null))
+                return false;
+
+            return otherCard.No == this.No && otherCard.Id == this.Id && otherCard.Color == this.Color;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

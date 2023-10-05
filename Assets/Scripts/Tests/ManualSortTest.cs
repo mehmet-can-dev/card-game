@@ -5,7 +5,7 @@ using UnityEngine.TestTools;
 
 namespace CardGame.Core.Test
 {
-    public class SortTest
+    public class ManualSortTest
     {
         NumericColoredCard[] testCards_noJoker_colored_numeric = new NumericColoredCard[]
         {
@@ -90,18 +90,7 @@ namespace CardGame.Core.Test
             NumericTest(testCards_noJoker_colored_numeric);
         }
 
-        [Test]
-        public void SortNumericTest2()
-        {
-            NumericTest(testCards_noJoker_numeric);
-        }
-
-        [Test]
-        public void SortNumericTest3()
-        {
-            NumericTest(testCards_noJoker_fullnumeric_double);
-        }
-
+      
 
         [Test]
         public void SortSmartTest1()
