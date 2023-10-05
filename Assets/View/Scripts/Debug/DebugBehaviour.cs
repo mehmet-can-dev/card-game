@@ -14,7 +14,10 @@ namespace CardGame.View.DebugUi
 
         private BuilderSettingsSO builderSettingsSo;
 
-        public void Init(BuilderSettingsSO builderSettingsSo,Hand hand, Deck deck, HandViewBase handViewBase, DeckViewBase deckViewBase)
+        private bool isAnimationPlaying = false;
+
+        public void Init(BuilderSettingsSO builderSettingsSo, Hand hand, Deck deck, HandViewBase handViewBase,
+            DeckViewBase deckViewBase)
         {
             this.hand = hand;
             this.deck = deck;
@@ -40,20 +43,33 @@ namespace CardGame.View.DebugUi
 
         public void DealHand()
         {
+            if (isAnimationPlaying)
+                return;
+
             if (hand.IsFull())
                 return;
 
-            StartCoroutine(DealHandAnimation(null));
+            isAnimationPlaying = true;
+
+            StartCoroutine(DealHandAnimation(ResetAnimationPLaying));
         }
 
         public void ClearHand()
         {
+            if (isAnimationPlaying)
+                return;
+
             if (hand.IsEmpty())
                 return;
 
-            StartCoroutine(ClearHandAnimation(null));
+            isAnimationPlaying = true;
+            StartCoroutine(ClearHandAnimation(ResetAnimationPLaying));
         }
 
+        private void ResetAnimationPLaying()
+        {
+            isAnimationPlaying = false;
+        }
 
         // Can move another script for animations
         private IEnumerator DealHandAnimation(Action onComplete)

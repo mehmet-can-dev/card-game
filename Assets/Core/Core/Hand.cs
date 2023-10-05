@@ -42,7 +42,7 @@ namespace CardGame.Core
 
         public bool IsEmpty()
         {
-            return currentCardCount < 0;
+            return currentCardCount <= 0;
         }
 
         public NumericColoredCard DrawCard()
