@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace CardGame.Core.Sort
 {
@@ -11,7 +12,7 @@ namespace CardGame.Core.Sort
             var cardList = cards.ToList();
             var nodeList = CreateCardNodes(cardList);
             CrateConnections(nodeList);
-            
+
             notSortedCards = null;
             return null;
         }
@@ -23,9 +24,11 @@ namespace CardGame.Core.Sort
                 var selectedNode = nodeList[i];
                 for (int j = 0; j < nodeList.Count; j++)
                 {
-                    selectedNode.TryAddNode(nodeList[j]);
+                    selectedNode.TryCreateConnection(nodeList[j]);
                 }
             }
+
+            Debug.Log(nodeList.Count);
         }
 
         private static List<CardNode> CreateCardNodes(List<NumericColoredCard> cards)
@@ -34,39 +37,40 @@ namespace CardGame.Core.Sort
 
             for (int i = 0; i < cards.Count; i++)
             {
-                nodeList.Add(new CardNode(cards[i], new List<CardNode>()));
+                nodeList.Add(new CardNode(cards[i], new List<Connection>()));
             }
 
             return nodeList;
         }
 
-        public static bool IsPer(NumericColoredCard card1, NumericColoredCard card2, out PerType perType)
+        public static bool IsConnect(NumericColoredCard card1, NumericColoredCard card2,
+            out ConnectionType connectionType)
         {
             if (Equals(card1, card2))
             {
-                perType = PerType.Unkown;
+                connectionType = ConnectionType.Unkown;
                 return false;
             }
 
             if (card1 is JokerCard || card2 is JokerCard)
             {
-                perType = PerType.Unkown;
+                connectionType = ConnectionType.Unkown;
                 return true;
             }
 
             if (card1.Color == card2.Color && card1.No + 1 == card2.No || card1.No - 1 == card2.No)
             {
-                perType = PerType.Numeric;
+                connectionType = ConnectionType.Numeric;
                 return true;
             }
 
             if (card1.No == card2.No && card1.Color != card2.Color)
             {
-                perType = PerType.Colored;
+                connectionType = ConnectionType.Colored;
                 return true;
             }
 
-            perType = PerType.Unkown;
+            connectionType = ConnectionType.Unkown;
 
             return false;
         }
@@ -74,19 +78,25 @@ namespace CardGame.Core.Sort
         public class CardNode
         {
             public NumericColoredCard card;
-            public List<CardNode> connectableNodes;
+            public List<Connection> connections;
 
-            public CardNode(NumericColoredCard card, List<CardNode> connectableNodes)
+            public CardNode(NumericColoredCard card, List<Connection> connections)
             {
                 this.card = card;
-                this.connectableNodes = connectableNodes;
+                this.connections = connections;
             }
 
-            public bool TryAddNode(CardNode targetCardNode)
+            public bool TryCreateConnection(CardNode targetCardNode)
             {
-                if (IsPer(card, targetCardNode.card, out var perType))
+                if (IsConnect(card, targetCardNode.card, out var connectType))
                 {
-                    connectableNodes.Add(targetCardNode);
+                    var connection = new Connection()
+                    {
+                        fromNode = this,
+                        toNode = targetCardNode,
+                        conectionType = connectType
+                    };
+                    connections.Add(connection);
                     return true;
                 }
 
@@ -94,7 +104,14 @@ namespace CardGame.Core.Sort
             }
         }
 
-        public enum PerType
+        public class Connection
+        {
+            public CardNode fromNode;
+            public CardNode toNode;
+            public ConnectionType conectionType;
+        }
+
+        public enum ConnectionType
         {
             Colored,
             Numeric,
