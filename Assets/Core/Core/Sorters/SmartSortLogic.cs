@@ -1,53 +1,104 @@
-﻿namespace CardGame.Core.Sort
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace CardGame.Core.Sort
 {
     public class SmartSortLogic
     {
         public static NumericColoredCard[][] SortBySmart(NumericColoredCard[] cards,
             out NumericColoredCard[] notSortedCards, int min, int max)
         {
-            // var jokerCards = SortUtilities.SplitJokerCard(cards, out var withoutSJokerCards);
+            var cardList = cards.ToList();
+            var nodeList = CreateCardNodes(cardList);
+            CrateConnections(nodeList);
+            
+            notSortedCards = null;
+            return null;
+        }
 
-            var coloredSortedCards =
-                ColoredSortLogic.SortByColored(cards, min, max, out var notSortedCardsAfterColor);
-            var numericSortedCardsAfterSortedColor =
-                NumericSortLogic.SortByNumeric(notSortedCardsAfterColor,
-                    out var notSortableCardsAfterSortedColor, min);
-
-            var numericSortedCards =
-                NumericSortLogic.SortByNumeric(cards, out var notSortedCardsAfterNumeric, min);
-
-            var coloredSortedCardsAfterSortedNumeric = ColoredSortLogic.SortByColored(
-                notSortedCardsAfterNumeric, min, max, out var notSortableCardsAfterSortedNumeric);
-
-
-            NumericColoredCard[][] selectedCards;
-            if (notSortableCardsAfterSortedColor.Length >= notSortableCardsAfterSortedNumeric.Length)
+        private static void CrateConnections(List<CardNode> nodeList)
+        {
+            for (int i = 0; i < nodeList.Count; i++)
             {
-                notSortedCards = notSortableCardsAfterSortedNumeric;
-
-                if (ReferenceEquals(numericSortedCards, null))
-                    selectedCards = coloredSortedCardsAfterSortedNumeric;
-                else if (ReferenceEquals(coloredSortedCardsAfterSortedNumeric, null))
-                    selectedCards = numericSortedCards;
-                else
-                    selectedCards =
-                        CardArrayUtilities.Merge2DimensionArray(numericSortedCards, coloredSortedCardsAfterSortedNumeric);
+                var selectedNode = nodeList[i];
+                for (int j = 0; j < nodeList.Count; j++)
+                {
+                    selectedNode.TryAddNode(nodeList[j]);
+                }
             }
-            else
-            {
-                notSortedCards = notSortableCardsAfterSortedColor;
+        }
 
-                if (ReferenceEquals(coloredSortedCards, null))
-                    selectedCards = numericSortedCardsAfterSortedColor;
-                else if (ReferenceEquals(numericSortedCardsAfterSortedColor, null))
-                    selectedCards = coloredSortedCards;
-                else
-                    selectedCards =
-                        CardArrayUtilities.Merge2DimensionArray(coloredSortedCards, numericSortedCardsAfterSortedColor);
-                // SortUtilities.AddJokerCardsToNumericCardsArray(notSortableCardsAfterSortedColor, jokerCards);
+        private static List<CardNode> CreateCardNodes(List<NumericColoredCard> cards)
+        {
+            var nodeList = new List<CardNode>(cards.Count);
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                nodeList.Add(new CardNode(cards[i], new List<CardNode>()));
             }
 
-            return selectedCards;
+            return nodeList;
+        }
+
+        public static bool IsPer(NumericColoredCard card1, NumericColoredCard card2, out PerType perType)
+        {
+            if (Equals(card1, card2))
+            {
+                perType = PerType.Unkown;
+                return false;
+            }
+
+            if (card1 is JokerCard || card2 is JokerCard)
+            {
+                perType = PerType.Unkown;
+                return true;
+            }
+
+            if (card1.Color == card2.Color && card1.No + 1 == card2.No || card1.No - 1 == card2.No)
+            {
+                perType = PerType.Numeric;
+                return true;
+            }
+
+            if (card1.No == card2.No && card1.Color != card2.Color)
+            {
+                perType = PerType.Colored;
+                return true;
+            }
+
+            perType = PerType.Unkown;
+
+            return false;
+        }
+
+        public class CardNode
+        {
+            public NumericColoredCard card;
+            public List<CardNode> connectableNodes;
+
+            public CardNode(NumericColoredCard card, List<CardNode> connectableNodes)
+            {
+                this.card = card;
+                this.connectableNodes = connectableNodes;
+            }
+
+            public bool TryAddNode(CardNode targetCardNode)
+            {
+                if (IsPer(card, targetCardNode.card, out var perType))
+                {
+                    connectableNodes.Add(targetCardNode);
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public enum PerType
+        {
+            Colored,
+            Numeric,
+            Unkown
         }
     }
 }
