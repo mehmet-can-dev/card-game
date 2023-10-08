@@ -20,6 +20,12 @@ namespace CardGame.Core.Sort
             Array.Sort(cards, new NumberComparer());
         }
 
+
+        public static bool CheckColorAndNumber(NumericColoredCard card1,NumericColoredCard card2)
+        {
+            return card1.No == card2.No && card1.Color == card2.Color;
+        }
+        
         public static JokerCard[] SplitJokerCard(NumericColoredCard[] cards,
             out NumericColoredCard[] otherCards)
         {

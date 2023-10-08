@@ -17,7 +17,7 @@ namespace CardGame.Core.Sort
 
             list.Add(new List<CardNode>());
             list[0].Add(nodeList.First());
-            FindMatchesNodes(nodeList.First(), list, list[0], ConnectionType.Numeric);
+            FindMatchesNodes(nodeList.First(), list, list[0], ConnectionType.Colored);
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -48,9 +48,15 @@ namespace CardGame.Core.Sort
                 if (connections.Contains(selectedConnection[i].toNode))
                     continue;
 
+                if (connections.Exists(p =>
+                        p.card.No == selectedConnection[i].toNode.card.No &&
+                        p.card.Color == selectedConnection[i].toNode.card.Color))
+                    continue;
+
+
                 if (i > 1)
                 {
-                    var l = new List<CardNode> { node, selectedConnection[i].toNode };
+                    var l = new List<CardNode> { selectedConnection[i].toNode };
                     totalList.Add(l);
                     FindMatchesNodes(selectedConnection[i].toNode, totalList, l, type);
                 }
@@ -61,6 +67,7 @@ namespace CardGame.Core.Sort
                 }
             }
         }
+
 
         private static void CrateConnections(List<CardNode> nodeList)
         {
@@ -85,6 +92,7 @@ namespace CardGame.Core.Sort
 
             return nodeList;
         }
+
 
         public static bool IsConnect(NumericColoredCard card1, NumericColoredCard card2,
             out ConnectionType connectionType)

@@ -37,9 +37,9 @@ namespace CardGame.Core.Test
 
         NumericColoredCard[] testCards_noJoker_numeric = new NumericColoredCard[]
         {
-            // new NumericColoredCard(0, 2, ColorLogic.red),
+             new NumericColoredCard(0, 2, ColorLogic.red),
             new NumericColoredCard(1, 2, ColorLogic.red),
-            //new NumericColoredCard(2, 3, ColorLogic.red),
+            new NumericColoredCard(2, 3, ColorLogic.red),
             new NumericColoredCard(3, 3, ColorLogic.red),
             new NumericColoredCard(4, 4, ColorLogic.red),
             new NumericColoredCard(5, 5, ColorLogic.red),
