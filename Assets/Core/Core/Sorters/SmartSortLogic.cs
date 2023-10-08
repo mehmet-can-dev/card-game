@@ -13,73 +13,37 @@ namespace CardGame.Core.Sort
             var nodeList = CreateCardNodes(cardList);
             CrateConnections(nodeList);
 
-            for (int i = 0; i < nodeList.Count; i++)
+            var list = new List<CardNode>();
+
+            list.Add(nodeList.First());
+            FindMatchesNodes(nodeList.First(), list, ConnectionType.Colored);
+
+            for (int i = 0; i < list.Count; i++)
             {
-                var connections = new List<Connection>();
-                FindConnection(nodeList[i], connections);
-
-                Debug.Log(connections.Count);
-                for (int j = 0; j < connections.Count; j++)
-                {
-                    Debug.Log(connections[j].fromNode.card.ToStringBuilder());
-                }
-
-                Debug.Log(" - ");
+                Debug.Log(list[i].card.ToStringBuilder());
             }
-
 
             notSortedCards = null;
             return null;
         }
 
-        private static void FindConnection(CardNode sourceNode, List<Connection> connections)
+        private static void FindMatchesNodes(CardNode node, List<CardNode> connections, ConnectionType type)
         {
-            int handBrake = 0;
-            while (true)
+            var selectedConnection =
+                node.connections.Where(p => p.conectionType == type || p.conectionType == ConnectionType.Unkown)
+                    .ToList();
+
+            for (int i = 0; i < selectedConnection.Count; i++)
             {
-                var connection = FindConnectableNode(sourceNode);
-                
-                bool isExits = connections.Exists(p => p == connection);
-
-                if (connection != null && !isExits)
-                {
-                    connections.Add(connection);
-                    sourceNode = connection.toNode;
-                    handBrake++;
-                    continue;
-                }
-
-                break;
-            }
-        }
-
-        private static Connection FindConnectableNode(CardNode sourceNode)
-        {
-            var connections = sourceNode.connections;
-            for (int i = 0; i < connections.Count; i++)
-            {
-                if (connections[i].conectionType == ConnectionType.Unkown)
+                if (selectedConnection[i].toNode == node)
                     continue;
 
-                var toNodeConnections = connections[i].toNode.connections;
-                for (int j = 0; j < toNodeConnections.Count; j++)
-                {
-                    if (toNodeConnections[j].conectionType == ConnectionType.Unkown)
-                        continue;
+                if (connections.Contains(selectedConnection[i].toNode))
+                    continue;
 
-                    if (toNodeConnections[j].toNode == sourceNode)
-                        continue;
-                    if (toNodeConnections[j] == connections[i])
-                        continue;
-
-                    if (toNodeConnections[j].conectionType == connections[i].conectionType)
-                    {
-                        return toNodeConnections[j];
-                    }
-                }
+                connections.Add(selectedConnection[i].toNode);
+                FindMatchesNodes(selectedConnection[i].toNode, connections, type);
             }
-
-            return null;
         }
 
         private static void CrateConnections(List<CardNode> nodeList)
