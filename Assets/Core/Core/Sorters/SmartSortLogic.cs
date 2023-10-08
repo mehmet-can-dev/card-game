@@ -21,13 +21,13 @@ namespace CardGame.Core.Sort
                     nodeList[k]
                 };
                 list.Add(l);
-                FindMatchesNodes(nodeList[k], list, l, ConnectionType.Numeric);
+                FindMatchesNodes(nodeList[k], list, l, ConnectionType.Colored);
                 var l2 = new List<CardNode>()
                 {
                     nodeList[k]
                 };
-                list.Add(l);
-                FindMatchesNodes(nodeList[k], list, l2, ConnectionType.Colored);
+                list.Add(l2);
+                FindMatchesNodes(nodeList[k], list, l2, ConnectionType.Numeric);
 
                 var longestList = list.OrderByDescending(p => p.Count).First();
 
