@@ -22,6 +22,12 @@ namespace CardGame.Core.Sort
                 };
                 list.Add(l);
                 FindMatchesNodes(nodeList[k], list, l, ConnectionType.Numeric);
+                var l2 = new List<CardNode>()
+                {
+                    nodeList[k]
+                };
+                list.Add(l);
+                FindMatchesNodes(nodeList[k], list, l2, ConnectionType.Colored);
 
                 var longestList = list.OrderByDescending(p => p.Count).First();
 
@@ -62,7 +68,6 @@ namespace CardGame.Core.Sort
                         p.card.Color == selectedConnection[i].toNode.card.Color))
                     continue;
 
-
                 if (i > 1)
                 {
                     var l = new List<CardNode> { selectedConnection[i].toNode };
@@ -76,7 +81,6 @@ namespace CardGame.Core.Sort
                 }
             }
         }
-
 
         private static void CrateConnections(List<CardNode> nodeList)
         {
