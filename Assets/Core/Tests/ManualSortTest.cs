@@ -43,8 +43,8 @@ namespace CardGame.Core.Test
             new NumericColoredCard(3, 3, ColorLogic.red),
             new NumericColoredCard(4, 4, ColorLogic.red),
             new NumericColoredCard(5, 5, ColorLogic.red),
-            new NumericColoredCard(6, 7, ColorLogic.red),
-            new NumericColoredCard(7, 8, ColorLogic.red),
+            new NumericColoredCard(6, 6, ColorLogic.red),
+            new NumericColoredCard(7, 7, ColorLogic.red),
             new NumericColoredCard(8, 9, ColorLogic.red),
             new NumericColoredCard(9, 10, ColorLogic.red),
             new NumericColoredCard(10, 12, ColorLogic.red),
@@ -144,9 +144,9 @@ namespace CardGame.Core.Test
 
             var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, 4);
 
-            CardArrayUtilities.Log2DimensionNumericArray(cards);
-
-            CardArrayUtilities.LogNumericArray(notSortableCard);
+            // CardArrayUtilities.Log2DimensionNumericArray(cards);
+            //
+            // CardArrayUtilities.LogNumericArray(notSortableCard);
 
             Assert.Pass();
         }

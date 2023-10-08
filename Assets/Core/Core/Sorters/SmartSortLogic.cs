@@ -13,7 +13,72 @@ namespace CardGame.Core.Sort
             var nodeList = CreateCardNodes(cardList);
             CrateConnections(nodeList);
 
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                var connections = new List<Connection>();
+                FindConnection(nodeList[i], connections);
+
+                Debug.Log(connections.Count);
+                for (int j = 0; j < connections.Count; j++)
+                {
+                    Debug.Log(connections[j].fromNode.card.ToStringBuilder());
+                }
+
+                Debug.Log(" - ");
+            }
+
+
             notSortedCards = null;
+            return null;
+        }
+
+        private static void FindConnection(CardNode sourceNode, List<Connection> connections)
+        {
+            int handBrake = 0;
+            while (true)
+            {
+                var connection = FindConnectableNode(sourceNode);
+                
+                bool isExits = connections.Exists(p => p == connection);
+
+                if (connection != null && !isExits)
+                {
+                    connections.Add(connection);
+                    sourceNode = connection.toNode;
+                    handBrake++;
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+        private static Connection FindConnectableNode(CardNode sourceNode)
+        {
+            var connections = sourceNode.connections;
+            for (int i = 0; i < connections.Count; i++)
+            {
+                if (connections[i].conectionType == ConnectionType.Unkown)
+                    continue;
+
+                var toNodeConnections = connections[i].toNode.connections;
+                for (int j = 0; j < toNodeConnections.Count; j++)
+                {
+                    if (toNodeConnections[j].conectionType == ConnectionType.Unkown)
+                        continue;
+
+                    if (toNodeConnections[j].toNode == sourceNode)
+                        continue;
+                    if (toNodeConnections[j] == connections[i])
+                        continue;
+
+                    if (toNodeConnections[j].conectionType == connections[i].conectionType)
+                    {
+                        return toNodeConnections[j];
+                    }
+                }
+            }
+
             return null;
         }
 
@@ -27,8 +92,6 @@ namespace CardGame.Core.Sort
                     selectedNode.TryCreateConnection(nodeList[j]);
                 }
             }
-
-            Debug.Log(nodeList.Count);
         }
 
         private static List<CardNode> CreateCardNodes(List<NumericColoredCard> cards)
@@ -108,6 +171,7 @@ namespace CardGame.Core.Sort
         {
             public CardNode fromNode;
             public CardNode toNode;
+
             public ConnectionType conectionType;
         }
 
