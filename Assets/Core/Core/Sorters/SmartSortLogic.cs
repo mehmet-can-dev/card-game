@@ -13,21 +13,28 @@ namespace CardGame.Core.Sort
             var nodeList = CreateCardNodes(cardList);
             CrateConnections(nodeList);
 
-            var list = new List<CardNode>();
+            var list = new List<List<CardNode>>();
 
-            list.Add(nodeList.First());
-            FindMatchesNodes(nodeList.First(), list, ConnectionType.Colored);
+            list.Add(new List<CardNode>());
+            list[0].Add(nodeList.First());
+            FindMatchesNodes(nodeList.First(), list, list[0], ConnectionType.Numeric);
 
             for (int i = 0; i < list.Count; i++)
             {
-                Debug.Log(list[i].card.ToStringBuilder());
+                for (int j = 0; j < list[i].Count; j++)
+                {
+                    Debug.Log(list[i][j].card.ToStringBuilder());
+                }
+
+                Debug.Log("--");
             }
 
             notSortedCards = null;
             return null;
         }
 
-        private static void FindMatchesNodes(CardNode node, List<CardNode> connections, ConnectionType type)
+        private static void FindMatchesNodes(CardNode node, List<List<CardNode>> totalList, List<CardNode> connections,
+            ConnectionType type)
         {
             var selectedConnection =
                 node.connections.Where(p => p.conectionType == type || p.conectionType == ConnectionType.Unkown)
@@ -41,8 +48,17 @@ namespace CardGame.Core.Sort
                 if (connections.Contains(selectedConnection[i].toNode))
                     continue;
 
-                connections.Add(selectedConnection[i].toNode);
-                FindMatchesNodes(selectedConnection[i].toNode, connections, type);
+                if (i > 1)
+                {
+                    var l = new List<CardNode> { node, selectedConnection[i].toNode };
+                    totalList.Add(l);
+                    FindMatchesNodes(selectedConnection[i].toNode, totalList, l, type);
+                }
+                else
+                {
+                    connections.Add(selectedConnection[i].toNode);
+                    FindMatchesNodes(selectedConnection[i].toNode, totalList, connections, type);
+                }
             }
         }
 
