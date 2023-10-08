@@ -13,20 +13,26 @@ namespace CardGame.Core.Sort
             var nodeList = CreateCardNodes(cardList);
             CrateConnections(nodeList);
 
-            var list = new List<List<CardNode>>();
-
-            list.Add(new List<CardNode>());
-            list[0].Add(nodeList.First());
-            FindMatchesNodes(nodeList.First(), list, list[0], ConnectionType.Colored);
-
-            for (int i = 0; i < list.Count; i++)
+            for (int k = 0; k < nodeList.Count; k++)
             {
-                for (int j = 0; j < list[i].Count; j++)
+                var list = new List<List<CardNode>>();
+                var l = new List<CardNode>()
                 {
-                    Debug.Log(list[i][j].card.ToStringBuilder());
-                }
+                    nodeList[k]
+                };
+                list.Add(l);
+                FindMatchesNodes(nodeList[k], list, l, ConnectionType.Numeric);
 
-                Debug.Log("--");
+                var longestList = list.OrderByDescending(p => p.Count).First();
+
+                if (longestList.Count >= min)
+                    for (int i = 0; i < longestList.Count; i++)
+                    {
+                        longestList[i].isSelected = true;
+                        Debug.Log(longestList[i].card.ToStringBuilder());
+                    }
+
+                Debug.Log("  -  ");
             }
 
             notSortedCards = null;
@@ -42,6 +48,9 @@ namespace CardGame.Core.Sort
 
             for (int i = 0; i < selectedConnection.Count; i++)
             {
+                if (selectedConnection[i].toNode.isSelected)
+                    continue;
+
                 if (selectedConnection[i].toNode == node)
                     continue;
 
@@ -109,7 +118,7 @@ namespace CardGame.Core.Sort
                 return true;
             }
 
-            if (card1.Color == card2.Color && card1.No + 1 == card2.No || card1.No - 1 == card2.No)
+            if (card1.Color == card2.Color && (card1.No + 1 == card2.No || card1.No - 1 == card2.No))
             {
                 connectionType = ConnectionType.Numeric;
                 return true;
@@ -130,6 +139,7 @@ namespace CardGame.Core.Sort
         {
             public NumericColoredCard card;
             public List<Connection> connections;
+            public bool isSelected;
 
             public CardNode(NumericColoredCard card, List<Connection> connections)
             {
