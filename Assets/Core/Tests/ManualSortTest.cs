@@ -140,7 +140,7 @@ namespace CardGame.Core.Test
         {
             LogAssert.Expect(LogType.Log, "Log");
 
-            var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, 4);
+            var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3);
 
             // CardArrayUtilities.Log2DimensionNumericArray(cards);
             //

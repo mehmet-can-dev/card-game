@@ -8,27 +8,28 @@ namespace CardGame.Core.Sort
     public class SmartSortLogic
     {
         public static NumericColoredCard[][] SortBySmart(NumericColoredCard[] cards,
-            out NumericColoredCard[] notSortedCards, int min, int max)
+            out NumericColoredCard[] notSortedCards, int minCardCount)
         {
-            List<List<NumericColoredCard>> matchedCardsList = new List<List<NumericColoredCard>>();
+            List<MatchedConnections<NumericColoredCard>> matchedCardsList =
+                new List<MatchedConnections<NumericColoredCard>>();
             List<NumericColoredCard> notMatched = new List<NumericColoredCard>();
 
             var cardList = cards.ToList();
             var nodeList = CreateCardNodes(cardList);
 
             var jokerNodes = nodeList.Where(p => p.card is JokerCard).ToList();
-            
+
             nodeList.RemoveAll(p => p.card is JokerCard);
 
             CrateConnections(nodeList);
 
             nodeList = nodeList.OrderBy(p => p.card.No).ToList();
 
-            FindMatchedWithoutJokers(min, nodeList, matchedCardsList);
+            FindMatchedWithoutJokers(minCardCount, nodeList, matchedCardsList);
 
             nodeList.RemoveAll(p => p.isSelected);
-            
-            FindMatchedWithJokerFromNotMatched(min, jokerNodes, nodeList, matchedCardsList);
+
+            FindMatchedWithJokerFromNotMatched(minCardCount, jokerNodes, nodeList, matchedCardsList);
 
             Debug.Log("------------>Not Matches");
 
@@ -42,17 +43,18 @@ namespace CardGame.Core.Sort
             var matchedCardsArray = new NumericColoredCard[matchedCardsList.Count][];
             for (int i = 0; i < matchedCardsList.Count; i++)
             {
-                matchedCardsArray[i] = new NumericColoredCard[matchedCardsList[i].Count];
-                for (int j = 0; j < matchedCardsList[i].Count; j++)
+                matchedCardsArray[i] = new NumericColoredCard[matchedCardsList[i].matchedCards.Count];
+                for (int j = 0; j < matchedCardsList[i].matchedCards.Count; j++)
                 {
-                    matchedCardsArray[i][j] = matchedCardsList[i][j];
+                    matchedCardsArray[i][j] = matchedCardsList[i].matchedCards[j];
                 }
             }
 
             return matchedCardsArray;
         }
 
-        private static void FindMatchedWithJokerFromNotMatched(int min, List<CardNode> jokerNodes, List<CardNode> nodeList, List<List<NumericColoredCard>> matchedCardsList)
+        private static void FindMatchedWithJokerFromNotMatched(int min, List<CardNode> jokerNodes,
+            List<CardNode> nodeList, List<MatchedConnections<NumericColoredCard>> matchedCardsList)
         {
             for (int j = 0; j < jokerNodes.Count; j++)
             {
@@ -60,7 +62,7 @@ namespace CardGame.Core.Sort
                 nodeList.Add(jokerNodes[j]);
                 CrateConnections(nodeList);
 
-                var list = new List<List<CardNode>>();
+                var list = new List<MatchedConnections<CardNode>>();
                 for (int k = 0; k < nodeList.Count; k++)
                 {
                     if (nodeList[k].card is JokerCard)
@@ -82,7 +84,7 @@ namespace CardGame.Core.Sort
         }
 
         private static void FindMatchedWithoutJokers(int min, List<CardNode> nodeList,
-            List<List<NumericColoredCard>> matchedCardsList)
+            List<MatchedConnections<NumericColoredCard>> matchedCardsList)
         {
             Debug.Log(" Matches");
 
@@ -94,7 +96,7 @@ namespace CardGame.Core.Sort
                 if (nodeList[k].isSelected)
                     continue;
 
-                var list = new List<List<CardNode>>();
+                var list = new List<MatchedConnections<CardNode>>();
                 TryFindSingleNodeMatches(list, nodeList, k, p => p.conectionType == ConnectionType.Colored,
                     ConnectionType.Colored, p => p.conectionType == ConnectionType.Numeric, ConnectionType.Numeric);
 
@@ -102,47 +104,49 @@ namespace CardGame.Core.Sort
             }
         }
 
-        private static void TryFindSingleNodeMatches(List<List<CardNode>> matchesList, List<CardNode> nodeList, int k,
+        private static void TryFindSingleNodeMatches(List<MatchedConnections<CardNode>> matchesList,
+            List<CardNode> nodeList, int k,
             Func<Connection, bool> firstPrediction, ConnectionType firstPredictionConnectionType,
             Func<Connection, bool> secondPrediction, ConnectionType secondPredictionConnectionType)
         {
-            var l = new List<CardNode>()
-            {
-                nodeList[k]
-            };
+            var l = new MatchedConnections<CardNode>();
+            l.matchedCards.Add(nodeList[k]);
+            l.conectionType = firstPredictionConnectionType;
             matchesList.Add(l);
-            FindMatchesNodes(nodeList[k], matchesList, l,
+            FindMatchesNodes(nodeList[k], matchesList, l.matchedCards,
                 firstPrediction, firstPredictionConnectionType);
-            var l2 = new List<CardNode>()
-            {
-                nodeList[k]
-            };
+            var l2 = new MatchedConnections<CardNode>();
+            l2.matchedCards.Add(nodeList[k]);
+            l2.conectionType = secondPredictionConnectionType;
             matchesList.Add(l2);
-            FindMatchesNodes(nodeList[k], matchesList, l2,
+            FindMatchesNodes(nodeList[k], matchesList, l2.matchedCards,
                 secondPrediction, secondPredictionConnectionType);
         }
 
-        private static void FindMaxLenghtMatched(int min, List<List<NumericColoredCard>> matchedCardsList,
-            List<List<CardNode>> list)
+        private static void FindMaxLenghtMatched(int min, List<MatchedConnections<NumericColoredCard>> matchedCardsList,
+            List<MatchedConnections<CardNode>> list)
         {
-            var longestList = list.OrderByDescending(p => p.Count).First();
+            var longestList = list.OrderByDescending(p => p.matchedCards.Count).First();
 
-            if (longestList.Count >= min)
+            if (longestList.matchedCards.Count >= min)
             {
-                var matchList = new List<NumericColoredCard>();
-                for (int i = 0; i < longestList.Count; i++)
+                var matchList = new MatchedConnections<NumericColoredCard>();
+                for (int i = 0; i < longestList.matchedCards.Count; i++)
                 {
-                    longestList[i].isSelected = true;
-                    Debug.Log(longestList[i].card.ToStringBuilder());
-                    matchList.Add(longestList[i].card);
+                    longestList.matchedCards[i].isSelected = true;
+                    Debug.Log(longestList.matchedCards[i].card.ToStringBuilder());
+                    matchList.matchedCards.Add(longestList.matchedCards[i].card);
+                    matchList.conectionType = longestList.conectionType;
                 }
+
 
                 matchedCardsList.Add(matchList);
                 Debug.Log("  -  ");
             }
         }
 
-        private static void FindMatchesNodes(CardNode node, List<List<CardNode>> totalList, List<CardNode> connections,
+        private static void FindMatchesNodes(CardNode node, List<MatchedConnections<CardNode>> totalList,
+            List<CardNode> connections,
             Func<Connection, bool> prediction, ConnectionType type)
         {
             var selectedConnection =
@@ -173,9 +177,11 @@ namespace CardGame.Core.Sort
 
                 if (i > 1)
                 {
-                    var l = new List<CardNode> { selectedConnection[i].toNode };
+                    var l = new MatchedConnections<CardNode>();
+                    l.matchedCards.Add(selectedConnection[i].toNode);
+                    l.conectionType = type;
                     totalList.Add(l);
-                    FindMatchesNodes(selectedConnection[i].toNode, totalList, l, prediction, type);
+                    FindMatchesNodes(selectedConnection[i].toNode, totalList, l.matchedCards, prediction, type);
                 }
                 else
                 {
@@ -185,7 +191,8 @@ namespace CardGame.Core.Sort
             }
         }
 
-        private static void CheckJokerConditions(List<List<CardNode>> totalList, List<CardNode> connections,
+        private static void CheckJokerConditions(List<MatchedConnections<CardNode>> totalList,
+            List<CardNode> connections,
             Func<Connection, bool> prediction, ConnectionType type,
             List<Connection> selectedConnection, int i)
         {
@@ -339,6 +346,17 @@ namespace CardGame.Core.Sort
             public CardNode toNode;
 
             public ConnectionType conectionType;
+        }
+
+        public class MatchedConnections<T>
+        {
+            public List<T> matchedCards;
+            public ConnectionType conectionType;
+
+            public MatchedConnections()
+            {
+                matchedCards = new List<T>();
+            }
         }
 
         public enum ConnectionType
