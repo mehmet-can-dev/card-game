@@ -68,7 +68,7 @@ namespace CardGame.Core.Test
             new NumericColoredCard(3, 12, ColorLogic.black),
             new NumericColoredCard(4, 4, ColorLogic.black),
             new NumericColoredCard(5, 4, ColorLogic.blue),
-            //new JokerCard(18, 11, ColorLogic.red),
+            new JokerCard(18, 11, ColorLogic.red),
             new NumericColoredCard(6, 4, ColorLogic.yellow),
             new NumericColoredCard(7, 6, ColorLogic.black),
             new NumericColoredCard(8, 6, ColorLogic.blue),
@@ -126,7 +126,7 @@ namespace CardGame.Core.Test
         private static void ColoredTest(NumericColoredCard[] testCards)
         {
             LogAssert.Expect(LogType.Log, "Log");
-            
+
             var cards = ColoredSortLogic.SortByColored(testCards, 3, 4, out var notSortableCard);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
@@ -139,7 +139,7 @@ namespace CardGame.Core.Test
         private static void SmartTest(NumericColoredCard[] testCards)
         {
             LogAssert.Expect(LogType.Log, "Log");
-            
+
             var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, 4);
 
             // CardArrayUtilities.Log2DimensionNumericArray(cards);

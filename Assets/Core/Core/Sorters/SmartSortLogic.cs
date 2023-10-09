@@ -10,6 +10,9 @@ namespace CardGame.Core.Sort
         public static NumericColoredCard[][] SortBySmart(NumericColoredCard[] cards,
             out NumericColoredCard[] notSortedCards, int min, int max)
         {
+            List<List<NumericColoredCard>> matchedCardsList = new List<List<NumericColoredCard>>();
+            List<NumericColoredCard> notMatched = new List<NumericColoredCard>();
+
             var cardList = cards.ToList();
             var nodeList = CreateCardNodes(cardList);
 
@@ -25,6 +28,9 @@ namespace CardGame.Core.Sort
             for (int k = 0; k < nodeList.Count; k++)
             {
                 if (nodeList[k].card is JokerCard)
+                    continue;
+
+                if (nodeList[k].isSelected)
                     continue;
 
                 var list = new List<List<CardNode>>();
@@ -47,66 +53,95 @@ namespace CardGame.Core.Sort
 
                 if (longestList.Count >= min)
                 {
+                    var matchList = new List<NumericColoredCard>();
                     for (int i = 0; i < longestList.Count; i++)
                     {
                         longestList[i].isSelected = true;
                         Debug.Log(longestList[i].card.ToStringBuilder());
+                        matchList.Add(longestList[i].card);
                     }
 
+                    matchedCardsList.Add(matchList);
                     Debug.Log("  -  ");
                 }
             }
 
             nodeList.RemoveAll(p => p.isSelected);
 
-            Debug.Log("Not Matches");
+            Debug.Log("------------>Not Matches");
 
             for (int i = 0; i < nodeList.Count; i++)
             {
                 Debug.Log(nodeList[i].card.ToStringBuilder());
             }
 
-
-            Debug.Log("Matches by Joker");
-            nodeList.AddRange(jokerNodes);
-            CrateConnections(nodeList);
-            for (int k = 0; k < nodeList.Count; k++)
+            for (int j = 0; j < jokerNodes.Count; j++)
             {
-                if (nodeList[k].card is JokerCard)
-                    continue;
+                Debug.Log("------------>Matches by Joker");
+                nodeList.Add(jokerNodes[j]);
+
+                CrateConnections(nodeList);
 
                 var list2 = new List<List<CardNode>>();
-                var l3 = new List<CardNode>()
+                for (int k = 0; k < nodeList.Count; k++)
                 {
-                    nodeList[k]
-                };
-                list2.Add(l3);
-                FindMatchesNodes(nodeList[k], list2, l3,
-                    p => p.conectionType is ConnectionType.Colored or ConnectionType.Unkown, ConnectionType.Colored);
-                var l4 = new List<CardNode>()
-                {
-                    nodeList[k]
-                };
-                list2.Add(l4);
-                FindMatchesNodes(nodeList[k], list2, l4,
-                    p => p.conectionType is ConnectionType.Numeric or ConnectionType.Unkown, ConnectionType.Numeric);
+                    if (nodeList[k].card is JokerCard)
+                        continue;
 
-                var longestList = list2.OrderByDescending(p => p.Count).First();
-                if (longestList.Count >= min)
-                {
-                    for (int i = 0; i < longestList.Count; i++)
+                    var l3 = new List<CardNode>()
                     {
-                        Debug.Log(longestList[i].card.ToStringBuilder());
-                        longestList[i].isSelected = true;
+                        nodeList[k]
+                    };
+                    list2.Add(l3);
+                    FindMatchesNodes(nodeList[k], list2, l3,
+                        p => p.conectionType is ConnectionType.Colored or ConnectionType.Unkown,
+                        ConnectionType.Colored);
+                    var l4 = new List<CardNode>()
+                    {
+                        nodeList[k]
+                    };
+                    list2.Add(l4);
+                    FindMatchesNodes(nodeList[k], list2, l4,
+                        p => p.conectionType is ConnectionType.Numeric or ConnectionType.Unkown,
+                        ConnectionType.Numeric);
+                }
+
+                var longestList2 = list2.OrderByDescending(p => p.Count).First();
+                if (longestList2.Count >= min)
+                {
+                    var matchList = new List<NumericColoredCard>();
+                    for (int i = 0; i < longestList2.Count; i++)
+                    {
+                        Debug.Log(longestList2[i].card.ToStringBuilder());
+                        longestList2[i].isSelected = true;
+                        matchList.Add(longestList2[i].card);
                     }
 
+                    matchedCardsList.Add(matchList);
                     Debug.Log("-p-");
                 }
+
+                nodeList.RemoveAll(p => p.isSelected);
+            }
+
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                notMatched.Add(nodeList[i].card);
             }
 
 
-            notSortedCards = null;
-            return null;
+            notSortedCards = notMatched.ToArray();
+            var matchedCardsArray = new NumericColoredCard[matchedCardsList.Count][];
+            for (int i = 0; i < matchedCardsList.Count; i++)
+            {
+                matchedCardsArray[i] = new NumericColoredCard[matchedCardsList[i].Count];
+                for (int j = 0; j < matchedCardsList[i].Count; j++)
+                {
+                    matchedCardsArray[i][j] = matchedCardsList[i][j];
+                }
+            }
+
+            return matchedCardsArray;
         }
 
         private static void FindMatchesNodes(CardNode node, List<List<CardNode>> totalList, List<CardNode> connections,
@@ -132,13 +167,12 @@ namespace CardGame.Core.Sort
                     CheckJokerConditions(totalList, connections, prediction, type, selectedConnection, i);
                     return;
                 }
-                else
-                {
-                    if (connections.Exists(p =>
-                            p.card.No == selectedConnection[i].toNode.card.No &&
-                            p.card.Color == selectedConnection[i].toNode.card.Color))
-                        continue;
-                }
+
+                if (connections.Exists(p =>
+                        p.card.No == selectedConnection[i].toNode.card.No &&
+                        p.card.Color == selectedConnection[i].toNode.card.Color))
+                    continue;
+
 
                 if (i > 1)
                 {
@@ -154,7 +188,7 @@ namespace CardGame.Core.Sort
             }
         }
 
-        private static bool CheckJokerConditions(List<List<CardNode>> totalList, List<CardNode> connections,
+        private static void CheckJokerConditions(List<List<CardNode>> totalList, List<CardNode> connections,
             Func<Connection, bool> prediction, ConnectionType type,
             List<Connection> selectedConnection, int i)
         {
@@ -170,6 +204,7 @@ namespace CardGame.Core.Sort
                     {
                         if (connections[i].card is JokerCard)
                             continue;
+
                         colorList.Add(connections[i].card.Color);
                     }
 
@@ -192,10 +227,7 @@ namespace CardGame.Core.Sort
                 if (!connections.Contains(conneciton.toNode))
                     connections.Add(conneciton.toNode);
                 FindMatchesNodes(conneciton.toNode, totalList, connections, prediction, type);
-                return true;
             }
-
-            return false;
         }
 
         private static Connection LookConnectionsSpecific(CardNode node, Func<NumericColoredCard, bool> presicion)
