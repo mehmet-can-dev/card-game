@@ -129,7 +129,8 @@ namespace CardGame.Core.Sort
 
                 if (selectedConnection[i].toNode.card is JokerCard)
                 {
-                    if (CheckJokerConditions(totalList, connections, prediction, type, selectedConnection, i)) return;
+                    CheckJokerConditions(totalList, connections, prediction, type, selectedConnection, i);
+                    return;
                 }
                 else
                 {
