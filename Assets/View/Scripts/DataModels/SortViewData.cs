@@ -7,5 +7,6 @@ namespace CardGame.View.DataModels
     {
         public int min;
         public int max;
+        public int maxNumberPerDeck;
     }
 }

@@ -35,7 +35,7 @@ namespace CardGame.Core.Test
             new NumericColoredCard(20, 3, ColorLogic.red),
         };
 
-        NumericColoredCard[] testCards_noJoker_numeric = new NumericColoredCard[]
+        NumericColoredCard[] testCards_numeric = new NumericColoredCard[]
         {
             new NumericColoredCard(0, 2, ColorLogic.red),
             new NumericColoredCard(1, 2, ColorLogic.red),
@@ -60,7 +60,7 @@ namespace CardGame.Core.Test
             new NumericColoredCard(19, 1, ColorLogic.black)
         };
 
-        NumericColoredCard[] testCards_noJoker_fullnumeric_double = new NumericColoredCard[]
+        NumericColoredCard[] testCards_fullnumeric_double = new NumericColoredCard[]
         {
             new NumericColoredCard(0, 9, ColorLogic.black),
             new NumericColoredCard(1, 10, ColorLogic.black),
@@ -78,6 +78,25 @@ namespace CardGame.Core.Test
             new NumericColoredCard(12, 4, ColorLogic.blue),
             new NumericColoredCard(12, 7, ColorLogic.red),
         };
+        
+        NumericColoredCard[] testCards_fullcolored = new NumericColoredCard[]
+        {
+            new NumericColoredCard(0, 8, ColorLogic.yellow),
+            new NumericColoredCard(1, 8, ColorLogic.black),
+            new JokerCard(2, 11, ColorLogic.black),
+            new NumericColoredCard(3, 8, ColorLogic.yellow),
+            new NumericColoredCard(4, 4, ColorLogic.red),
+            new NumericColoredCard(5, 4, ColorLogic.black),
+            new JokerCard(18, 11, ColorLogic.red),
+            new NumericColoredCard(6, 3, ColorLogic.yellow),
+            new NumericColoredCard(7, 5, ColorLogic.blue),
+            new NumericColoredCard(8, 7, ColorLogic.blue),
+            new NumericColoredCard(9, 9, ColorLogic.black),
+            new NumericColoredCard(10, 9, ColorLogic.yellow),
+            new NumericColoredCard(11, 12, ColorLogic.black),
+            new NumericColoredCard(12, 13, ColorLogic.blue),
+        };
+
 
 
         [Test]
@@ -96,13 +115,19 @@ namespace CardGame.Core.Test
         [Test]
         public void SortSmartTest2()
         {
-            SmartTest(testCards_noJoker_numeric);
+            SmartTest(testCards_numeric);
         }
 
         [Test]
         public void SortSmartTest3()
         {
-            SmartTest(testCards_noJoker_fullnumeric_double);
+            SmartTest(testCards_fullnumeric_double);
+        }
+        
+        [Test]
+        public void SortSmartTest4()
+        {
+            SmartTest(testCards_fullcolored);
         }
 
         [Test]
@@ -114,13 +139,13 @@ namespace CardGame.Core.Test
         [Test]
         public void SortColoredTest2()
         {
-            ColoredTest(testCards_noJoker_numeric);
+            ColoredTest(testCards_numeric);
         }
 
         [Test]
         public void SortColoredTest3()
         {
-            ColoredTest(testCards_noJoker_fullnumeric_double);
+            ColoredTest(testCards_fullnumeric_double);
         }
 
         private static void ColoredTest(NumericColoredCard[] testCards)
@@ -142,10 +167,6 @@ namespace CardGame.Core.Test
 
             var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, ColorLogic.UsedColors.Length,
                 13);
-
-            // CardArrayUtilities.Log2DimensionNumericArray(cards);
-            //
-            // CardArrayUtilities.LogNumericArray(notSortableCard);
 
             Assert.Pass();
         }

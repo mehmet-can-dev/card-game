@@ -16,9 +16,10 @@ MonoBehaviour:
     handCount: 14
     deckCount: 2
     cardPerDeck: 52
-    jokerCount: 10
+    jokerCount: 4
   BuilderViewData:
     deckColor: {r: 0.23343134, g: 0, b: 0.46226418, a: 1}
   SortViewData:
     min: 3
     max: 4
+    maxNumberPerDeck: 13

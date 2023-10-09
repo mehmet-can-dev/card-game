@@ -57,7 +57,8 @@ namespace CardGame.Core.Sort
             return matchedCardsArray;
         }
 
-        private static void TryConnectJokerToAlreadyMatchedCards(int uniqColorCount, int maxNumber, List<CardNode> nodeList,
+        private static void TryConnectJokerToAlreadyMatchedCards(int uniqColorCount, int maxNumber,
+            List<CardNode> nodeList,
             List<MatchedConnections<NumericColoredCard>> matchedCardsList)
         {
             for (int i = 0; i < nodeList.Count; i++)
@@ -146,7 +147,7 @@ namespace CardGame.Core.Sort
         private static void FindMatchedWithoutJokers(int min, List<CardNode> nodeList,
             List<MatchedConnections<NumericColoredCard>> matchedCardsList)
         {
-            Debug.Log(" Matches");
+            Debug.Log("----------->Matches");
 
             for (int k = 0; k < nodeList.Count; k++)
             {
@@ -199,9 +200,8 @@ namespace CardGame.Core.Sort
                     matchList.conectionType = longestList.conectionType;
                 }
 
-
                 matchedCardsList.Add(matchList);
-                Debug.Log("  -  ");
+                Debug.Log("");
             }
         }
 
@@ -256,8 +256,9 @@ namespace CardGame.Core.Sort
             Func<Connection, bool> prediction, ConnectionType type,
             List<Connection> selectedConnection, int i)
         {
-            connections.Add(selectedConnection[i].toNode);
             var selectedCard = selectedConnection[i].fromNode.card;
+
+            connections.Add(selectedConnection[i].toNode);
 
             Connection conneciton = null;
             switch (type)
@@ -266,10 +267,10 @@ namespace CardGame.Core.Sort
                     List<Color> colorList = new List<Color>();
                     for (int j = 0; j < connections.Count; j++)
                     {
-                        if (connections[i].card is JokerCard)
+                        if (connections[j].card is JokerCard)
                             continue;
 
-                        colorList.Add(connections[i].card.Color);
+                        colorList.Add(connections[j].card.Color);
                     }
 
                     conneciton = LookConnectionsSpecific(selectedConnection[i].toNode,
@@ -285,6 +286,7 @@ namespace CardGame.Core.Sort
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+
 
             if (conneciton != null)
             {
