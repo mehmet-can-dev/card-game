@@ -8,7 +8,7 @@ namespace CardGame.Core.Sort
     public class SmartSortLogic
     {
         public static NumericColoredCard[][] SortBySmart(NumericColoredCard[] cards,
-            out NumericColoredCard[] notSortedCards, int minCardCount)
+            out NumericColoredCard[] notSortedCards, int minCardCount, int uniqColorCount, int maxNumber)
         {
             List<MatchedConnections<NumericColoredCard>> matchedCardsList =
                 new List<MatchedConnections<NumericColoredCard>>();
@@ -31,6 +31,10 @@ namespace CardGame.Core.Sort
 
             FindMatchedWithJokerFromNotMatched(minCardCount, jokerNodes, nodeList, matchedCardsList);
 
+            TryConnectJokerToAlreadyMatchedCards(uniqColorCount, maxNumber, nodeList, matchedCardsList);
+
+            nodeList.RemoveAll(p => p.isSelected);
+
             Debug.Log("------------>Not Matches");
 
             for (int i = 0; i < nodeList.Count; i++)
@@ -51,6 +55,62 @@ namespace CardGame.Core.Sort
             }
 
             return matchedCardsArray;
+        }
+
+        private static void TryConnectJokerToAlreadyMatchedCards(int uniqColorCount, int maxNumber, List<CardNode> nodeList,
+            List<MatchedConnections<NumericColoredCard>> matchedCardsList)
+        {
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                if (nodeList[i].card is JokerCard)
+                {
+                    for (int j = 0; j < matchedCardsList.Count; j++)
+                    {
+                        if (matchedCardsList[j].conectionType == ConnectionType.Colored)
+                        {
+                            if (matchedCardsList[j].matchedCards.Count >= uniqColorCount)
+                                continue;
+
+                            if (matchedCardsList[j].matchedCards.Last() is not JokerCard)
+                            {
+                                nodeList[i].isSelected = true;
+                                matchedCardsList[j].matchedCards.Add(nodeList[i].card);
+                                break;
+                            }
+
+                            if (matchedCardsList[j].matchedCards.First() is not JokerCard)
+                            {
+                                nodeList[i].isSelected = true;
+                                matchedCardsList[j].matchedCards.Insert(0, nodeList[i].card);
+                                break;
+                            }
+                        }
+                        else if (matchedCardsList[j].conectionType == ConnectionType.Numeric)
+                        {
+                            var firstCard = matchedCardsList[j].matchedCards.First();
+                            if (firstCard.No != 1 && firstCard is not JokerCard)
+                            {
+                                nodeList[i].isSelected = true;
+                                matchedCardsList[j].matchedCards.Insert(0, nodeList[i].card);
+                                break;
+                            }
+
+                            var lastCard = matchedCardsList[j].matchedCards.Last();
+
+                            if (lastCard.No != maxNumber && lastCard is not JokerCard)
+                            {
+                                nodeList[i].isSelected = true;
+                                matchedCardsList[j].matchedCards.Add(nodeList[i].card);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("Unknown Sorted Type");
+                        }
+                    }
+                }
+            }
         }
 
         private static void FindMatchedWithJokerFromNotMatched(int min, List<CardNode> jokerNodes,

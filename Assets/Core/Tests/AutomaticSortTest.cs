@@ -64,7 +64,8 @@ namespace CardGame.Core.Test
 
             var testCards = testableCards.GetNotSortedCards();
 
-            var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3);
+            var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, ColorLogic.UsedColors.Length,
+                13);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 

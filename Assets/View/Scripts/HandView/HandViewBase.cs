@@ -54,7 +54,8 @@ namespace CardGame.View
 
         public void SortHandBySmart(SortViewData sortViewData)
         {
-            var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCards, sortViewData.min);
+            var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCards, sortViewData.min,
+                ColorLogic.UsedColors.Length, 13);
             handViewGridModule.ReAssignCards(cards, notSortableCards);
         }
     }
