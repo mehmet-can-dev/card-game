@@ -25,7 +25,7 @@ namespace CardGame.View
 
             cardPos.x = pos.x;
             cardPos.y = pos.y;
-            cardPos.z = LayerData.SELECTEDCARDLAYER;
+            cardPos.z = LayerConstants.SELECTEDCARDLAYER;
             tile.GetConnectedCard.transform.position = cardPos + offset;
         }
 

@@ -1,11 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CardGame.View;
 using UnityEngine;
 
 public class CardViewBoxCasterModule : MonoBehaviour
 {
+    
+    
     [Header("Variable References")] [SerializeField]
     private LayerMask layerMask;
 

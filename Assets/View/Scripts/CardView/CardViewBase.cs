@@ -1,8 +1,7 @@
 ﻿using System;
 using CardGame.Core;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Rendering;
 using Color = UnityEngine.Color;
 
 namespace CardGame.View
@@ -21,6 +20,7 @@ namespace CardGame.View
         [SerializeField] private ColorSetterUseByProperty outLineColorSetter;
         [SerializeField] private SpriteText cardNoSpriteText;
         [SerializeField] private GameObject jokerGameObject;
+        [SerializeField] private SortingGroup sortingGroup;
 
         private NumericColoredCard card;
 
@@ -57,11 +57,13 @@ namespace CardGame.View
         public void SelectCard()
         {
             outLineColorSetter.gameObject.SetActive(true);
+            sortingGroup.sortingOrder = LayerConstants.SELECTEDCARDSORTINGORDER;
         }
 
         public void DeSelectCard()
         {
             outLineColorSetter.gameObject.SetActive(false);
+            sortingGroup.sortingOrder = LayerConstants.DEFAULTSORTINGORDER;
         }
     }
 }

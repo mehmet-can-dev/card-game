@@ -42,7 +42,7 @@ namespace CardGame.View
 
         public void ResetConnectCardPosition()
         {
-            connectedCard.transform.localPosition = Vector3.forward * LayerData.CARDLAYER;
+            connectedCard.transform.localPosition = Vector3.forward * LayerConstants.CARDLAYER;
         }
 
         public void ResetConnectCardWithoutNotify()

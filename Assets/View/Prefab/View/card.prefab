@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 7733610705397953404}
   - component: {fileID: 8565237694429936352}
   - component: {fileID: 7176826324132651334}
+  - component: {fileID: 167255724039451940}
   m_Layer: 0
   m_Name: card
   m_TagString: Untagged
@@ -184,6 +185,7 @@ MonoBehaviour:
   outLineColorSetter: {fileID: 5391605130231482912}
   cardNoSpriteText: {fileID: 8904278118603712355}
   jokerGameObject: {fileID: 4234137809950863587}
+  sortingGroup: {fileID: 167255724039451940}
 --- !u!114 &8565237694429936352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +215,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   castSize: {x: 1, y: 2, z: 1}
+--- !u!210 &167255724039451940
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5528608772585193900}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &5528608773330610322
 GameObject:
   m_ObjectHideFlags: 0
