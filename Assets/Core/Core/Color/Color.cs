@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace CardGame.Core
 {
@@ -9,9 +10,12 @@ namespace CardGame.Core
         public byte G { get; }
 
         public byte B { get; }
-        
-        public string RGB =>R.ToString() + G.ToString() + B.ToString();
-        
+
+        private string RGB()
+        {
+            return this.ToString();
+        }
+
         public Color(byte r, byte g, byte b)
         {
             this.R = r;
@@ -21,12 +25,16 @@ namespace CardGame.Core
 
         public override string ToString()
         {
-            return "r:" + R + "g:" + G + "b:" + B;
+            var sb = new StringBuilder();
+            sb.Append((char)R);
+            sb.Append((char)G);
+            sb.Append((char)B);
+            return sb.ToString();
         }
 
         public int CompareTo(Color obj)
         {
-            return String.Compare(RGB, obj.RGB, StringComparison.Ordinal);
+            return String.Compare(RGB(), obj.RGB(), StringComparison.InvariantCulture);
         }
 
         public static bool operator ==(Color c1, Color c2)
@@ -36,8 +44,8 @@ namespace CardGame.Core
 
             if (ReferenceEquals(c1, null) || ReferenceEquals(c2, null))
                 return false;
-                
-            
+
+
             return c1.B == c2.B && c1.G == c2.G && c1.R == c2.R;
         }
 
@@ -49,7 +57,7 @@ namespace CardGame.Core
 
             if (ReferenceEquals(this, null) || ReferenceEquals(otherColor, null))
                 return false;
-            
+
             return otherColor.B == this.B && otherColor.G == this.G && otherColor.R == this.R;
         }
 
@@ -62,12 +70,11 @@ namespace CardGame.Core
         {
             if (ReferenceEquals(c1, c2))
                 return false;
-            
+
             if (ReferenceEquals(c1, null) || ReferenceEquals(c2, null))
                 return true;
-            
+
             return !(c1 == c2);
         }
-        
     }
 }
