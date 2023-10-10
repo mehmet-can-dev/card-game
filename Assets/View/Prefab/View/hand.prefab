@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1776311042839402348}
   - component: {fileID: 942423450}
+  - component: {fileID: 3910430008167503624}
   m_Layer: 0
   m_Name: grid
   m_TagString: Untagged
@@ -50,6 +51,18 @@ MonoBehaviour:
     sizeY: 2
     tileColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
   tileParent: {fileID: 1776311042839402348}
+--- !u!114 &3910430008167503624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776311042839402349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd5bfcd67ca451098e2c9070a51e85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1776311042953053713
 GameObject:
   m_ObjectHideFlags: 0

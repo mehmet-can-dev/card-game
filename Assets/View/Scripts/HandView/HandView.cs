@@ -41,21 +41,21 @@ namespace CardGame.View.Hand
         public void SortHandByNumeric(SortViewData sortViewData, Action onComplete)
         {
             var cards = NumericSortLogic.SortByNumeric(hand.Cards, out var notSortableCards, sortViewData.min);
-            handViewGridModule.ReAssignCards(cards, notSortableCards, onComplete);
+            handViewGridModule.CardAssigner.ReAssignCards(cards, notSortableCards, onComplete);
         }
 
         public void SortHandByColored(SortViewData sortViewData, Action onComplete)
         {
             var cards = ColoredSortLogic.SortByColored(hand.Cards, sortViewData.min, sortViewData.max,
                 out var notSortableCards);
-            handViewGridModule.ReAssignCards(cards, notSortableCards, onComplete);
+            handViewGridModule.CardAssigner.ReAssignCards(cards, notSortableCards, onComplete);
         }
 
         public void SortHandBySmart(SortViewData sortViewData, Action onComplete)
         {
             var cards = SmartSortLogic.SortBySmart(hand.Cards, out var notSortableCards, sortViewData.min,
                 ColorConstants.UsedColors.Length, sortViewData.maxNumberPerDeck);
-            handViewGridModule.ReAssignCards(cards, notSortableCards, onComplete);
+            handViewGridModule.CardAssigner.ReAssignCards(cards, notSortableCards, onComplete);
         }
     }
 }
