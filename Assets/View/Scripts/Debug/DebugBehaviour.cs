@@ -28,17 +28,35 @@ namespace CardGame.View.DebugUi
 
         public void SortHandByNumeric()
         {
-            handViewBase.SortHandByNumeric(builderSettingsSo.SortViewData);
+            if (isAnimationPlaying)
+                return;
+            if (hand.IsEmpty())
+                return;
+            isAnimationPlaying = true;
+
+            handViewBase.SortHandByNumeric(builderSettingsSo.SortViewData, ResetAnimationPLaying);
         }
 
         public void SortHandByColor()
         {
-            handViewBase.SortHandByColored(builderSettingsSo.SortViewData);
+            if (isAnimationPlaying)
+                return;
+            if (hand.IsEmpty())
+                return;
+            isAnimationPlaying = true;
+
+            handViewBase.SortHandByColored(builderSettingsSo.SortViewData, ResetAnimationPLaying);
         }
 
         public void SortHandBySmartSort()
         {
-            handViewBase.SortHandBySmart(builderSettingsSo.SortViewData);
+            if (isAnimationPlaying)
+                return;
+            if (hand.IsEmpty())
+                return;
+            isAnimationPlaying = true;
+
+            handViewBase.SortHandBySmart(builderSettingsSo.SortViewData, ResetAnimationPLaying);
         }
 
         public void DealHand()

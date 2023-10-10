@@ -58,21 +58,31 @@ namespace CardGame.View
             return null;
         }
 
-        public void ReAssignCards(NumericColoredCard[][] cardContainer, NumericColoredCard[] notMatchedCards)
+        public void ReAssignCards(NumericColoredCard[][] cardContainer, NumericColoredCard[] notMatchedCards,
+            Action onComplete)
         {
             Vector2Int tempIndexTwoDimension = Vector2Int.zero;
-            if (cardContainer != null)
+
+            if (cardContainer == null && notMatchedCards == null)
+            {
+                onComplete?.Invoke();
+            }
+            else if (cardContainer == null)
+            {
+                AssignOrderedCards(notMatchedCards, tempIndexTwoDimension, onComplete);
+            }
+            else if (notMatchedCards == null)
+            {
+                AssignOrderedCardContainer(cardContainer, onComplete);
+            }
+            else
             {
                 tempIndexTwoDimension = AssignOrderedCardContainer(cardContainer);
-            }
-
-            if (notMatchedCards != null)
-            {
-                AssignOrderedCards(notMatchedCards, tempIndexTwoDimension);
+                AssignOrderedCards(notMatchedCards, tempIndexTwoDimension, onComplete);
             }
         }
 
-        private Vector2Int AssignOrderedCardContainer(NumericColoredCard[][] cardContainer)
+        private Vector2Int AssignOrderedCardContainer(NumericColoredCard[][] cardContainer, Action onComplete = null)
         {
             int tileHorizontalIndex = 0;
             int tileVerticalIndex = 0;
@@ -93,8 +103,16 @@ namespace CardGame.View
                     {
                         var tilesIndex = tileHorizontalIndex + tileVerticalIndex * handViewGridData.sizeX;
 
-                        AssignCardToTile(value, tilesIndex, card);
+                        if (i == cardContainer.Length - 1 && j == cardContainer[i].Length - 1)
+                        {
+                            AssignCardToTile(value, tilesIndex, card, onComplete);
+                        }
+                        else
+                        {
+                            AssignCardToTile(value, tilesIndex, card);
+                        }
                     }
+
 
                     tileHorizontalIndex++;
                 }
@@ -105,7 +123,8 @@ namespace CardGame.View
             return new Vector2Int(tileHorizontalIndex, tileVerticalIndex);
         }
 
-        private void AssignOrderedCards(NumericColoredCard[] notMatchedCards, Vector2Int startIndexes)
+        private void AssignOrderedCards(NumericColoredCard[] notMatchedCards, Vector2Int startIndexes,
+            Action onComplete = null)
         {
             var tempContainerR = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
 
@@ -116,20 +135,32 @@ namespace CardGame.View
                 var card = notMatchedCards[i];
                 if (tempContainerR.TryGetValue(card, out var value))
                 {
-                    AssignCardToTile(value, currentIndex, card);
+                    if (i == notMatchedCards.Length - 1)
+                    {
+                        AssignCardToTile(value, currentIndex, card, onComplete);
+                    }
+                    else
+                    {
+                        AssignCardToTile(value, currentIndex, card);
+                    }
                 }
 
                 currentIndex++;
             }
         }
 
-        private void AssignCardToTile(Tile value, int tilesIndex, NumericColoredCard card)
+        private void AssignCardToTile(Tile value, int tilesIndex, NumericColoredCard card, Action onComplete = null)
         {
             var cardView = value.GetConnectedCard;
             var tempIndex = tilesIndex;
             value.ResetConnectCardWithoutNotify();
-            cardView.MoveTargetPosition(tiles[tempIndex].transform.position + Vector3.forward * LayerConstants.CARDLAYER,
-                () => tiles[tempIndex].ConnectCardWithoutNotify(cardView));
+            cardView.MoveTargetPosition(
+                tiles[tempIndex].transform.position + Vector3.forward * LayerConstants.CARDLAYER,
+                () =>
+                {
+                    tiles[tempIndex].ConnectCardWithoutNotify(cardView);
+                    onComplete?.Invoke();
+                });
 
             cardTileOwnershipContainer[card] = tiles[tilesIndex];
         }
