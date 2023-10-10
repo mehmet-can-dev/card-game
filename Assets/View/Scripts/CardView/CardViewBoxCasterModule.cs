@@ -1,42 +1,43 @@
-using CardGame.View;
+using CardGame.View.Hand;
 using UnityEngine;
 
-public class CardViewBoxCasterModule : MonoBehaviour
+namespace CardGame.View.Card
 {
-    
-    
-    [Header("Variable References")] [SerializeField]
-    private LayerMask layerMask;
-
-    [SerializeField] Vector3 castSize = Vector3.one;
-
-    private RaycastHit[] result = new RaycastHit[5];
-
-    public Tile FindClosestTile()
+    public class CardViewBoxCasterModule : MonoBehaviour
     {
-        var hitCount =
-            Physics.BoxCastNonAlloc(transform.position, castSize * 0.5f, Vector3.forward, result,
-                transform.rotation, 1, layerMask);
-        if (hitCount > 0)
+        [Header("Variable References")] [SerializeField]
+        private LayerMask layerMask;
+
+        [SerializeField] Vector3 castSize = Vector3.one;
+
+        private RaycastHit[] result = new RaycastHit[5];
+
+        public Tile FindClosestTile()
         {
-            float maxDistance = float.MaxValue;
-            Tile closestTile = null;
-            for (int i = 0; i < hitCount; i++)
+            var hitCount =
+                Physics.BoxCastNonAlloc(transform.position, castSize * 0.5f, Vector3.forward, result,
+                    transform.rotation, 1, layerMask);
+            if (hitCount > 0)
             {
-                if (result[i].transform.TryGetComponent(out Tile tile))
+                float maxDistance = float.MaxValue;
+                Tile closestTile = null;
+                for (int i = 0; i < hitCount; i++)
                 {
-                    var distance = Mathf.Abs((transform.position - result[i].point).sqrMagnitude);
-                    if (distance < maxDistance)
+                    if (result[i].transform.TryGetComponent(out Tile tile))
                     {
-                        maxDistance = distance;
-                        closestTile = tile;
+                        var distance = Mathf.Abs((transform.position - result[i].point).sqrMagnitude);
+                        if (distance < maxDistance)
+                        {
+                            maxDistance = distance;
+                            closestTile = tile;
+                        }
                     }
                 }
+
+                return closestTile;
             }
 
-            return closestTile;
+            return null;
         }
-
-        return null;
     }
 }

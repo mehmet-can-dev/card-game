@@ -1,4 +1,4 @@
-﻿namespace CardGame.View
+﻿namespace CardGame.View.Utilities
 {
     public static class LayerConstants
     {

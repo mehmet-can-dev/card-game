@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using CardGame.Core;
-using CardGame.View;
+using CardGame.View.Card;
 using UnityEngine;
 using Color = UnityEngine.Color;
 
-namespace CardGame.View
+namespace CardGame.View.Deck
 {
     public class DeckViewCardSpawnerModule : MonoBehaviour
     {

@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+namespace CardGame.View.Utilities
 {
-    private static T _instance;
-
-    public static T Instance
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        get
-        {
-            if (_instance == null) _instance = (T)FindObjectOfType(typeof(T));
+        private static T _instance;
 
-            return _instance;
+        public static T Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = (T)FindObjectOfType(typeof(T));
+
+                return _instance;
+            }
         }
     }
 }

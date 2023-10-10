@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace CardGame.View.DebugUi
+namespace CardGame.View.DebugSystem
 {
     public static class UiDebugFunctions
     {

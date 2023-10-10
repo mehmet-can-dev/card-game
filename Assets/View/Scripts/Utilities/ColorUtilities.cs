@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Utilities
+namespace CardGame.View.Utilities
 {
     public static class ColorUtilities
     {

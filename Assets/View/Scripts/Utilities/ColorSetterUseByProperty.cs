@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardGame.View
+namespace CardGame.View.Utilities
 {
     public class ColorSetterUseByProperty : MonoBehaviour
     {

@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CardGame.View
+namespace CardGame.View.InputSystem
 {
     public class InputRaycaster : MonoBehaviour
     {

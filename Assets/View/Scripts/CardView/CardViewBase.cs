@@ -1,10 +1,13 @@
 ﻿using System;
 using CardGame.Core;
+using CardGame.View.Hand;
+using CardGame.View.SpriteTexts;
+using CardGame.View.Utilities;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Color = UnityEngine.Color;
 
-namespace CardGame.View
+namespace CardGame.View.Card
 {
     public class CardViewBase : MonoBehaviour
     {

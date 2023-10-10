@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using CardGame.Core;
-using TMPro;
+using CardGame.View.Card;
+using CardGame.View.Hand;
+using CardGame.View.SpriteTexts;
+using CardGame.View.Utilities;
 using UnityEngine;
 using Color = UnityEngine.Color;
 
-namespace CardGame.View
+namespace CardGame.View.Deck
 {
     public class DeckViewBase : MonoBehaviour
     {
@@ -19,10 +21,10 @@ namespace CardGame.View
 
         [SerializeField] private SpriteText cardCountSpriteText;
 
-        private Deck deck;
+        private Core.Deck deck;
         private Color deckColor;
 
-        public void Init(Deck deck, Color deckColor)
+        public void Init(Core.Deck deck, Color deckColor)
         {
             this.deck = deck;
             this.deckColor = deckColor;
@@ -32,7 +34,7 @@ namespace CardGame.View
             UpdateText(deck);
         }
 
-        private void UpdateText(Deck deck)
+        private void UpdateText(Core.Deck deck)
         {
             cardCountSpriteText.SetNumber(deck.CurrentCardCount);
         }

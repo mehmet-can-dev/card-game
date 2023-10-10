@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CardGame.View
+namespace CardGame.View.InputSystem
 {
     public interface IInteractable
     {

@@ -1,8 +1,10 @@
 ﻿using System;
+using CardGame.View.Card;
+using CardGame.View.Utilities;
 using UnityEngine;
 using Color = UnityEngine.Color;
 
-namespace CardGame.View
+namespace CardGame.View.Hand
 {
     public class Tile : MonoBehaviour
     {

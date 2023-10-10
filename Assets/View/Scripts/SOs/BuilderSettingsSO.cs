@@ -1,7 +1,7 @@
 ﻿using CardGame.View.DataModels;
 using UnityEngine;
 
-namespace CardGame.View
+namespace CardGame.View.SO
 {
     [CreateAssetMenu(fileName = "BuilderSettings", menuName = "CardGame/BuilderSettings", order = 0)]
     public class BuilderSettingsSO : ScriptableObject

@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using CardGame.View.Card;
+using CardGame.View.SO.Animations;
 using DG.Tweening;
 using UnityEngine;
 
-namespace CardGame.View
+namespace CardGame.View.Deck
 {
     public class DeckViewAnimationModule : MonoBehaviour
     {

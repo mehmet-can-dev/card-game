@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using CardGame.Core;
 using CardGame.Core.Sort;
+using CardGame.View.Card;
 using CardGame.View.DataModels;
 using UnityEngine;
-using Color = UnityEngine.Color;
 
-namespace CardGame.View
+namespace CardGame.View.Hand
 {
     public class HandViewBase : MonoBehaviour
     {
         [Header("Module References")] [SerializeField]
         private HandViewGridModule handViewGridModule;
 
-        private Hand hand;
-        public Hand Hand => hand;
+        private Core.Hand hand;
+        public Core.Hand Hand => hand;
 
-        public void Init(Hand hand)
+        public void Init(Core.Hand hand)
         {
             this.hand = hand;
             handViewGridModule.Init();

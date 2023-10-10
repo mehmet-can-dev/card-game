@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CardGame.Core;
-using CardGame.Core.Sort;
 using CardGame.View.DataModels;
-using CardGame.View.DebugUi;
+using CardGame.View.DebugSystem;
+using CardGame.View.Deck;
+using CardGame.View.Hand;
+using CardGame.View.SO;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Color = UnityEngine.Color;
 
 namespace CardGame.View
 {
@@ -23,25 +20,23 @@ namespace CardGame.View
         [Header("Project References")] [SerializeField]
         private BuilderSettingsSO builderSettingsSo;
 
-        private Hand hand;
-        private Deck deck;
+        private Core.Hand hand;
+        private Core.Deck deck;
 
         void Start()
         {
-            //RandomLogic.AssignRandomSeed();
-
             deck = BuildDeck(builderSettingsSo.BuilderCountData);
 
             deckViewBase.Init(deck, builderSettingsSo.BuilderViewData.deckColor);
 
-            hand = new Hand(builderSettingsSo.BuilderCountData.handCount);
+            hand = new Core.Hand(builderSettingsSo.BuilderCountData.handCount);
 
             handViewBase.Init(hand);
 
             debugBehaviour.Init(builderSettingsSo, hand, deck, handViewBase, deckViewBase);
         }
 
-        private Deck BuildDeck(BuilderCountData builderCountData)
+        private Core.Deck BuildDeck(BuilderCountData builderCountData)
         {
             var builder = new DeckBuilder(builderCountData.deckCount, builderCountData.cardPerDeck,
                 ColorLogic.UsedColors);

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using CardGame.Core;
+using CardGame.View.Card;
 using CardGame.View.DataModels;
+using CardGame.View.Utilities;
 using UnityEngine;
-using Color = UnityEngine.Color;
 
-namespace CardGame.View
+namespace CardGame.View.Hand
 {
     public class HandViewGridModule : MonoBehaviour
     {
@@ -20,12 +21,12 @@ namespace CardGame.View
 
         private List<Tile> tiles;
 
-        private Dictionary<Card, Tile> cardTileOwnershipContainer;
+        private Dictionary<Core.Card, Tile> cardTileOwnershipContainer;
 
         public void Init()
         {
             tiles = new List<Tile>();
-            cardTileOwnershipContainer = new Dictionary<Card, Tile>();
+            cardTileOwnershipContainer = new Dictionary<Core.Card, Tile>();
             CreateTiles();
         }
 
@@ -87,7 +88,7 @@ namespace CardGame.View
             int tileHorizontalIndex = 0;
             int tileVerticalIndex = 0;
 
-            var tempContainer = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
+            var tempContainer = new Dictionary<Core.Card, Tile>(cardTileOwnershipContainer);
             for (int i = 0; i < cardContainer.Length; i++)
             {
                 if (tileHorizontalIndex + cardContainer[i].Length > handViewGridData.sizeX)
@@ -126,7 +127,7 @@ namespace CardGame.View
         private void AssignOrderedCards(NumericColoredCard[] notMatchedCards, Vector2Int startIndexes,
             Action onComplete = null)
         {
-            var tempContainerR = new Dictionary<Card, Tile>(cardTileOwnershipContainer);
+            var tempContainerR = new Dictionary<Core.Card, Tile>(cardTileOwnershipContainer);
 
             var currentIndex = startIndexes.x + startIndexes.y * handViewGridData.sizeX;
 

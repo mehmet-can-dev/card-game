@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Utilities
+namespace CardGame.View.Utilities
 {
     public static class IntUtilities
     {

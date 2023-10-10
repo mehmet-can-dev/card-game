@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using CardGame.View.InputSystem;
+using CardGame.View.Utilities;
+using UnityEngine;
 
-namespace CardGame.View
+namespace CardGame.View.Hand
 {
     public class TileInteractableModule : MonoBehaviour, IInteractable
     {

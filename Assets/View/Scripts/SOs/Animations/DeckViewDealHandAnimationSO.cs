@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CardGame.View
+namespace CardGame.View.SO.Animations
 {
     [CreateAssetMenu(fileName = "DeckViewDealHandAnimation", menuName = "CardGame/Animation/DeckDealAnimationSettings", order = 0)]
     public class DeckViewDealHandAnimationSO : ScriptableObject

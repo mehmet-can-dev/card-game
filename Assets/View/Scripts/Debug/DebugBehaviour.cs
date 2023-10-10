@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections;
-using CardGame.Core;
+using CardGame.View.Deck;
+using CardGame.View.Hand;
+using CardGame.View.SO;
 using UnityEngine;
 
-namespace CardGame.View.DebugUi
+namespace CardGame.View.DebugSystem
 {
     public class DebugBehaviour : MonoBehaviour
     {
-        private Hand hand;
-        private Deck deck;
+        private Core.Hand hand;
+        private Core.Deck deck;
         private HandViewBase handViewBase;
         private DeckViewBase deckViewBase;
 
@@ -16,7 +18,7 @@ namespace CardGame.View.DebugUi
 
         private bool isAnimationPlaying = false;
 
-        public void Init(BuilderSettingsSO builderSettingsSo, Hand hand, Deck deck, HandViewBase handViewBase,
+        public void Init(BuilderSettingsSO builderSettingsSo, Core.Hand hand, Core.Deck deck, HandViewBase handViewBase,
             DeckViewBase deckViewBase)
         {
             this.hand = hand;

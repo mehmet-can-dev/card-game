@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
-namespace CardGame.View.DebugUi
+namespace CardGame.View.DebugSystem
 {
     public class DebugCanvas : MonoBehaviour
     {
