@@ -9,7 +9,7 @@ using Color = UnityEngine.Color;
 
 namespace CardGame.View.Deck
 {
-    public class DeckViewBase : MonoBehaviour
+    public class DeckView : MonoBehaviour
     {
         [Header("Module References")] [SerializeField]
         private DeckViewCardSpawnerModule deckViewCardSpawnerModule;
@@ -28,8 +28,6 @@ namespace CardGame.View.Deck
         {
             this.deck = deck;
             this.deckColor = deckColor;
-            deckViewCardSpawnerModule.Init();
-            deckViewAnimationModule.Init();
             colorSetter.SetColor(deckColor);
             UpdateText(deck);
         }
@@ -39,7 +37,7 @@ namespace CardGame.View.Deck
             cardCountSpriteText.SetNumber(deck.CurrentCardCount);
         }
 
-        public CardViewBase DrawCard()
+        public CardView DrawCard()
         {
             var c = deck.DrawCard();
             UpdateText(deck);
@@ -53,7 +51,7 @@ namespace CardGame.View.Deck
             UpdateText(deck);
         }
 
-        public IEnumerator DeckToPlayerHandAnimation(HandViewBase targetHand, CardViewBase spawnedCard,
+        public IEnumerator DeckToPlayerHandAnimation(HandView targetHand, CardView spawnedCard,
             Tile connectTile)
         {
             var targetPos = connectTile.transform.position + Vector3.forward * LayerConstants.CARDLAYER;

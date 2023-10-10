@@ -5,6 +5,7 @@ using CardGame.View.Deck;
 using CardGame.View.Hand;
 using CardGame.View.SO;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CardGame.View
 {
@@ -12,9 +13,9 @@ namespace CardGame.View
     public class BuilderViewController : MonoBehaviour
     {
         [Header("Scene References")] [SerializeField]
-        private DeckViewBase deckViewBase;
+        private DeckView deckView;
 
-        [SerializeField] private HandViewBase handViewBase;
+        [SerializeField] private HandView handView;
         [SerializeField] private DebugBehaviour debugBehaviour;
 
         [Header("Project References")] [SerializeField]
@@ -27,13 +28,13 @@ namespace CardGame.View
         {
             deck = BuildDeck(builderSettingsSo.BuilderCountData);
 
-            deckViewBase.Init(deck, builderSettingsSo.BuilderViewData.deckColor);
+            deckView.Init(deck, builderSettingsSo.BuilderViewData.deckColor);
 
             hand = new Core.Hand(builderSettingsSo.BuilderCountData.handCount);
 
-            handViewBase.Init(hand);
+            handView.Init(hand);
 
-            debugBehaviour.Init(builderSettingsSo, hand, deck, handViewBase, deckViewBase);
+            debugBehaviour.Init(builderSettingsSo, hand, deck, handView, deckView);
         }
 
         private Core.Deck BuildDeck(BuilderCountData builderCountData)

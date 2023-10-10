@@ -8,18 +8,14 @@ namespace CardGame.View.Deck
     public class DeckViewCardSpawnerModule : MonoBehaviour
     {
         [Header("Project References")]
-        [SerializeField] private CardViewBase cardPrefab;
+        [SerializeField] private CardView cardPrefab;
         [Header("Child References")]
         [SerializeField] private Transform cardSpawnTransform;
 
         // Can be transfer another script for memory allocate
         private Quaternion cardSpawnRotation = Quaternion.AngleAxis(180, Vector3.up);
 
-        public void Init()
-        {
-        }
-
-        public CardViewBase SpawnCard(NumericColoredCard card,Color deckColor)
+        public CardView SpawnCard(NumericColoredCard card,Color deckColor)
         {
            var c= Instantiate(cardPrefab, cardSpawnTransform.position,cardSpawnRotation);
            c.Init(card,deckColor);

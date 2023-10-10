@@ -14,14 +14,14 @@ namespace CardGame.View.Hand
         [Header("Child References")] [SerializeField]
         private ColorSetterUseByProperty colorSetter;
 
-        private CardViewBase connectedCard;
-        public CardViewBase GetConnectedCard => connectedCard;
+        private CardView connectedCard;
+        public CardView GetConnectedCard => connectedCard;
 
-        private Action<Tile, CardViewBase> onCardConnect;
-        private Action<Tile, CardViewBase> onCardReset;
+        private Action<Tile, CardView> onCardConnect;
+        private Action<Tile, CardView> onCardReset;
 
-        public void Init(Color tileColor, Action<Tile, CardViewBase> onCardConnect,
-            Action<Tile, CardViewBase> onCardReset)
+        public void Init(Color tileColor, Action<Tile, CardView> onCardConnect,
+            Action<Tile, CardView> onCardReset)
         {
             this.onCardConnect = onCardConnect;
             this.onCardReset = onCardReset;
@@ -29,14 +29,14 @@ namespace CardGame.View.Hand
             tileInteractableModule.Init(this);
         }
 
-        public void ConnectCard(CardViewBase connectCard)
+        public void ConnectCard(CardView connectCard)
         {
             connectCard.transform.SetParent(transform);
             connectedCard = connectCard;
             onCardConnect?.Invoke(this, connectCard);
         }
 
-        public void ConnectCardWithoutNotify(CardViewBase connectCard)
+        public void ConnectCardWithoutNotify(CardView connectCard)
         {
             connectCard.transform.SetParent(transform);
             connectedCard = connectCard;

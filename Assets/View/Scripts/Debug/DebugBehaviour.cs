@@ -11,20 +11,20 @@ namespace CardGame.View.DebugSystem
     {
         private Core.Hand hand;
         private Core.Deck deck;
-        private HandViewBase handViewBase;
-        private DeckViewBase deckViewBase;
+        private HandView handView;
+        private DeckView deckView;
 
         private BuilderSettingsSO builderSettingsSo;
 
         private bool isAnimationPlaying = false;
 
-        public void Init(BuilderSettingsSO builderSettingsSo, Core.Hand hand, Core.Deck deck, HandViewBase handViewBase,
-            DeckViewBase deckViewBase)
+        public void Init(BuilderSettingsSO builderSettingsSo, Core.Hand hand, Core.Deck deck, HandView handView,
+            DeckView deckView)
         {
             this.hand = hand;
             this.deck = deck;
-            this.handViewBase = handViewBase;
-            this.deckViewBase = deckViewBase;
+            this.handView = handView;
+            this.deckView = deckView;
             this.builderSettingsSo = builderSettingsSo;
         }
 
@@ -36,7 +36,7 @@ namespace CardGame.View.DebugSystem
                 return;
             isAnimationPlaying = true;
 
-            handViewBase.SortHandByNumeric(builderSettingsSo.SortViewData, ResetAnimationPLaying);
+            handView.SortHandByNumeric(builderSettingsSo.SortViewData, ResetAnimationPLaying);
         }
 
         public void SortHandByColor()
@@ -47,7 +47,7 @@ namespace CardGame.View.DebugSystem
                 return;
             isAnimationPlaying = true;
 
-            handViewBase.SortHandByColored(builderSettingsSo.SortViewData, ResetAnimationPLaying);
+            handView.SortHandByColored(builderSettingsSo.SortViewData, ResetAnimationPLaying);
         }
 
         public void SortHandBySmartSort()
@@ -58,7 +58,7 @@ namespace CardGame.View.DebugSystem
                 return;
             isAnimationPlaying = true;
 
-            handViewBase.SortHandBySmart(builderSettingsSo.SortViewData, ResetAnimationPLaying);
+            handView.SortHandBySmart(builderSettingsSo.SortViewData, ResetAnimationPLaying);
         }
 
         public void DealHand()
@@ -94,16 +94,16 @@ namespace CardGame.View.DebugSystem
         // Can move another script for animations
         private IEnumerator DealHandAnimation(Action onComplete)
         {
-            int count = handViewBase.Hand.MaxCount;
+            int count = handView.Hand.MaxCount;
             for (int i = 0; i < count; i++)
             {
-                var spawnedCard = deckViewBase.DrawCard();
-                var connectTile = handViewBase.AddCardToTile(spawnedCard);
+                var spawnedCard = deckView.DrawCard();
+                var connectTile = handView.AddCardToTile(spawnedCard);
                 if (i != count - 1)
-                    StartCoroutine(deckViewBase.DeckToPlayerHandAnimation(handViewBase, spawnedCard, connectTile));
+                    StartCoroutine(deckView.DeckToPlayerHandAnimation(handView, spawnedCard, connectTile));
                 else
                     yield return StartCoroutine(
-                        deckViewBase.DeckToPlayerHandAnimation(handViewBase, spawnedCard, connectTile));
+                        deckView.DeckToPlayerHandAnimation(handView, spawnedCard, connectTile));
 
                 yield return null;
             }
@@ -114,17 +114,17 @@ namespace CardGame.View.DebugSystem
         // Can move another script for animations
         private IEnumerator ClearHandAnimation(Action onComplete)
         {
-            var handCount = handViewBase.Hand.CurrentCardCount;
+            var handCount = handView.Hand.CurrentCardCount;
             for (int i = 0; i < handCount; i++)
             {
-                var spawnedCard = handViewBase.RemoveCardFromTile();
+                var spawnedCard = handView.RemoveCardFromTile();
                 var numericCard = spawnedCard.Card;
-                deckViewBase.AddCard(numericCard);
+                deckView.AddCard(numericCard);
                 if (i != handCount - 1)
-                    spawnedCard.MoveTargetPosition(deckViewBase.transform.position + Vector3.forward,
+                    spawnedCard.MoveTargetPosition(deckView.transform.position + Vector3.forward,
                         () => Destroy(spawnedCard.gameObject));
                 else
-                    spawnedCard.MoveTargetPosition(deckViewBase.transform.position + Vector3.forward,
+                    spawnedCard.MoveTargetPosition(deckView.transform.position + Vector3.forward,
                         () =>
                         {
                             Destroy(spawnedCard.gameObject);
@@ -135,7 +135,7 @@ namespace CardGame.View.DebugSystem
                 yield return null;
             }
 
-            deckViewBase.Shuffle();
+            deckView.Shuffle();
         }
     }
 }

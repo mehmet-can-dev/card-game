@@ -9,7 +9,7 @@ using Color = UnityEngine.Color;
 
 namespace CardGame.View.Card
 {
-    public class CardViewBase : MonoBehaviour
+    public class CardView : MonoBehaviour
     {
         [Header("Module References")] [SerializeField]
         private CardViewAnimationModule cardViewAnimationModule;
@@ -36,8 +36,6 @@ namespace CardGame.View.Card
             backColorSetter.SetColor(backColor);
             outLineColorSetter.SetColor(Color.cyan);
             cardNoSpriteText.SetNumber(card.No);
-
-            cardViewAnimationModule.Init();
 
             if (card is JokerCard)
                 jokerGameObject.SetActive(true);

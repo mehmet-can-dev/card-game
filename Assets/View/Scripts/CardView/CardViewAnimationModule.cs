@@ -11,10 +11,6 @@ namespace CardGame.View.Card
         [Header("Project References")] [SerializeField]
         private CardViewAnimationSettingsSO animationSettingsSo;
 
-        public void Init()
-        {
-        }
-
         public IEnumerator MovePosition(Vector3 pos, Action onComplete)
         {
             yield return transform.DOMove(pos, animationSettingsSo.duration).SetEase(animationSettingsSo.curve)

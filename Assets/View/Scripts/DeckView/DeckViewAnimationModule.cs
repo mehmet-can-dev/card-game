@@ -11,14 +11,10 @@ namespace CardGame.View.Deck
         [Header("Project References")] [SerializeField]
         private DeckViewDealHandAnimationSO deckViewDealHandAnimation;
 
-        public void Init()
+        public IEnumerator CardSpawnAnimation(CardView cardView, Vector3 targetPosition)
         {
-        }
-
-        public IEnumerator CardSpawnAnimation(CardViewBase cardViewBase, Vector3 targetPosition)
-        {
-            cardViewBase.transform.DORotateQuaternion(Quaternion.identity, deckViewDealHandAnimation.flipDuration);
-            yield return cardViewBase.transform
+            cardView.transform.DORotateQuaternion(Quaternion.identity, deckViewDealHandAnimation.flipDuration);
+            yield return cardView.transform
                 .DOJump(targetPosition, deckViewDealHandAnimation.jumpPower, 1, deckViewDealHandAnimation.jumpDuration)
                 .SetEase(deckViewDealHandAnimation.jumpCurve).WaitForCompletion();
         }

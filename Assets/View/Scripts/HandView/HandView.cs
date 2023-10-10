@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CardGame.View.Hand
 {
-    public class HandViewBase : MonoBehaviour
+    public class HandView : MonoBehaviour
     {
         [Header("Module References")] [SerializeField]
         private HandViewGridModule handViewGridModule;
@@ -21,15 +21,15 @@ namespace CardGame.View.Hand
             handViewGridModule.Init();
         }
 
-        public Tile AddCardToTile(CardViewBase cardViewBase)
+        public Tile AddCardToTile(CardView cardView)
         {
             var tile = handViewGridModule.GetEmptyTile();
-            hand.AddCard(cardViewBase.Card);
-            handViewGridModule.ConnectCardToTile(tile, cardViewBase);
+            hand.AddCard(cardView.Card);
+            handViewGridModule.ConnectCardToTile(tile, cardView);
             return tile;
         }
 
-        public CardViewBase RemoveCardFromTile()
+        public CardView RemoveCardFromTile()
         {
             var card = hand.DrawCard();
             var tile = handViewGridModule.GetConnectedTile(card);

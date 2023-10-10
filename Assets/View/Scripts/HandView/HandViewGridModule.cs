@@ -30,10 +30,10 @@ namespace CardGame.View.Hand
             CreateTiles();
         }
 
-        public void ConnectCardToTile(Tile tile, CardViewBase cardViewBase)
+        public void ConnectCardToTile(Tile tile, CardView cardView)
         {
-            cardTileOwnershipContainer.Add(cardViewBase.Card, tile);
-            tile.ConnectCardWithoutNotify(cardViewBase);
+            cardTileOwnershipContainer.Add(cardView.Card, tile);
+            tile.ConnectCardWithoutNotify(cardView);
         }
 
         public void RemoveConnectionCardFromTile(NumericColoredCard card, Tile tile)
@@ -166,14 +166,14 @@ namespace CardGame.View.Hand
             cardTileOwnershipContainer[card] = tiles[tilesIndex];
         }
 
-        private void OnCardConnectedTile(Tile tile, CardViewBase cardViewBase)
+        private void OnCardConnectedTile(Tile tile, CardView cardView)
         {
-            cardTileOwnershipContainer.Add(cardViewBase.Card, tile);
+            cardTileOwnershipContainer.Add(cardView.Card, tile);
         }
 
-        private void OnCardDisconnectedTile(Tile tile, CardViewBase cardViewBase)
+        private void OnCardDisconnectedTile(Tile tile, CardView cardView)
         {
-            cardTileOwnershipContainer.Remove(cardViewBase.Card);
+            cardTileOwnershipContainer.Remove(cardView.Card);
         }
 
 
