@@ -19,32 +19,36 @@ namespace CardGame.View.Hand
             if (!tile.IsCardConnected())
                 return;
 
-            tile.GetConnectedCard.SelectCard();
+            var cardView=tile.GetConnectedCard;
+            
+            cardView.SelectCard();
 
-            var cardPos = tile.GetConnectedCard.transform.position;
+            var cardPos = cardView.transform.position;
             offset = cardPos - pos;
             offset.z = 0;
 
             cardPos.x = pos.x;
             cardPos.y = pos.y;
             cardPos.z = LayerConstants.SELECTEDCARDLAYER;
-            tile.GetConnectedCard.transform.position = cardPos + offset;
+            cardView.transform.position = cardPos + offset;
         }
 
         public void OnDrag(Vector3 pos)
         {
             if (!tile.IsCardConnected())
                 return;
+            
+            var cardView=tile.GetConnectedCard;
 
-            var cardPos = tile.GetConnectedCard.transform.position;
+            var cardPos = cardView.transform.position;
             offset.z = 0;
 
             cardPos.x = pos.x;
             cardPos.y = pos.y;
-            tile.GetConnectedCard.transform.position = cardPos + offset;
+            cardView.transform.position = cardPos + offset;
         }
 
-        public void OnInteractEnded(Vector3 pos)
+        public void OnInteractEnded()
         {
             if (!tile.IsCardConnected())
                 return;

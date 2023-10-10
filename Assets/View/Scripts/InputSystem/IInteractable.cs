@@ -8,6 +8,6 @@ namespace CardGame.View.InputSystem
 
         public void OnDrag(Vector3 pos);
 
-        public void OnInteractEnded(Vector3 pos);
+        public void OnInteractEnded();
     }
 }
