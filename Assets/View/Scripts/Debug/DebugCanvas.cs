@@ -5,7 +5,7 @@ namespace CardGame.View.DebugSystem
     public class DebugCanvas : MonoBehaviour
     {
         [SerializeField] private Canvas canvas;
-         [SerializeField] private DebugBehaviour debugBehaviour;
+        [SerializeField] private DebugBehaviour debugBehaviour;
 
         private void Start()
         {

@@ -100,10 +100,11 @@ namespace CardGame.View.DebugSystem
                 var spawnedCard = deckView.DrawCard();
                 var connectTile = handView.AddCardToTile(spawnedCard);
                 if (i != count - 1)
-                    StartCoroutine(deckView.DeckToPlayerHandAnimation(handView, spawnedCard, connectTile));
+                    StartCoroutine(
+                        deckView.DeckViewAnimationModuleModule.DeckToPlayerHandAnimation(spawnedCard, connectTile));
                 else
                     yield return StartCoroutine(
-                        deckView.DeckToPlayerHandAnimation(handView, spawnedCard, connectTile));
+                        deckView.DeckViewAnimationModuleModule.DeckToPlayerHandAnimation(spawnedCard, connectTile));
 
                 yield return null;
             }
