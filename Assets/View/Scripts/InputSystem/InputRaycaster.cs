@@ -4,8 +4,8 @@ namespace CardGame.View.InputSystem
 {
     public class InputRaycaster : MonoBehaviour
     {
-        [Header("Scene References")]
-        [SerializeField] private Camera mainCamera;
+        [Header("Scene References")] [SerializeField]
+        private Camera mainCamera;
 
         private bool isPressed = false;
         private IInteractable iInteractable;
@@ -40,8 +40,7 @@ namespace CardGame.View.InputSystem
             {
                 if (iInteractable != null)
                 {
-                    var worldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                    iInteractable.OnInteractEnded(worldPos);
+                    iInteractable.OnInteractEnded();
                     iInteractable = null;
                 }
 
