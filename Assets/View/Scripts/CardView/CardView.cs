@@ -9,12 +9,13 @@ using Color = UnityEngine.Color;
 
 namespace CardGame.View.Card
 {
+    [RequireComponent(typeof(ICardViewAnimationModule))]
+    [RequireComponent(typeof(ICardViewFinderModule))]
     public class CardView : MonoBehaviour
     {
-        [Header("Module References")] [SerializeField]
-        private CardViewAnimationModule cardViewAnimationModule;
+        private ICardViewAnimationModule cardViewAnimationModule;
 
-        [SerializeField] private CardViewBoxCasterModule cardViewBoxCasterModuleModule;
+         private ICardViewFinderModule cardViewFinderModule;
 
         [Header("Child References")] [SerializeField]
         private ColorSetterUseByProperty frontColorSetter;
@@ -37,6 +38,9 @@ namespace CardGame.View.Card
             outLineColorSetter.SetColor(Color.cyan);
             cardNoSpriteText.SetNumber(card.No);
 
+            cardViewAnimationModule = GetComponent<ICardViewAnimationModule>();
+            cardViewFinderModule = GetComponent<ICardViewFinderModule>();
+            
             if (card is JokerCard)
                 jokerGameObject.SetActive(true);
             else
@@ -52,7 +56,7 @@ namespace CardGame.View.Card
 
         public Tile FindClosestTile()
         {
-            return cardViewBoxCasterModuleModule.FindClosestTile();
+            return cardViewFinderModule.FindClosestTile();
         }
 
         public void SelectCard()

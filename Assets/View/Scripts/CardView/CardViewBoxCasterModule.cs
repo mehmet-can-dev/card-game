@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CardGame.View.Card
 {
-    public class CardViewBoxCasterModule : MonoBehaviour
+    public class CardViewBoxCasterModule : MonoBehaviour,ICardViewFinderModule
     {
         [Header("Variable References")] [SerializeField]
         private LayerMask layerMask;

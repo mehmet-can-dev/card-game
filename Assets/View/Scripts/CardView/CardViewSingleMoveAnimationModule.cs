@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CardGame.View.Card
 {
-    public class CardViewAnimationModule : MonoBehaviour
+    public class CardViewSingleMoveAnimationModule : MonoBehaviour, ICardViewAnimationModule
     {
         [Header("Project References")] [SerializeField]
         private CardViewAnimationSettingsSO animationSettingsSo;
