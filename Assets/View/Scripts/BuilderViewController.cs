@@ -40,7 +40,7 @@ namespace CardGame.View
         private Core.Deck BuildDeck(BuilderCountData builderCountData)
         {
             var builder = new DeckBuilder(builderCountData.deckCount, builderCountData.cardPerDeck,
-                ColorLogic.UsedColors);
+                ColorConstants.UsedColors);
 
             var decks = builder.Build();
             var mergedDeck = DeckBuilder.MergeDeck(decks);

@@ -8,19 +8,19 @@ namespace CardGame.Core.Test.Testables
         {
             return new NumericColoredCard[]
             {
-                new NumericColoredCard(0, 1, ColorLogic.red),
-                new NumericColoredCard(1, 2, ColorLogic.red),
-                new NumericColoredCard(2, 3, ColorLogic.red),
-                new NumericColoredCard(3, 4, ColorLogic.red),
-                new NumericColoredCard(4, 5, ColorLogic.red),
-                new NumericColoredCard(5, 6, ColorLogic.red),
-                new NumericColoredCard(6, 7, ColorLogic.red),
-                new NumericColoredCard(7, 8, ColorLogic.red),
-                new NumericColoredCard(8, 9, ColorLogic.red),
-                new NumericColoredCard(9, 10, ColorLogic.red),
-                new NumericColoredCard(10, 11, ColorLogic.red),
-                new NumericColoredCard(11, 12, ColorLogic.red),
-                new NumericColoredCard(12, 13, ColorLogic.red),
+                new NumericColoredCard(0, 1, ColorConstants.Red),
+                new NumericColoredCard(1, 2, ColorConstants.Red),
+                new NumericColoredCard(2, 3, ColorConstants.Red),
+                new NumericColoredCard(3, 4, ColorConstants.Red),
+                new NumericColoredCard(4, 5, ColorConstants.Red),
+                new NumericColoredCard(5, 6, ColorConstants.Red),
+                new NumericColoredCard(6, 7, ColorConstants.Red),
+                new NumericColoredCard(7, 8, ColorConstants.Red),
+                new NumericColoredCard(8, 9, ColorConstants.Red),
+                new NumericColoredCard(9, 10, ColorConstants.Red),
+                new NumericColoredCard(10, 11, ColorConstants.Red),
+                new NumericColoredCard(11, 12, ColorConstants.Red),
+                new NumericColoredCard(12, 13, ColorConstants.Red),
             };
         }
 
@@ -30,19 +30,19 @@ namespace CardGame.Core.Test.Testables
             {
                 new[]
                 {
-                    new NumericColoredCard(0, 1, ColorLogic.red),
-                    new NumericColoredCard(1, 2, ColorLogic.red),
-                    new NumericColoredCard(2, 3, ColorLogic.red),
-                    new NumericColoredCard(3, 4, ColorLogic.red),
-                    new NumericColoredCard(4, 5, ColorLogic.red),
-                    new NumericColoredCard(5, 6, ColorLogic.red),
-                    new NumericColoredCard(6, 7, ColorLogic.red),
-                    new NumericColoredCard(7, 8, ColorLogic.red),
-                    new NumericColoredCard(8, 9, ColorLogic.red),
-                    new NumericColoredCard(9, 10, ColorLogic.red),
-                    new NumericColoredCard(10, 11, ColorLogic.red),
-                    new NumericColoredCard(11, 12, ColorLogic.red),
-                    new NumericColoredCard(12, 13, ColorLogic.red),
+                    new NumericColoredCard(0, 1, ColorConstants.Red),
+                    new NumericColoredCard(1, 2, ColorConstants.Red),
+                    new NumericColoredCard(2, 3, ColorConstants.Red),
+                    new NumericColoredCard(3, 4, ColorConstants.Red),
+                    new NumericColoredCard(4, 5, ColorConstants.Red),
+                    new NumericColoredCard(5, 6, ColorConstants.Red),
+                    new NumericColoredCard(6, 7, ColorConstants.Red),
+                    new NumericColoredCard(7, 8, ColorConstants.Red),
+                    new NumericColoredCard(8, 9, ColorConstants.Red),
+                    new NumericColoredCard(9, 10, ColorConstants.Red),
+                    new NumericColoredCard(10, 11, ColorConstants.Red),
+                    new NumericColoredCard(11, 12, ColorConstants.Red),
+                    new NumericColoredCard(12, 13, ColorConstants.Red),
                 }
             };
 
@@ -55,19 +55,19 @@ namespace CardGame.Core.Test.Testables
         {
             notSortedCards = new[]
             {
-                new NumericColoredCard(0, 1, ColorLogic.red),
-                new NumericColoredCard(1, 2, ColorLogic.red),
-                new NumericColoredCard(2, 3, ColorLogic.red),
-                new NumericColoredCard(3, 4, ColorLogic.red),
-                new NumericColoredCard(4, 5, ColorLogic.red),
-                new NumericColoredCard(5, 6, ColorLogic.red),
-                new NumericColoredCard(6, 7, ColorLogic.red),
-                new NumericColoredCard(7, 8, ColorLogic.red),
-                new NumericColoredCard(8, 9, ColorLogic.red),
-                new NumericColoredCard(9, 10, ColorLogic.red),
-                new NumericColoredCard(10, 11, ColorLogic.red),
-                new NumericColoredCard(11, 12, ColorLogic.red),
-                new NumericColoredCard(12, 13, ColorLogic.red),
+                new NumericColoredCard(0, 1, ColorConstants.Red),
+                new NumericColoredCard(1, 2, ColorConstants.Red),
+                new NumericColoredCard(2, 3, ColorConstants.Red),
+                new NumericColoredCard(3, 4, ColorConstants.Red),
+                new NumericColoredCard(4, 5, ColorConstants.Red),
+                new NumericColoredCard(5, 6, ColorConstants.Red),
+                new NumericColoredCard(6, 7, ColorConstants.Red),
+                new NumericColoredCard(7, 8, ColorConstants.Red),
+                new NumericColoredCard(8, 9, ColorConstants.Red),
+                new NumericColoredCard(9, 10, ColorConstants.Red),
+                new NumericColoredCard(10, 11, ColorConstants.Red),
+                new NumericColoredCard(11, 12, ColorConstants.Red),
+                new NumericColoredCard(12, 13, ColorConstants.Red),
             };
             return Array.Empty<NumericColoredCard[]>();
         }
@@ -78,19 +78,19 @@ namespace CardGame.Core.Test.Testables
             {
                 new[]
                 {
-                    new NumericColoredCard(0, 1, ColorLogic.red),
-                    new NumericColoredCard(1, 2, ColorLogic.red),
-                    new NumericColoredCard(2, 3, ColorLogic.red),
-                    new NumericColoredCard(3, 4, ColorLogic.red),
-                    new NumericColoredCard(4, 5, ColorLogic.red),
-                    new NumericColoredCard(5, 6, ColorLogic.red),
-                    new NumericColoredCard(6, 7, ColorLogic.red),
-                    new NumericColoredCard(7, 8, ColorLogic.red),
-                    new NumericColoredCard(8, 9, ColorLogic.red),
-                    new NumericColoredCard(9, 10, ColorLogic.red),
-                    new NumericColoredCard(10, 11, ColorLogic.red),
-                    new NumericColoredCard(11, 12, ColorLogic.red),
-                    new NumericColoredCard(12, 13, ColorLogic.red),
+                    new NumericColoredCard(0, 1, ColorConstants.Red),
+                    new NumericColoredCard(1, 2, ColorConstants.Red),
+                    new NumericColoredCard(2, 3, ColorConstants.Red),
+                    new NumericColoredCard(3, 4, ColorConstants.Red),
+                    new NumericColoredCard(4, 5, ColorConstants.Red),
+                    new NumericColoredCard(5, 6, ColorConstants.Red),
+                    new NumericColoredCard(6, 7, ColorConstants.Red),
+                    new NumericColoredCard(7, 8, ColorConstants.Red),
+                    new NumericColoredCard(8, 9, ColorConstants.Red),
+                    new NumericColoredCard(9, 10, ColorConstants.Red),
+                    new NumericColoredCard(10, 11, ColorConstants.Red),
+                    new NumericColoredCard(11, 12, ColorConstants.Red),
+                    new NumericColoredCard(12, 13, ColorConstants.Red),
                 }
             };
 

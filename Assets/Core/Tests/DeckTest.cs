@@ -10,7 +10,7 @@ namespace CardGame.Core.Test
         public int jokerCount = 4;
         public int deckDrawCount = 25;
 
-        public Color[] colors = ColorLogic.UsedColors;
+        public Color[] colors = ColorConstants.UsedColors;
 
 
         [Test]
