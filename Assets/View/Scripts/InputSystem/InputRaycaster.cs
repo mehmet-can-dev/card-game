@@ -10,6 +10,9 @@ namespace CardGame.View.InputSystem
         private bool isPressed = false;
         private IInteractable iInteractable;
 
+        private Vector3 inputDelta;
+        private Vector3 previousFrameInputPosition;
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -22,17 +25,23 @@ namespace CardGame.View.InputSystem
                         iInteractable = interactable;
                         var worldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                         interactable.OnInteractStarted(worldPos);
+                        previousFrameInputPosition = Input.mousePosition;
                         isPressed = true;
                     }
                 }
             }
-
-            if (isPressed)
+            else if (isPressed)
             {
                 if (iInteractable != null)
                 {
-                    var worldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                    iInteractable.OnDrag(worldPos);
+                    if (inputDelta.sqrMagnitude != 0)
+                    {
+                        var worldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                        iInteractable.OnDrag(worldPos);
+                    }
+
+                    inputDelta = Input.mousePosition - previousFrameInputPosition;
+                    previousFrameInputPosition = Input.mousePosition;
                 }
             }
 
