@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace CardGame.Core.Sort
 {
@@ -35,12 +34,9 @@ namespace CardGame.Core.Sort
 
             nodeList.RemoveAll(p => p.isSelected);
 
-            Debug.Log("------------>Not Matches");
-
             for (int i = 0; i < nodeList.Count; i++)
             {
                 notMatched.Add(nodeList[i].card);
-                Debug.Log(nodeList[i].card.ToStringBuilder());
             }
 
             notSortedCards = notMatched.ToArray();
@@ -119,7 +115,6 @@ namespace CardGame.Core.Sort
         {
             for (int j = 0; j < jokerNodes.Count; j++)
             {
-                Debug.Log("------------>Matches by Joker");
                 nodeList.Add(jokerNodes[j]);
                 CrateConnections(nodeList);
 
@@ -147,8 +142,7 @@ namespace CardGame.Core.Sort
         private static void FindMatchedWithoutJokers(int min, List<CardNode> nodeList,
             List<MatchedConnections<NumericColoredCard>> matchedCardsList)
         {
-            Debug.Log("----------->Matches");
-
+            
             for (int k = 0; k < nodeList.Count; k++)
             {
                 if (nodeList[k].card is JokerCard)
@@ -195,13 +189,11 @@ namespace CardGame.Core.Sort
                 for (int i = 0; i < longestList.matchedCards.Count; i++)
                 {
                     longestList.matchedCards[i].isSelected = true;
-                    Debug.Log(longestList.matchedCards[i].card.ToStringBuilder());
                     matchList.matchedCards.Add(longestList.matchedCards[i].card);
                     matchList.conectionType = longestList.conectionType;
                 }
 
                 matchedCardsList.Add(matchList);
-                Debug.Log("");
             }
         }
 

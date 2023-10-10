@@ -90,7 +90,7 @@ namespace CardGame.Core
 
         public void Shuffle()
         {
-            Cards.Shuffle(firstCardIndex);
+            Cards.ShuffleWithRandomSeed(firstCardIndex);
         }
     }
 }

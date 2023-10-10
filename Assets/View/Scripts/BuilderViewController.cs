@@ -28,7 +28,7 @@ namespace CardGame.View
 
         void Start()
         {
-            RandomLogic.AssignRandomSeed();
+            //RandomLogic.AssignRandomSeed();
 
             deck = BuildDeck(builderSettingsSo.BuilderCountData);
 
