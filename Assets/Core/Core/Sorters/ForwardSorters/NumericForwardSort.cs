@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace CardGame.Core.Sort.Forward
 {
     public class NumericForwardSort : ISort

@@ -9,23 +9,41 @@ namespace CardGame.View.DebugSystem
 
         private void Start()
         {
-            UiDebugFunctions.CreateDebugUIButton(canvas, debugBehaviour.DealHand, 0, "Deal Hands");
-            UiDebugFunctions.CreateDebugUIButton(canvas, debugBehaviour.ClearHand, 1, "Clear Hands");
-            UiDebugFunctions.CreateDebugUIButton(canvas, () =>
+            UiDebugFunctions.CreateDebugUIButtonLeft(canvas, debugBehaviour.DealHand, 0, "Deal Hands");
+            UiDebugFunctions.CreateDebugUIButtonLeft(canvas, debugBehaviour.ClearHand, 1, "Clear Hands");
+            
+            UiDebugFunctions.CreateDebugUIButtonLeft(canvas, () =>
             {
-                debugBehaviour.SetSortLogicNumeric();
+                debugBehaviour.SetSortLogicForwardNumeric();
                 debugBehaviour.Sort();
-            }, 2, "Numeric Sort");
-            UiDebugFunctions.CreateDebugUIButton(canvas, () =>
+            }, 3, "Forward Numeric Sort");
+            UiDebugFunctions.CreateDebugUIButtonLeft(canvas, () =>
             {
-                debugBehaviour.SetSortLogicColored();
+                debugBehaviour.SetSortLogicForwardColored();
                 debugBehaviour.Sort();
-            }, 3, "Colored Sort");
-            UiDebugFunctions.CreateDebugUIButton(canvas, () =>
+            }, 4, "Forward Colored Sort");
+            
+            
+            UiDebugFunctions.CreateDebugUIButtonRight(canvas, () =>
             {
-                debugBehaviour.SetSortLogicSmart();
+                debugBehaviour.SetSortLogicRecursiveNumeric();
                 debugBehaviour.Sort();
-            }, 4, "Smart Sort");
+            }, 0, "Smart Numeric Sort");
+
+            UiDebugFunctions.CreateDebugUIButtonRight(canvas, () =>
+            {
+                debugBehaviour.SetSortLogicRecursiveColored();
+                debugBehaviour.Sort();
+            }, 1, "Smart Colored Sort");
+            
+            UiDebugFunctions.CreateDebugUIButtonRight(canvas, () =>
+            {
+                debugBehaviour.SetSortLogicRecursiveSmart();
+                debugBehaviour.Sort();
+            }, 2, "Smart Sort");
+            
+         
+          
         }
     }
 }

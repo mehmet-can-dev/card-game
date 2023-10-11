@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections;
-using CardGame.Core.Sort;
 using CardGame.Core.Sort.Forward;
 using CardGame.Core.Sort.Recursive;
 using CardGame.View.Deck;
 using CardGame.View.Hand;
-using CardGame.View.SO;
 using UnityEngine;
 
 namespace CardGame.View.DebugSystem
@@ -29,19 +27,29 @@ namespace CardGame.View.DebugSystem
             builderViewController = viewController;
         }
 
-        public void SetSortLogicNumeric()
+        public void SetSortLogicForwardNumeric()
         {
             builderViewController.SetNewSorter(new NumericForwardSort());
         }
 
-        public void SetSortLogicColored()
+        public void SetSortLogicForwardColored()
         {
             builderViewController.SetNewSorter(new ColoredForwardSort());
         }
 
-        public void SetSortLogicSmart()
+        public void SetSortLogicRecursiveSmart()
         {
             builderViewController.SetNewSorter(new SmartRecursiveSort());
+        }
+
+        public void SetSortLogicRecursiveNumeric()
+        {
+            builderViewController.SetNewSorter(new SmartNumericSort());
+        }
+
+        public void SetSortLogicRecursiveColored()
+        {
+            builderViewController.SetNewSorter(new SmartColoredSort());
         }
 
         public void Sort()
