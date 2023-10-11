@@ -4,35 +4,20 @@ using System.Linq;
 
 namespace CardGame.Core.Sort.Recursive
 {
-    public class SmartSort : ISort
+    public abstract class RecursiveSortBase : ISort
     {
-        private static readonly List<PredictionData> SmartPrediction_WithJoker = new()
+       
+        protected virtual List<PredictionData> GetWithJokerPredictionList()
         {
-            new PredictionData
-            {
-                PredictionConnectionType = ConnectionType.Colored,
-                Prediction = (p) => p.conectionType is ConnectionType.Colored or ConnectionType.Unknown
-            },
-            new PredictionData
-            {
-                PredictionConnectionType = ConnectionType.Numeric,
-                Prediction = (p) => p.conectionType is ConnectionType.Numeric or ConnectionType.Unknown
-            }
-        };
+            throw new Exception("Assign Prediction");
+            return null;
+        }
 
-        private static readonly List<PredictionData> SmartPrediction_WithoutJoker = new()
+        protected virtual List<PredictionData> GetWithoutJokerPredictionList()
         {
-            new PredictionData
-            {
-                PredictionConnectionType = ConnectionType.Colored,
-                Prediction = (p) => p.conectionType is ConnectionType.Colored
-            },
-            new PredictionData
-            {
-                PredictionConnectionType = ConnectionType.Numeric,
-                Prediction = (p) => p.conectionType is ConnectionType.Numeric
-            }
-        };
+            throw new Exception("Assign Prediction");
+            return null;
+        }
 
         public NumericColoredCard[][] Sort(NumericColoredCard[] cards, out NumericColoredCard[] notSortedCards,
             int minCardCount,
@@ -84,7 +69,7 @@ namespace CardGame.Core.Sort.Recursive
         }
 
 
-        private static void FindMatchedWithJokerFromNotMatched(int min, List<CardNodeData> jokerNodes,
+        private void FindMatchedWithJokerFromNotMatched(int min, List<CardNodeData> jokerNodes,
             List<CardNodeData> nodeList, List<MatchedConnectionsData<NumericColoredCard>> matchedCardsList)
         {
             for (int j = 0; j < jokerNodes.Count; j++)
@@ -101,7 +86,7 @@ namespace CardGame.Core.Sort.Recursive
                     if (nodeList[k].isSelected)
                         continue;
 
-                    RecursiveLogic.TryFindSingleNodeMatches(list, nodeList, k, SmartPrediction_WithJoker);
+                    RecursiveLogic.TryFindSingleNodeMatches(list, nodeList, k, GetWithJokerPredictionList());
                 }
 
                 RecursiveLogic.FindMaxLenghtMatched(min, matchedCardsList, list);
@@ -110,7 +95,7 @@ namespace CardGame.Core.Sort.Recursive
             }
         }
 
-        private static void FindMatchedWithoutJokers(int min, List<CardNodeData> nodeList,
+        private void FindMatchedWithoutJokers(int min, List<CardNodeData> nodeList,
             List<MatchedConnectionsData<NumericColoredCard>> matchedCardsList)
         {
             for (int k = 0; k < nodeList.Count; k++)
@@ -125,7 +110,7 @@ namespace CardGame.Core.Sort.Recursive
 
 
                 RecursiveLogic.TryFindSingleNodeMatches(list, nodeList, k,
-                    SmartPrediction_WithoutJoker);
+                    GetWithoutJokerPredictionList());
 
                 RecursiveLogic.FindMaxLenghtMatched(min, matchedCardsList, list);
             }

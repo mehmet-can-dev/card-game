@@ -169,7 +169,7 @@ namespace CardGame.Core.Test
         {
             LogAssert.Expect(LogType.Log, "Log");
 
-            var sorter = new SmartSort();
+            var sorter = new SmartRecursiveSort();
 
             var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
                 1, 13);

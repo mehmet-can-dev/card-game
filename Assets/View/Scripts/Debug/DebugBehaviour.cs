@@ -41,7 +41,7 @@ namespace CardGame.View.DebugSystem
 
         public void SetSortLogicSmart()
         {
-            builderViewController.SetNewSorter(new SmartSort());
+            builderViewController.SetNewSorter(new SmartRecursiveSort());
         }
 
         public void Sort()
