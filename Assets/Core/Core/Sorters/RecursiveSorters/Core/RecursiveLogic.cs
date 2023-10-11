@@ -74,8 +74,6 @@ namespace CardGame.Core.Sort.Recursive
         {
             var selectedCard = selectedConnection[i].FromNodeData.card;
 
-            connections.Add(selectedConnection[i].ToNodeData);
-
             ConnectionData conneciton = null;
             switch (type)
             {
@@ -95,7 +93,7 @@ namespace CardGame.Core.Sort.Recursive
                     break;
                 case ConnectionType.Numeric:
                     conneciton = LookConnectionsSpecific(selectedConnection[i].ToNodeData,
-                        p => p.Color == selectedCard.Color && p.No == selectedCard.No -2);
+                        p => p.Color == selectedCard.Color && p.No == selectedCard.No - 2);
                     break;
                 case ConnectionType.Unknown:
                     break;
@@ -106,8 +104,11 @@ namespace CardGame.Core.Sort.Recursive
 
             if (conneciton != null)
             {
+                connections.Add(selectedConnection[i].ToNodeData);
+
                 if (!connections.Contains(conneciton.ToNodeData))
                     connections.Add(conneciton.ToNodeData);
+
                 FindMatchesNodes(conneciton.ToNodeData, totalList, connections, prediction, type);
             }
         }

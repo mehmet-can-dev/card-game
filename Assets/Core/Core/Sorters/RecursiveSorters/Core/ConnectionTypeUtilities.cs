@@ -54,6 +54,7 @@ namespace CardGame.Core.Sort.Recursive
                             if (matchedCardsList[j].matchedCards.Count >= uniqColorCount)
                                 continue;
 
+                            //ToDo Check Already Matches
                             if (matchedCardsList[j].matchedCards.Last() is not JokerCard)
                             {
                                 nodeList[i].isSelected = true;
@@ -71,7 +72,7 @@ namespace CardGame.Core.Sort.Recursive
                         else if (matchedCardsList[j].conectionType == ConnectionType.Numeric)
                         {
                             var firstCard = matchedCardsList[j].matchedCards.First();
-                            if (firstCard.No != 1 && firstCard is not JokerCard)
+                            if (firstCard.No != maxNumber && firstCard is not JokerCard)
                             {
                                 nodeList[i].isSelected = true;
                                 matchedCardsList[j].matchedCards.Insert(0, nodeList[i].card);
@@ -80,7 +81,7 @@ namespace CardGame.Core.Sort.Recursive
 
                             var lastCard = matchedCardsList[j].matchedCards.Last();
 
-                            if (lastCard.No != maxNumber && lastCard is not JokerCard)
+                            if (lastCard.No != 1 && lastCard is not JokerCard)
                             {
                                 nodeList[i].isSelected = true;
                                 matchedCardsList[j].matchedCards.Add(nodeList[i].card);
@@ -94,6 +95,7 @@ namespace CardGame.Core.Sort.Recursive
                     }
                 }
             }
+            nodeList.RemoveAll(p => p.isSelected);
         }
     }
 }

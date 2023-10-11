@@ -53,11 +53,11 @@ namespace CardGame.Core.Sort.Recursive
             var matchedCardsArray = new NumericColoredCard[matchedCardsList.Count][];
             for (int i = 0; i < matchedCardsList.Count; i++)
             {
-                matchedCardsList[i].matchedCards = matchedCardsList[i].matchedCards.OrderBy(p => p.No).ToList();
                 matchedCardsArray[i] = new NumericColoredCard[matchedCardsList[i].matchedCards.Count];
                 for (int j = 0; j < matchedCardsList[i].matchedCards.Count; j++)
                 {
-                    matchedCardsArray[i][j] = matchedCardsList[i].matchedCards[j];
+                    matchedCardsArray[i][j] =
+                        matchedCardsList[i].matchedCards[matchedCardsList[i].matchedCards.Count - j - 1];
                 }
             }
 
