@@ -95,41 +95,7 @@ namespace CardGame.Core.Sort.Recursive
                     }
                 }
             }
-
             nodeList.RemoveAll(p => p.isSelected);
-        }
-
-        public static ConnectionData TryFindConnectionData(List<CardNodeData> connections, ConnectionType type,
-            List<ConnectionData> selectedConnection, int i)
-        {
-            var selectedCard = selectedConnection[i].FromNodeData.card;
-
-            ConnectionData conneciton = null;
-            switch (type)
-            {
-                case ConnectionType.Colored:
-                    List<Color> colorList = new List<Color>();
-                    for (int j = 0; j < connections.Count; j++)
-                    {
-                        if (connections[j].card is JokerCard)
-                            continue;
-
-                        colorList.Add(connections[j].card.Color);
-                    }
-                    conneciton = RecursiveLogic.LookConnectionsSpecific(selectedConnection[i].ToNodeData,
-                        p => !colorList.Contains(p.Color) && p.No == selectedCard.No);
-                    break;
-                case ConnectionType.Numeric:
-                    conneciton = RecursiveLogic.LookConnectionsSpecific(selectedConnection[i].ToNodeData,
-                        p => p.Color == selectedCard.Color && p.No == selectedCard.No - 2);
-                    break;
-                case ConnectionType.Unknown:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-
-            return conneciton;
         }
     }
 }
