@@ -53,8 +53,7 @@ namespace CardGame.Core.Sort.Recursive
                         {
                             if (matchedCardsList[j].matchedCards.Count >= uniqColorCount)
                                 continue;
-
-                            //ToDo Check Already Matches
+                            
                             if (matchedCardsList[j].matchedCards.Last() is not JokerCard)
                             {
                                 nodeList[i].isSelected = true;
@@ -72,19 +71,66 @@ namespace CardGame.Core.Sort.Recursive
                         else if (matchedCardsList[j].conectionType == ConnectionType.Numeric)
                         {
                             var firstCard = matchedCardsList[j].matchedCards.First();
+                            List<CardNodeData> preMatchedNodes = new List<CardNodeData>();
+                            List<CardNodeData> postMatchedNodes = new List<CardNodeData>();
                             if (firstCard.No != maxNumber && firstCard is not JokerCard)
                             {
-                                nodeList[i].isSelected = true;
-                                matchedCardsList[j].matchedCards.Insert(0, nodeList[i].card);
-                                break;
+                                var tempNodeList = nodeList.OrderBy(p => p.card.No).ToList();
+                                for (int k = 0; k < tempNodeList.Count; k++)
+                                {
+                                    if (tempNodeList[k].card is JokerCard)
+                                        continue;
+
+                                    if (tempNodeList[k].card.No == firstCard.No + 2 + preMatchedNodes.Count &&
+                                        nodeList[k].card.Color == firstCard.Color)
+                                    {
+                                        preMatchedNodes.Add(tempNodeList[k]);
+                                    }
+                                }
                             }
 
                             var lastCard = matchedCardsList[j].matchedCards.Last();
 
                             if (lastCard.No != 1 && lastCard is not JokerCard)
                             {
+                                for (int k = 0; k < nodeList.Count; k++)
+                                {
+                                    if (nodeList[k].card is JokerCard)
+                                        continue;
+
+                                    if (nodeList[k].card.No == firstCard.No - 2 - postMatchedNodes.Count &&
+                                        nodeList[k].card.Color == firstCard.Color)
+                                    {
+                                        postMatchedNodes.Add(nodeList[k]);
+                                    }
+                                }
+                            }
+
+                            if (preMatchedNodes.Count > 0 && postMatchedNodes.Count > 0)
+                            {
                                 nodeList[i].isSelected = true;
-                                matchedCardsList[j].matchedCards.Add(nodeList[i].card);
+
+                                if (preMatchedNodes.Count > postMatchedNodes.Count)
+                                {
+                                    matchedCardsList[j].matchedCards.Insert(0, nodeList[i].card);
+
+                                    for (int k = 0; k < preMatchedNodes.Count; k++)
+                                    {
+                                        preMatchedNodes[k].isSelected = true;
+                                        matchedCardsList[j].matchedCards.Insert(0, preMatchedNodes[k].card);
+                                    }
+                                }
+                                else
+                                {
+                                    matchedCardsList[j].matchedCards.Add(nodeList[i].card);
+
+                                    for (int k = 0; k < postMatchedNodes.Count; k++)
+                                    {
+                                        postMatchedNodes[k].isSelected = true;
+                                        matchedCardsList[j].matchedCards.Add(postMatchedNodes[k].card);
+                                    }
+                                }
+
                                 break;
                             }
                         }
@@ -95,6 +141,7 @@ namespace CardGame.Core.Sort.Recursive
                     }
                 }
             }
+
             nodeList.RemoveAll(p => p.isSelected);
         }
     }

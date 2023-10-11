@@ -101,11 +101,10 @@ namespace CardGame.Core.Sort.Recursive
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
 
+            connections.Add(selectedConnection[i].ToNodeData);
 
             if (conneciton != null)
             {
-                connections.Add(selectedConnection[i].ToNodeData);
-
                 if (!connections.Contains(conneciton.ToNodeData))
                     connections.Add(conneciton.ToNodeData);
 
