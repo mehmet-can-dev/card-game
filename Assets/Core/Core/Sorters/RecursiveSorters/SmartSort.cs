@@ -6,6 +6,34 @@ namespace CardGame.Core.Sort.Recursive
 {
     public class SmartSort : ISort
     {
+        private static readonly List<PredictionData> SmartPrediction_WithJoker = new()
+        {
+            new PredictionData
+            {
+                PredictionConnectionType = ConnectionType.Colored,
+                Prediction = (p) => p.conectionType is ConnectionType.Colored or ConnectionType.Unknown
+            },
+            new PredictionData
+            {
+                PredictionConnectionType = ConnectionType.Numeric,
+                Prediction = (p) => p.conectionType is ConnectionType.Numeric or ConnectionType.Unknown
+            }
+        };
+
+        private static readonly List<PredictionData> SmartPrediction_WithoutJoker = new()
+        {
+            new PredictionData
+            {
+                PredictionConnectionType = ConnectionType.Colored,
+                Prediction = (p) => p.conectionType is ConnectionType.Colored
+            },
+            new PredictionData
+            {
+                PredictionConnectionType = ConnectionType.Numeric,
+                Prediction = (p) => p.conectionType is ConnectionType.Numeric
+            }
+        };
+
         public NumericColoredCard[][] Sort(NumericColoredCard[] cards, out NumericColoredCard[] notSortedCards,
             int minCardCount,
             int maxCardCount, int uniqColorCount, int minNumber, int maxNumber)
@@ -73,11 +101,7 @@ namespace CardGame.Core.Sort.Recursive
                     if (nodeList[k].isSelected)
                         continue;
 
-                    RecursiveLogic.TryFindSingleNodeMatches(list, nodeList, k,
-                        p => p.conectionType is ConnectionType.Colored or ConnectionType.Unknown,
-                        ConnectionType.Colored,
-                        p => p.conectionType is ConnectionType.Numeric or ConnectionType.Unknown,
-                        ConnectionType.Numeric);
+                    RecursiveLogic.TryFindSingleNodeMatches(list, nodeList, k, SmartPrediction_WithJoker);
                 }
 
                 RecursiveLogic.FindMaxLenghtMatched(min, matchedCardsList, list);
@@ -98,9 +122,10 @@ namespace CardGame.Core.Sort.Recursive
                     continue;
 
                 var list = new List<MatchedConnectionsData<CardNodeData>>();
+
+
                 RecursiveLogic.TryFindSingleNodeMatches(list, nodeList, k,
-                    p => p.conectionType == ConnectionType.Colored,
-                    ConnectionType.Colored, p => p.conectionType == ConnectionType.Numeric, ConnectionType.Numeric);
+                    SmartPrediction_WithoutJoker);
 
                 RecursiveLogic.FindMaxLenghtMatched(min, matchedCardsList, list);
             }

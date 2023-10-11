@@ -8,22 +8,17 @@ namespace CardGame.Core.Sort.Recursive
     {
         public static void TryFindSingleNodeMatches(List<MatchedConnectionsData<CardNodeData>> matchesList,
             List<CardNodeData> nodeList, int k,
-            Func<ConnectionData, bool> firstPrediction, ConnectionType firstPredictionConnectionType,
-            Func<ConnectionData, bool> secondPrediction, ConnectionType secondPredictionConnectionType)
+            List<PredictionData> predictions)
         {
-            var l = new MatchedConnectionsData<CardNodeData>();
-            l.matchedCards.Add(nodeList[k]);
-            l.conectionType = firstPredictionConnectionType;
-            matchesList.Add(l);
-            FindMatchesNodes(nodeList[k], matchesList, l.matchedCards,
-                firstPrediction, firstPredictionConnectionType);
-
-            var l2 = new MatchedConnectionsData<CardNodeData>();
-            l2.matchedCards.Add(nodeList[k]);
-            l2.conectionType = secondPredictionConnectionType;
-            matchesList.Add(l2);
-            FindMatchesNodes(nodeList[k], matchesList, l2.matchedCards,
-                secondPrediction, secondPredictionConnectionType);
+            for (int i = 0; i < predictions.Count; i++)
+            {
+                var l = new MatchedConnectionsData<CardNodeData>();
+                l.matchedCards.Add(nodeList[k]);
+                l.conectionType = predictions[i].PredictionConnectionType;
+                matchesList.Add(l);
+                FindMatchesNodes(nodeList[k], matchesList, l.matchedCards,
+                    predictions[i].Prediction, l.conectionType);
+            }
         }
 
         public static void FindMatchesNodes(CardNodeData nodeData, List<MatchedConnectionsData<CardNodeData>> totalList,
