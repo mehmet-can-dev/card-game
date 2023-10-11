@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CardGame.Core.Sort;
 using CardGame.Core.Sort.Forward;
 using CardGame.Core.Sort.Recursive;
@@ -13,8 +14,7 @@ namespace CardGame.Core.Test
     {
         private List<ITestableCards> testableCards = new List<ITestableCards>()
         {
-            new SingleColorCardsNoJoker(),
-            new ColoredNumericCardsNoJoker()
+            new ExampleDocCards()
         };
 
         [Test]
@@ -56,10 +56,6 @@ namespace CardGame.Core.Test
             var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length, 1,
                 13);
 
-            CardArrayUtilities.Log2DimensionNumericArray(cards);
-
-            CardArrayUtilities.LogNumericArray(notSortableCard);
-
             Assert.Pass();
         }
 
@@ -74,11 +70,16 @@ namespace CardGame.Core.Test
             var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
                 1, 13);
 
-            CardArrayUtilities.Log2DimensionNumericArray(cards);
+            var targetCards = testableCards.GetSmartSortedCards(out var targetNotSortable);
 
-            CardArrayUtilities.LogNumericArray(notSortableCard);
+            var cardList = ArrayToList(cards);
+            var notSortableList = notSortableCard.ToList();
 
-            Assert.Pass();
+            var targetCardList = ArrayToList(targetCards);
+            var targetNotSortableList = targetNotSortable.ToList();
+
+
+            Assert.IsTrue(IsCardListEqual(notSortableList, targetNotSortableList, false));
         }
 
         private static void NumericTest(ITestableCards testableCards)
@@ -91,9 +92,46 @@ namespace CardGame.Core.Test
             var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length, 1,
                 13);
 
-            CardArrayUtilities.Log2DimensionNumericArray(cards);
-
             Assert.Pass();
+        }
+
+        private static List<List<T>> ArrayToList<T>(T[][] array2D)
+        {
+            var list = new List<List<T>>();
+
+            for (int i = 0; i < array2D.Length; i++)
+            {
+                list.Add(new List<T>());
+                for (int j = 0; j < array2D[i].Length; j++)
+                {
+                    list[i].Add(array2D[i][j]);
+                }
+            }
+
+            return list;
+        }
+
+        private static bool IsCardListEqual(List<NumericColoredCard> list1, List<NumericColoredCard> list2,
+            bool isCheckOrder)
+        {
+            if (list1.Count != list2.Count)
+                return false;
+
+            if (!isCheckOrder)
+            {
+                list1 = list1.OrderBy(p => p.Id).ToList();
+                list2 = list2.OrderBy(p => p.Id).ToList();
+            }
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (!list1[i].Equals(list2[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

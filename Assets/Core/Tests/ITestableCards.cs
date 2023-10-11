@@ -7,5 +7,7 @@
         public NumericColoredCard[][] GetColoredSortedCards(out NumericColoredCard[] notSortedCards);
         public NumericColoredCard[][] GetSmartSortedCards(out NumericColoredCard[] notSortedCards);
         
+        
+        
     }
 }
