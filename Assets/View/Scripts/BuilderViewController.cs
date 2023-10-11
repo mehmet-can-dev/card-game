@@ -1,4 +1,6 @@
+using System;
 using CardGame.Core;
+using CardGame.Core.Sort;
 using CardGame.View.DataModels;
 using CardGame.View.DebugSystem;
 using CardGame.View.Deck;
@@ -24,6 +26,8 @@ namespace CardGame.View
         private Core.Hand hand;
         private Core.Deck deck;
 
+        private ISort currentSorter;
+
         void Start()
         {
             deck = BuildDeck(builderSettingsSo.BuilderCountData);
@@ -34,7 +38,20 @@ namespace CardGame.View
 
             handView.Init(hand);
 
-            debugBehaviour.Init(builderSettingsSo, hand, deck, handView, deckView);
+            debugBehaviour.Init(this, hand, handView, deckView);
+        }
+
+        public void SortHand(Action onComplete)
+        {
+            if (currentSorter == null)
+                throw new Exception("Sort Type Unknown");
+            
+            handView.SortHand(currentSorter, builderSettingsSo.SortViewData, onComplete);
+        }
+
+        public void SetNewSorter(ISort sorter)
+        {
+            currentSorter = sorter;
         }
 
         private Core.Deck BuildDeck(BuilderCountData builderCountData)

@@ -4,10 +4,11 @@ using System.Linq;
 
 namespace CardGame.Core.Sort
 {
-    public class SmartSortLogic
+    public class SmartSort : ISort
     {
-        public static NumericColoredCard[][] SortBySmart(NumericColoredCard[] cards,
-            out NumericColoredCard[] notSortedCards, int minCardCount, int uniqColorCount, int maxNumber)
+        public NumericColoredCard[][] Sort(NumericColoredCard[] cards, out NumericColoredCard[] notSortedCards,
+            int minCardCount,
+            int maxCardCount, int uniqColorCount, int minNumber, int maxNumber)
         {
             List<MatchedConnections<NumericColoredCard>> matchedCardsList =
                 new List<MatchedConnections<NumericColoredCard>>();
@@ -142,7 +143,6 @@ namespace CardGame.Core.Sort
         private static void FindMatchedWithoutJokers(int min, List<CardNode> nodeList,
             List<MatchedConnections<NumericColoredCard>> matchedCardsList)
         {
-            
             for (int k = 0; k < nodeList.Count; k++)
             {
                 if (nodeList[k].card is JokerCard)

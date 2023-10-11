@@ -78,7 +78,7 @@ namespace CardGame.Core.Test
             new NumericColoredCard(12, 4, ColorConstants.Blue),
             new NumericColoredCard(12, 7, ColorConstants.Red),
         };
-        
+
         NumericColoredCard[] testCards_fullcolored = new NumericColoredCard[]
         {
             new NumericColoredCard(0, 8, ColorConstants.Yellow),
@@ -96,7 +96,6 @@ namespace CardGame.Core.Test
             new NumericColoredCard(11, 12, ColorConstants.Black),
             new NumericColoredCard(12, 13, ColorConstants.Blue),
         };
-
 
 
         [Test]
@@ -123,7 +122,7 @@ namespace CardGame.Core.Test
         {
             SmartTest(testCards_fullnumeric_double);
         }
-        
+
         [Test]
         public void SortSmartTest4()
         {
@@ -152,7 +151,10 @@ namespace CardGame.Core.Test
         {
             LogAssert.Expect(LogType.Log, "Log");
 
-            var cards = ColoredSortLogic.SortByColored(testCards, 3, 4, out var notSortableCard);
+            var sorter = new ColoredForwardSort();
+
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
+                1, 13);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 
@@ -165,8 +167,10 @@ namespace CardGame.Core.Test
         {
             LogAssert.Expect(LogType.Log, "Log");
 
-            var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, ColorConstants.UsedColors.Length,
-                13);
+            var sorter = new SmartSort();
+
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
+                1, 13);
 
             Assert.Pass();
         }
@@ -175,14 +179,10 @@ namespace CardGame.Core.Test
         {
             LogAssert.Expect(LogType.Log, "Log");
 
-            var hand = new Hand(testCards.Length);
+            var sorter = new NumericForwardSort();
 
-            for (int i = 0; i < testCards.Length; i++)
-            {
-                hand.AddCard(testCards[i]);
-            }
-
-            var cards = NumericSortLogic.SortByNumeric(testCards, out var notSortableCard, 3);
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
+                1, 13);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 

@@ -1,12 +1,14 @@
 ﻿using System;
+using UnityEngine.Serialization;
 
 namespace CardGame.View.DataModels
 {
     [Serializable]
     public class SortViewData
     {
-        public int min;
-        public int max;
+        public int minCardCount;
+        public int maxCardCount;
+        public int minNumberPerDeck;
         public int maxNumberPerDeck;
     }
 }

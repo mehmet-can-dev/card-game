@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CardGame.Core.Sort;
 using CardGame.View.Deck;
 using CardGame.View.Hand;
 using CardGame.View.SO;
@@ -10,56 +11,48 @@ namespace CardGame.View.DebugSystem
     public class DebugBehaviour : MonoBehaviour
     {
         private Core.Hand hand;
-        private Core.Deck deck;
         private HandView handView;
         private DeckView deckView;
-
-        private BuilderSettingsSO builderSettingsSo;
+        
+        private BuilderViewController builderViewController;
 
         private bool isAnimationPlaying = false;
 
-        public void Init(BuilderSettingsSO builderSettingsSo, Core.Hand hand, Core.Deck deck, HandView handView,
+        public void Init(BuilderViewController viewController, Core.Hand hand, HandView handView,
             DeckView deckView)
         {
             this.hand = hand;
-            this.deck = deck;
             this.handView = handView;
             this.deckView = deckView;
-            this.builderSettingsSo = builderSettingsSo;
+            builderViewController = viewController;
         }
 
-        public void SortHandByNumeric()
+        public void SetSortLogicNumeric()
+        {
+            builderViewController.SetNewSorter(new NumericForwardSort());
+        }
+        
+        public void SetSortLogicColored()
+        {
+            builderViewController.SetNewSorter(new ColoredForwardSort());
+        }
+        
+        public void SetSortLogicSmart()
+        {
+            builderViewController.SetNewSorter(new SmartSort());
+        }
+
+        public void Sort()
         {
             if (isAnimationPlaying)
                 return;
             if (hand.IsEmpty())
                 return;
             isAnimationPlaying = true;
-
-            handView.SortHandByNumeric(builderSettingsSo.SortViewData, ResetAnimationPLaying);
+            
+            builderViewController.SortHand(ResetAnimationPLaying);
         }
-
-        public void SortHandByColor()
-        {
-            if (isAnimationPlaying)
-                return;
-            if (hand.IsEmpty())
-                return;
-            isAnimationPlaying = true;
-
-            handView.SortHandByColored(builderSettingsSo.SortViewData, ResetAnimationPLaying);
-        }
-
-        public void SortHandBySmartSort()
-        {
-            if (isAnimationPlaying)
-                return;
-            if (hand.IsEmpty())
-                return;
-            isAnimationPlaying = true;
-
-            handView.SortHandBySmart(builderSettingsSo.SortViewData, ResetAnimationPLaying);
-        }
+        
 
         public void DealHand()
         {

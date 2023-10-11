@@ -49,7 +49,10 @@ namespace CardGame.Core.Test
 
             var testCards = testableCards.GetNotSortedCards();
 
-            var cards = ColoredSortLogic.SortByColored(testCards, 3, 4, out var notSortableCard);
+            var sorter = new ColoredForwardSort();
+
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length, 1,
+                13);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 
@@ -64,8 +67,10 @@ namespace CardGame.Core.Test
 
             var testCards = testableCards.GetNotSortedCards();
 
-            var cards = SmartSortLogic.SortBySmart(testCards, out var notSortableCard, 3, ColorConstants.UsedColors.Length,
-                13);
+            var sorter = new SmartSort();
+
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
+                1, 13);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 
@@ -79,7 +84,10 @@ namespace CardGame.Core.Test
             LogAssert.Expect(LogType.Log, "Log");
             var testCards = testableCards.GetNotSortedCards();
 
-            var cards = NumericSortLogic.SortByNumeric(testCards, out var notSortableCard, 3);
+            var sorter = new NumericForwardSort();
+
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length, 1,
+                13);
 
             CardArrayUtilities.Log2DimensionNumericArray(cards);
 
