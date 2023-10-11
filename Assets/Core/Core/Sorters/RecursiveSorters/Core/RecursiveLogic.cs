@@ -70,41 +70,13 @@ namespace CardGame.Core.Sort.Recursive
         public static void CheckJokerConditions(List<MatchedConnectionsData<CardNodeData>> totalList,
             List<CardNodeData> connections,
             Func<ConnectionData, bool> prediction, ConnectionType type,
-            List<ConnectionData> selectedConnection, int i)
+            List<ConnectionData> selectedConnection, int index)
         {
-            var selectedCard = selectedConnection[i].FromNodeData.card;
-
-            ConnectionData conneciton = null;
-            switch (type)
-            {
-                case ConnectionType.Colored:
-                    List<Color> colorList = new List<Color>();
-                    for (int j = 0; j < connections.Count; j++)
-                    {
-                        if (connections[j].card is JokerCard)
-                            continue;
-
-                        colorList.Add(connections[j].card.Color);
-                    }
-
-                    conneciton = LookConnectionsSpecific(selectedConnection[i].ToNodeData,
-                        p => !colorList.Contains(p.Color) && p.No == selectedCard.No);
-
-                    break;
-                case ConnectionType.Numeric:
-                    conneciton = LookConnectionsSpecific(selectedConnection[i].ToNodeData,
-                        p => p.Color == selectedCard.Color && p.No == selectedCard.No - 2);
-                    break;
-                case ConnectionType.Unknown:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-
-
+            var conneciton = ConnectionTypeUtilities.TryFindConnectionData(connections, type, selectedConnection, index);
+            
             if (conneciton != null)
             {
-                connections.Add(selectedConnection[i].ToNodeData);
+                connections.Add(selectedConnection[index].ToNodeData);
 
                 if (!connections.Contains(conneciton.ToNodeData))
                     connections.Add(conneciton.ToNodeData);
@@ -113,7 +85,9 @@ namespace CardGame.Core.Sort.Recursive
             }
         }
 
-        private static ConnectionData LookConnectionsSpecific(CardNodeData nodeData,
+       
+
+        public static ConnectionData LookConnectionsSpecific(CardNodeData nodeData,
             Func<NumericColoredCard, bool> presicion)
         {
             for (int i = 0; i < nodeData.connections.Count; i++)
