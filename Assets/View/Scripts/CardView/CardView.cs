@@ -15,7 +15,7 @@ namespace CardGame.View.Card
     {
         private ICardViewAnimationModule cardViewAnimationModule;
 
-         private ICardViewFinderModule cardViewFinderModule;
+        private ICardViewFinderModule cardViewFinderModule;
 
         [Header("Child References")] [SerializeField]
         private ColorSetterUseByProperty frontColorSetter;
@@ -40,13 +40,19 @@ namespace CardGame.View.Card
 
             cardViewAnimationModule = GetComponent<ICardViewAnimationModule>();
             cardViewFinderModule = GetComponent<ICardViewFinderModule>();
-            
+
             if (card is JokerCard)
                 jokerGameObject.SetActive(true);
             else
                 jokerGameObject.SetActive(false);
 
             outLineColorSetter.gameObject.SetActive(false);
+        }
+
+        public void DestroyCard()
+        {
+            cardNoSpriteText.Clear();
+            Destroy(gameObject);
         }
 
         public void MoveTargetPosition(Vector3 targetPos, Action onComplete)

@@ -564,6 +564,14 @@ PrefabInstance:
       value: view_controller_builder
       objectReference: {fileID: 0}
     - target: {fileID: 3888253539261082382, guid: 3b1338f39ffad4c4cb947565f58d88bf, type: 3}
+      propertyPath: deckView
+      value: 
+      objectReference: {fileID: 905423897}
+    - target: {fileID: 3888253539261082382, guid: 3b1338f39ffad4c4cb947565f58d88bf, type: 3}
+      propertyPath: handView
+      value: 
+      objectReference: {fileID: 586542310}
+    - target: {fileID: 3888253539261082382, guid: 3b1338f39ffad4c4cb947565f58d88bf, type: 3}
       propertyPath: deckViewBase
       value: 
       objectReference: {fileID: 905423897}

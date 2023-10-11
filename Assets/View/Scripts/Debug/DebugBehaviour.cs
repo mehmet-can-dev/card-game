@@ -123,12 +123,12 @@ namespace CardGame.View.DebugSystem
                 deckView.AddCard(numericCard);
                 if (i != handCount - 1)
                     spawnedCard.MoveTargetPosition(deckView.transform.position + Vector3.forward,
-                        () => Destroy(spawnedCard.gameObject));
+                        () => { spawnedCard.DestroyCard(); });
                 else
                     spawnedCard.MoveTargetPosition(deckView.transform.position + Vector3.forward,
                         () =>
                         {
-                            Destroy(spawnedCard.gameObject);
+                            spawnedCard.DestroyCard();
                             onComplete?.Invoke();
                         });
 

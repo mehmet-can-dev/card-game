@@ -28,6 +28,12 @@ namespace CardGame.View.SpriteTexts
             CreateSpriteRenderers(array, numberList, size);
         }
 
+        public void Clear()
+        {
+            ClearOldStates();
+        }
+
+
         private void CreateSpriteRenderers(int[] array, List<Sprite> numberList, float size)
         {
             for (int i = 0; i < array.Length; i++)
@@ -83,11 +89,6 @@ namespace CardGame.View.SpriteTexts
             float size = 1 / (float)array.Length;
             size = Mathf.Min(size, MAX_SIZE);
             return size;
-        }
-
-        private void OnDisable()
-        {
-            ClearOldStates();
         }
 
         private void ClearOldStates()
