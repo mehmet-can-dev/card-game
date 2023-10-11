@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using CardGame.Core.Sort;
+using CardGame.Core.Sort.Forward;
+using CardGame.Core.Sort.Recursive;
 using CardGame.View.Deck;
 using CardGame.View.Hand;
 using CardGame.View.SO;
@@ -13,7 +15,7 @@ namespace CardGame.View.DebugSystem
         private Core.Hand hand;
         private HandView handView;
         private DeckView deckView;
-        
+
         private BuilderViewController builderViewController;
 
         private bool isAnimationPlaying = false;
@@ -31,12 +33,12 @@ namespace CardGame.View.DebugSystem
         {
             builderViewController.SetNewSorter(new NumericForwardSort());
         }
-        
+
         public void SetSortLogicColored()
         {
             builderViewController.SetNewSorter(new ColoredForwardSort());
         }
-        
+
         public void SetSortLogicSmart()
         {
             builderViewController.SetNewSorter(new SmartSort());
@@ -49,10 +51,10 @@ namespace CardGame.View.DebugSystem
             if (hand.IsEmpty())
                 return;
             isAnimationPlaying = true;
-            
+
             builderViewController.SortHand(ResetAnimationPLaying);
         }
-        
+
 
         public void DealHand()
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CardGame.Core.Sort
+namespace CardGame.Core.Sort.Forward
 {
     public class ForwardSortUtilities
     {
