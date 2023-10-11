@@ -47,13 +47,15 @@ namespace CardGame.Core.Sort.Recursive
             {
                 if (nodeList[i].card is JokerCard)
                 {
+                    matchedCardsList = matchedCardsList.OrderByDescending(p => p.conectionType).ToList();
+
                     for (int j = 0; j < matchedCardsList.Count; j++)
                     {
                         if (matchedCardsList[j].conectionType == ConnectionType.Colored)
                         {
                             if (matchedCardsList[j].matchedCards.Count >= uniqColorCount)
                                 continue;
-                            
+
                             if (matchedCardsList[j].matchedCards.Last() is not JokerCard)
                             {
                                 nodeList[i].isSelected = true;
@@ -98,15 +100,15 @@ namespace CardGame.Core.Sort.Recursive
                                     if (nodeList[k].card is JokerCard)
                                         continue;
 
-                                    if (nodeList[k].card.No == firstCard.No - 2 - postMatchedNodes.Count &&
-                                        nodeList[k].card.Color == firstCard.Color)
+                                    if (nodeList[k].card.No == lastCard.No - 2 - postMatchedNodes.Count &&
+                                        nodeList[k].card.Color == lastCard.Color)
                                     {
                                         postMatchedNodes.Add(nodeList[k]);
                                     }
                                 }
                             }
 
-                            if (preMatchedNodes.Count > 0 && postMatchedNodes.Count > 0)
+                            if (preMatchedNodes.Count > 0 || postMatchedNodes.Count > 0)
                             {
                                 nodeList[i].isSelected = true;
 

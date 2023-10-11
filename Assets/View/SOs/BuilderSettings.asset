@@ -20,6 +20,7 @@ MonoBehaviour:
   BuilderViewData:
     deckColor: {r: 0.23343134, g: 0, b: 0.46226418, a: 1}
   SortViewData:
-    min: 3
-    max: 4
+    minCardCount: 3
+    maxCardCount: 4
+    minNumberPerDeck: 1
     maxNumberPerDeck: 13

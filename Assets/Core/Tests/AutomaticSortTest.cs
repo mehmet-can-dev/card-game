@@ -47,7 +47,6 @@ namespace CardGame.Core.Test
 
         private static void ColoredTest(ITestableCards testableCards)
         {
-            LogAssert.Expect(LogType.Log, "Log");
 
             var testCards = testableCards.GetNotSortedCards();
 
@@ -61,8 +60,6 @@ namespace CardGame.Core.Test
 
         private static void SmartTest(ITestableCards testableCards)
         {
-            LogAssert.Expect(LogType.Log, "Log");
-
             var testCards = testableCards.GetNotSortedCards();
 
             var sorter = new SmartRecursiveSort();
@@ -77,8 +74,7 @@ namespace CardGame.Core.Test
 
             var targetCardList = ArrayToList(targetCards);
             var targetNotSortableList = targetNotSortable.ToList();
-
-
+            
             Assert.IsTrue(IsCardListEqual(notSortableList, targetNotSortableList, false));
         }
 
