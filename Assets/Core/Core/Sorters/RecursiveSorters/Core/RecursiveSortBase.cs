@@ -6,6 +6,7 @@ namespace CardGame.Core.Sort.Recursive
 {
     public abstract class RecursiveSortBase : ISort
     {
+       
         protected virtual List<PredictionData> GetWithJokerPredictionList()
         {
             throw new Exception("Assign Prediction");
@@ -35,14 +36,18 @@ namespace CardGame.Core.Sort.Recursive
 
             RecursiveLogic.CrateConnections(nodeList);
 
-            nodeList = nodeList.OrderByDescending(p => p.card.No).ToList();
+            nodeList = nodeList.OrderBy(p => p.card.No).ToList();
 
             FindMatchedWithoutJokers(minCardCount, nodeList, matchedCardsList);
+
+            nodeList.RemoveAll(p => p.isSelected);
 
             FindMatchedWithJokerFromNotMatched(minCardCount, jokerNodes, nodeList, matchedCardsList);
 
             ConnectionTypeUtilities.TryConnectJokerToAlreadyMatchedCards(uniqColorCount, maxNumber, nodeList,
                 matchedCardsList);
+
+            nodeList.RemoveAll(p => p.isSelected);
 
             for (int i = 0; i < nodeList.Count; i++)
             {
@@ -53,7 +58,6 @@ namespace CardGame.Core.Sort.Recursive
             var matchedCardsArray = new NumericColoredCard[matchedCardsList.Count][];
             for (int i = 0; i < matchedCardsList.Count; i++)
             {
-                matchedCardsList[i].matchedCards = matchedCardsList[i].matchedCards.OrderBy(p => p.No).ToList();
                 matchedCardsArray[i] = new NumericColoredCard[matchedCardsList[i].matchedCards.Count];
                 for (int j = 0; j < matchedCardsList[i].matchedCards.Count; j++)
                 {
@@ -89,8 +93,6 @@ namespace CardGame.Core.Sort.Recursive
 
                 nodeList.RemoveAll(p => p.isSelected);
             }
-
-            nodeList.RemoveAll(p => p.isSelected);
         }
 
         private void FindMatchedWithoutJokers(int min, List<CardNodeData> nodeList,
@@ -112,8 +114,6 @@ namespace CardGame.Core.Sort.Recursive
 
                 RecursiveLogic.FindMaxLenghtMatched(min, matchedCardsList, list);
             }
-
-            nodeList.RemoveAll(p => p.isSelected);
         }
     }
 }

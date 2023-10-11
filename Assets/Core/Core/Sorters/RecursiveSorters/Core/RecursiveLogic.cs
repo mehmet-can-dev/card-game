@@ -95,7 +95,7 @@ namespace CardGame.Core.Sort.Recursive
                     break;
                 case ConnectionType.Numeric:
                     conneciton = LookConnectionsSpecific(selectedConnection[i].ToNodeData,
-                        p => p.Color == selectedCard.Color && p.No == selectedCard.No -2);
+                        p => p.Color == selectedCard.Color && p.No == selectedCard.No + 2);
                     break;
                 case ConnectionType.Unknown:
                     break;
