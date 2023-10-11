@@ -21,7 +21,7 @@ namespace CardGame.Core.Sort.Recursive
                 return true;
             }
 
-            if (card1.Color == card2.Color && (card1.No + 1 == card2.No))
+            if (card1.Color == card2.Color && (card1.No - 1 == card2.No))
             {
                 connectionType = ConnectionType.Numeric;
                 return true;
