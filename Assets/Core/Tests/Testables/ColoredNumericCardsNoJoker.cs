@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CardGame.Core.Test.Testables
+﻿namespace CardGame.Core.Test.Testables
 {
     public class ColoredNumericCardsNoJoker: ITestableCards
     {
