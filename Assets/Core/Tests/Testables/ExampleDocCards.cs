@@ -23,7 +23,7 @@
             };
         }
 
-        public NumericColoredCard[][] GetNumericSortedCards(out NumericColoredCard[] notSortedCards)
+        public NumericColoredCard[][] GetForwardNumericSortedCards(out NumericColoredCard[] notSortedCards)
         {
             var splitCards = new[]
             {
@@ -56,7 +56,7 @@
             return splitCards;
         }
 
-        public NumericColoredCard[][] GetColoredSortedCards(out NumericColoredCard[] notSortedCards)
+        public NumericColoredCard[][] GetForwardColoredSortedCards(out NumericColoredCard[] notSortedCards)
         {
             var splitCards = new[]
             {

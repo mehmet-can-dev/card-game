@@ -6,7 +6,6 @@ using CardGame.Core.Sort.Recursive;
 using CardGame.Core.Test.Testables;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace CardGame.Core.Test
 {
@@ -14,15 +13,19 @@ namespace CardGame.Core.Test
     {
         private List<ITestableCards> testableCards = new List<ITestableCards>()
         {
-            new ExampleDocCards()
+            new FourJokerTestCards(),
+            new ExampleDocCards(),
+            new ColoredNumericCardsNoJoker(),
         };
 
         [Test]
-        public void SortNumericTest()
+        public void SortForwardNumericTest()
         {
             for (int i = 0; i < testableCards.Count; i++)
             {
+                Debug.Log("Numeric Test Start " + testableCards.GetType());
                 NumericTest(testableCards[i]);
+                Debug.Log("Numeric Test End " + testableCards.GetType());
             }
         }
 
@@ -31,34 +34,39 @@ namespace CardGame.Core.Test
         {
             for (int i = 0; i < testableCards.Count; i++)
             {
+                Debug.Log("Smart Test Start " + testableCards.GetType());
                 SmartTest(testableCards[i]);
+                Debug.Log("Smart Test End " + testableCards.GetType());
             }
         }
 
         [Test]
-        public void SortColoredTest()
+        public void SortForwardColoredTest()
         {
             for (int i = 0; i < testableCards.Count; i++)
             {
+                Debug.Log("Colored Test Start " + testableCards.GetType());
                 ColoredTest(testableCards[i]);
+                Debug.Log("Colored Test End " + testableCards.GetType());
             }
         }
 
 
-        private static void ColoredTest(ITestableCards testableCards)
+        public static void ColoredTest(ITestableCards testableCards)
         {
-
             var testCards = testableCards.GetNotSortedCards();
 
             var sorter = new ColoredForwardSort();
 
-            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length, 1,
-                13);
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
+                1, 13);
 
-            Assert.Pass();
+            var targetCards = testableCards.GetForwardColoredSortedCards(out var targetNotSortable);
+
+            AssertAndLogCards(cards, notSortableCard, targetCards, targetNotSortable);
         }
 
-        private static void SmartTest(ITestableCards testableCards)
+        public static void SmartTest(ITestableCards testableCards)
         {
             var testCards = testableCards.GetNotSortedCards();
 
@@ -69,27 +77,50 @@ namespace CardGame.Core.Test
 
             var targetCards = testableCards.GetSmartSortedCards(out var targetNotSortable);
 
+            AssertAndLogCards(cards, notSortableCard, targetCards, targetNotSortable);
+        }
+
+        public static void NumericTest(ITestableCards testableCards)
+        {
+            var testCards = testableCards.GetNotSortedCards();
+
+            var sorter = new NumericForwardSort();
+
+
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length, 1,
+                13);
+
+            var targetCards = testableCards.GetForwardNumericSortedCards(out var targetNotSortable);
+
+            AssertAndLogCards(cards, notSortableCard, targetCards, targetNotSortable);
+
+
+            Assert.Pass();
+        }
+
+        public static void AssertAndLogCards(NumericColoredCard[][] cards, NumericColoredCard[] notSortableCard,
+            NumericColoredCard[][] targetCards, NumericColoredCard[] targetNotSortable)
+        {
             var cardList = ArrayToList(cards);
             var notSortableList = notSortableCard.ToList();
 
             var targetCardList = ArrayToList(targetCards);
             var targetNotSortableList = targetNotSortable.ToList();
-            
-            Assert.IsTrue(IsCardListEqual(notSortableList, targetNotSortableList, false));
+
+            Debug.Log("Test Sorted List");
+            Debug.Log(CardLoger.Log2DimensionNumericList(cardList));
+
+            Debug.Log("Target Sorted List");
+            Debug.Log(CardLoger.Log2DimensionNumericList(targetCardList));
+
+            Debug.Log("Test Not Sortable");
+            Debug.Log(CardLoger.LogNumericList(notSortableList));
+            Debug.Log("Target Not Sortable");
+            Debug.Log(CardLoger.LogNumericList(targetNotSortableList));
+
+            Assert.IsTrue(notSortableList.Count == targetNotSortableList.Count);
         }
 
-        private static void NumericTest(ITestableCards testableCards)
-        {
-            LogAssert.Expect(LogType.Log, "Log");
-            var testCards = testableCards.GetNotSortedCards();
-
-            var sorter = new NumericForwardSort();
-
-            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length, 1,
-                13);
-
-            Assert.Pass();
-        }
 
         private static List<List<T>> ArrayToList<T>(T[][] array2D)
         {

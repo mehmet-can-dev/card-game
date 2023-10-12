@@ -18,13 +18,13 @@ namespace CardGame.Core.Test.Testables
                 new NumericColoredCard(7, 8, ColorConstants.Red),
                 new NumericColoredCard(8, 9, ColorConstants.Red),
                 new NumericColoredCard(9, 10, ColorConstants.Red),
-                new NumericColoredCard(10, 11, ColorConstants.Red),
-                new NumericColoredCard(11, 12, ColorConstants.Red),
-                new NumericColoredCard(12, 13, ColorConstants.Red),
+                new NumericColoredCard(10, 11, ColorConstants.Blue),
+                new NumericColoredCard(11, 11, ColorConstants.Blue),
+                new NumericColoredCard(12, 11, ColorConstants.Blue),
             };
         }
 
-        public NumericColoredCard[][] GetNumericSortedCards(out NumericColoredCard[] notSortedCards)
+        public NumericColoredCard[][] GetForwardNumericSortedCards(out NumericColoredCard[] notSortedCards)
         {
             var splitCards = new NumericColoredCard[1][]
             {
@@ -40,19 +40,31 @@ namespace CardGame.Core.Test.Testables
                     new NumericColoredCard(7, 8, ColorConstants.Red),
                     new NumericColoredCard(8, 9, ColorConstants.Red),
                     new NumericColoredCard(9, 10, ColorConstants.Red),
-                    new NumericColoredCard(10, 11, ColorConstants.Red),
-                    new NumericColoredCard(11, 12, ColorConstants.Red),
-                    new NumericColoredCard(12, 13, ColorConstants.Red),
                 }
             };
 
-            notSortedCards = Array.Empty<NumericColoredCard>();
-            
+            notSortedCards = new[]
+            {
+                new NumericColoredCard(10, 11, ColorConstants.Blue),
+                new NumericColoredCard(11, 11, ColorConstants.Blue),
+                new NumericColoredCard(12, 11, ColorConstants.Blue),
+            };
+
             return splitCards;
         }
 
-        public NumericColoredCard[][] GetColoredSortedCards(out NumericColoredCard[] notSortedCards)
+        public NumericColoredCard[][] GetForwardColoredSortedCards(out NumericColoredCard[] notSortedCards)
         {
+            var splitCards = new NumericColoredCard[1][]
+            {
+                new[]
+                {
+                    new NumericColoredCard(10, 11, ColorConstants.Blue),
+                    new NumericColoredCard(11, 11, ColorConstants.Blue),
+                    new NumericColoredCard(12, 11, ColorConstants.Blue),
+                }
+            };
+
             notSortedCards = new[]
             {
                 new NumericColoredCard(0, 1, ColorConstants.Red),
@@ -65,16 +77,15 @@ namespace CardGame.Core.Test.Testables
                 new NumericColoredCard(7, 8, ColorConstants.Red),
                 new NumericColoredCard(8, 9, ColorConstants.Red),
                 new NumericColoredCard(9, 10, ColorConstants.Red),
-                new NumericColoredCard(10, 11, ColorConstants.Red),
-                new NumericColoredCard(11, 12, ColorConstants.Red),
-                new NumericColoredCard(12, 13, ColorConstants.Red),
             };
-            return Array.Empty<NumericColoredCard[]>();
+
+
+            return splitCards;
         }
 
         public NumericColoredCard[][] GetSmartSortedCards(out NumericColoredCard[] notSortedCards)
         {
-            var splitCards = new NumericColoredCard[1][]
+            var splitCards = new NumericColoredCard[][]
             {
                 new[]
                 {
@@ -88,14 +99,17 @@ namespace CardGame.Core.Test.Testables
                     new NumericColoredCard(7, 8, ColorConstants.Red),
                     new NumericColoredCard(8, 9, ColorConstants.Red),
                     new NumericColoredCard(9, 10, ColorConstants.Red),
-                    new NumericColoredCard(10, 11, ColorConstants.Red),
-                    new NumericColoredCard(11, 12, ColorConstants.Red),
-                    new NumericColoredCard(12, 13, ColorConstants.Red),
+                },
+                new[]
+                {
+                    new NumericColoredCard(10, 11, ColorConstants.Blue),
+                    new NumericColoredCard(11, 11, ColorConstants.Blue),
+                    new NumericColoredCard(12, 11, ColorConstants.Blue),
                 }
             };
 
             notSortedCards = Array.Empty<NumericColoredCard>();
-            
+
             return splitCards;
         }
     }

@@ -9,13 +9,11 @@ namespace CardGame.Core.Sort.Recursive
         protected virtual List<PredictionData> GetWithJokerPredictionList()
         {
             throw new Exception("Assign Prediction");
-            return null;
         }
 
         protected virtual List<PredictionData> GetWithoutJokerPredictionList()
         {
             throw new Exception("Assign Prediction");
-            return null;
         }
 
         public NumericColoredCard[][] Sort(NumericColoredCard[] cards, out NumericColoredCard[] notSortedCards,

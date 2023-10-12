@@ -26,9 +26,9 @@ namespace CardGame.Core
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append((char)R);
-            sb.Append((char)G);
-            sb.Append((char)B);
+            sb.Append(R.ToString());
+            sb.Append(G.ToString());
+            sb.Append(B.ToString());
             return sb.ToString();
         }
 

@@ -1,9 +1,8 @@
-﻿using CardGame.Core.Sort;
-using CardGame.Core.Sort.Forward;
+﻿using CardGame.Core.Sort.Forward;
 using CardGame.Core.Sort.Recursive;
+using CardGame.Core.Test.Testables;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace CardGame.Core.Test
 {
@@ -99,96 +98,22 @@ namespace CardGame.Core.Test
             new NumericColoredCard(12, 13, ColorConstants.Blue),
         };
 
-
         [Test]
-        public void SortNumericTest1()
+        public void ExampleTest()
         {
-            NumericTest(testCards_noJoker_colored_numeric);
+            var test = new ExampleDocCards();
+            Debug.Log("Smart Test");
+            
+             AutomaticSortTest.SmartTest(test);
+             
+             Debug.Log("Colored Test");
+            
+            AutomaticSortTest.ColoredTest(test);
+            
+            Debug.Log("Numeric Test");
+            AutomaticSortTest.NumericTest(test);
         }
 
-
-        [Test]
-        public void SortSmartTest1()
-        {
-            SmartTest(testCards_noJoker_colored_numeric);
-        }
-
-        [Test]
-        public void SortSmartTest2()
-        {
-            SmartTest(testCards_numeric);
-        }
-
-        [Test]
-        public void SortSmartTest3()
-        {
-            SmartTest(testCards_fullnumeric_double);
-        }
-
-        [Test]
-        public void SortSmartTest4()
-        {
-            SmartTest(testCards_fullcolored);
-        }
-
-        [Test]
-        public void SortColoredTest1()
-        {
-            ColoredTest(testCards_noJoker_colored_numeric);
-        }
-
-        [Test]
-        public void SortColoredTest2()
-        {
-            ColoredTest(testCards_numeric);
-        }
-
-        [Test]
-        public void SortColoredTest3()
-        {
-            ColoredTest(testCards_fullnumeric_double);
-        }
-
-        private static void ColoredTest(NumericColoredCard[] testCards)
-        {
-            LogAssert.Expect(LogType.Log, "Log");
-
-            var sorter = new ColoredForwardSort();
-
-            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
-                1, 13);
-
-            CardArrayUtilities.Log2DimensionNumericArray(cards);
-
-            CardArrayUtilities.LogNumericArray(notSortableCard);
-
-            Assert.Pass();
-        }
-
-        private static void SmartTest(NumericColoredCard[] testCards)
-        {
-            LogAssert.Expect(LogType.Log, "Log");
-
-            var sorter = new SmartRecursiveSort();
-
-            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
-                1, 13);
-
-            Assert.Pass();
-        }
-
-        private static void NumericTest(NumericColoredCard[] testCards)
-        {
-            LogAssert.Expect(LogType.Log, "Log");
-
-            var sorter = new NumericForwardSort();
-
-            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
-                1, 13);
-
-            CardArrayUtilities.Log2DimensionNumericArray(cards);
-
-            Assert.Pass();
-        }
+        
     }
 }
