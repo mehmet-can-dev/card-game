@@ -2,7 +2,7 @@
 
 namespace CardGame.Core.Sort.Recursive
 {
-    public class SmartRecursiveSort : RecursiveSortBase
+    public class SmartColoredNumericSort : RecursiveSortBase
     {
         private static readonly List<PredictionData> SmartPrediction_WithJoker = new()
         {

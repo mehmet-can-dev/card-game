@@ -39,7 +39,7 @@ namespace CardGame.View.DebugSystem
 
         public void SetSortLogicRecursiveSmart()
         {
-            builderViewController.SetNewSorter(new SmartRecursiveSort());
+            builderViewController.SetNewSorter(new SmartColoredNumericSort());
         }
 
         public void SetSortLogicRecursiveNumeric()
