@@ -6,10 +6,10 @@ namespace CardGame.Core.Test
 {
     public class PerformaceTest
     {
-        public int deckCount = 16;
+        public int deckCount = 20;
         public int cardPerDeck = 52;
         public int jokerCount = 4;
-        public int deckDrawCount = 250;
+        public int deckDrawCount => (int)(512);
 
         public Hand GetHand()
         {
@@ -17,6 +17,7 @@ namespace CardGame.Core.Test
 
             var decks = builder.Build();
             var mergedDeck = DeckBuilder.MergeDeck(decks);
+            mergedDeck.Shuffle();
 
             var hand = new Hand(deckDrawCount);
             for (int i = 0; i < deckDrawCount; i++)
