@@ -49,13 +49,26 @@ namespace CardGame.Core.Test
                 Debug.Log("Colored Test End " + testableCards.GetType());
             }
         }
-
-
+        
         public static void ColoredTest(ITestableCards testableCards)
         {
             var testCards = testableCards.GetNotSortedCards();
 
             var sorter = new ColoredForwardSort();
+
+            var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
+                1, 13);
+
+            var targetCards = testableCards.GetForwardColoredSortedCards(out var targetNotSortable);
+
+            AssertAndLogCards(cards, notSortableCard, targetCards, targetNotSortable);
+        }
+        
+        public static void SmartColoredTest(ITestableCards testableCards)
+        {
+            var testCards = testableCards.GetNotSortedCards();
+
+            var sorter = new SmartColoredSort();
 
             var cards = sorter.Sort(testCards, out var notSortableCard, 3, 4, ColorConstants.UsedColors.Length,
                 1, 13);
