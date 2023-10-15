@@ -29,6 +29,8 @@ namespace CardGame.Core.Sort.Recursive
                 nodeData.connections.Where(prediction)
                     .ToList();
 
+            int matchedCount = 0;
+
             for (int i = 0; i < selectedConnection.Count; i++)
             {
                 if (selectedConnection[i].ToNodeData.isSelected)
@@ -51,7 +53,7 @@ namespace CardGame.Core.Sort.Recursive
                         p.card.Color == selectedConnection[i].ToNodeData.card.Color))
                     continue;
 
-                if (i > 1)
+                if (matchedCount > 1)
                 {
                     var l = new MatchedConnectionsData<CardNodeData>();
                     l.matchedCards.Add(selectedConnection[i].ToNodeData);
@@ -62,6 +64,7 @@ namespace CardGame.Core.Sort.Recursive
                 else
                 {
                     connections.Add(selectedConnection[i].ToNodeData);
+                    matchedCount++;
                     FindMatchesNodes(selectedConnection[i].ToNodeData, totalList, connections, prediction, type);
                 }
             }
