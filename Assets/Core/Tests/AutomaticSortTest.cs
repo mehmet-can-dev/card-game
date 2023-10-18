@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CardGame.Core.Sort;
 using CardGame.Core.Sort.Forward;
 using CardGame.Core.Sort.Recursive;
 using CardGame.Core.Test.Testables;
@@ -49,7 +50,7 @@ namespace CardGame.Core.Test
                 Debug.Log("Colored Test End " + testableCards.GetType());
             }
         }
-        
+
         public static void ColoredTest(ITestableCards testableCards)
         {
             var testCards = testableCards.GetNotSortedCards();
@@ -63,7 +64,7 @@ namespace CardGame.Core.Test
 
             AssertAndLogCards(cards, notSortableCard, targetCards, targetNotSortable);
         }
-        
+
         public static void SmartColoredTest(ITestableCards testableCards)
         {
             var testCards = testableCards.GetNotSortedCards();
@@ -122,6 +123,11 @@ namespace CardGame.Core.Test
             Debug.Log("Test Sorted List");
             Debug.Log(CardLoger.Log2DimensionNumericList(cardList));
 
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                Assert.IsTrue(IsCardListOrdered(cardList[i]));
+            }
+
             Debug.Log("Target Sorted List");
             Debug.Log(CardLoger.Log2DimensionNumericList(targetCardList));
 
@@ -132,7 +138,6 @@ namespace CardGame.Core.Test
 
             Assert.IsTrue(notSortableList.Count == targetNotSortableList.Count);
         }
-
 
         private static List<List<T>> ArrayToList<T>(T[][] array2D)
         {
@@ -171,6 +176,16 @@ namespace CardGame.Core.Test
             }
 
             return true;
+        }
+
+        private static bool IsCardListOrdered(List<NumericColoredCard> list)
+        {
+            if (SortUtilities.IsOrderedNumeric(list) || SortUtilities.IsOrderedColored(list))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
