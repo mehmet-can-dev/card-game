@@ -1,6 +1,6 @@
 ﻿namespace CardGame.Core.Test.Testables
 {
-    public class ColoredNumericCardsNoJoker: ITestableCards
+    public class ColoredNumericCardsNoJoker : ITestableCards
     {
         public NumericColoredCard[] GetNotSortedCards()
         {
@@ -39,14 +39,14 @@
             notSortedCards = new[]
             {
                 new NumericColoredCard(4, 4, ColorConstants.Black),
-                new NumericColoredCard(5, 4, ColorConstants.Blue),
-                new NumericColoredCard(6, 4, ColorConstants.Yellow),
                 new NumericColoredCard(7, 6, ColorConstants.Black),
-                new NumericColoredCard(8, 6, ColorConstants.Blue),
-                new NumericColoredCard(9, 6, ColorConstants.Red),
                 new NumericColoredCard(10, 2, ColorConstants.Blue),
-                new NumericColoredCard(11, 2, ColorConstants.Red),
+                new NumericColoredCard(5, 4, ColorConstants.Blue),
                 new NumericColoredCard(12, 4, ColorConstants.Blue),
+                new NumericColoredCard(8, 6, ColorConstants.Blue),
+                new NumericColoredCard(11, 2, ColorConstants.Red),
+                new NumericColoredCard(6, 4, ColorConstants.Yellow),
+                new NumericColoredCard(9, 6, ColorConstants.Red),
                 new NumericColoredCard(12, 7, ColorConstants.Red),
             };
 
@@ -98,25 +98,24 @@
                 },
                 new[]
                 {
-                    new NumericColoredCard(4, 4, ColorConstants.Black),
-                    new NumericColoredCard(5, 4, ColorConstants.Blue),
-                    new NumericColoredCard(6, 4, ColorConstants.Yellow),
+                    new NumericColoredCard(9, 6, ColorConstants.Red),
+                    new NumericColoredCard(8, 6, ColorConstants.Blue),
+                    new NumericColoredCard(7, 6, ColorConstants.Black),
                 },
                 new[]
                 {
-                    new NumericColoredCard(7, 6, ColorConstants.Black),
-                    new NumericColoredCard(8, 6, ColorConstants.Blue),
-                    new NumericColoredCard(9, 6, ColorConstants.Red),
+                    new NumericColoredCard(6, 4, ColorConstants.Yellow),
+                    new NumericColoredCard(5, 4, ColorConstants.Blue),
+                    new NumericColoredCard(4, 4, ColorConstants.Black),
                 }
             };
 
-
             notSortedCards = new[]
             {
+                new NumericColoredCard(12, 7, ColorConstants.Red),
+                new NumericColoredCard(12, 4, ColorConstants.Blue),
                 new NumericColoredCard(10, 2, ColorConstants.Blue),
                 new NumericColoredCard(11, 2, ColorConstants.Red),
-                new NumericColoredCard(12, 4, ColorConstants.Blue),
-                new NumericColoredCard(12, 7, ColorConstants.Red),
             };
 
             return splitCards;

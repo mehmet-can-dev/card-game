@@ -106,9 +106,6 @@ namespace CardGame.Core.Test
             var targetCards = testableCards.GetForwardNumericSortedCards(out var targetNotSortable);
 
             AssertAndLogCards(cards, notSortableCard, targetCards, targetNotSortable);
-
-
-            Assert.Pass();
         }
 
         public static void AssertAndLogCards(NumericColoredCard[][] cards, NumericColoredCard[] notSortableCard,
@@ -120,16 +117,19 @@ namespace CardGame.Core.Test
             var targetCardList = ArrayToList(targetCards);
             var targetNotSortableList = targetNotSortable.ToList();
 
+            Assert.IsTrue(targetCardList.Count == cardList.Count);
+
             Debug.Log("Test Sorted List");
             Debug.Log(CardLoger.Log2DimensionNumericList(cardList));
+
+            Debug.Log("Target Sorted List");
+            Debug.Log(CardLoger.Log2DimensionNumericList(targetCardList));
 
             for (int i = 0; i < cardList.Count; i++)
             {
                 Assert.IsTrue(IsCardListOrdered(cardList[i]));
+                Assert.IsTrue(IsCardListEqual(cardList[i], targetCardList[i]));
             }
-
-            Debug.Log("Target Sorted List");
-            Debug.Log(CardLoger.Log2DimensionNumericList(targetCardList));
 
             Debug.Log("Test Not Sortable");
             Debug.Log(CardLoger.LogNumericList(notSortableList));
@@ -137,6 +137,7 @@ namespace CardGame.Core.Test
             Debug.Log(CardLoger.LogNumericList(targetNotSortableList));
 
             Assert.IsTrue(notSortableList.Count == targetNotSortableList.Count);
+            Assert.IsTrue(IsCardListEqual(notSortableList, targetNotSortableList));
         }
 
         private static List<List<T>> ArrayToList<T>(T[][] array2D)
@@ -155,23 +156,24 @@ namespace CardGame.Core.Test
             return list;
         }
 
-        private static bool IsCardListEqual(List<NumericColoredCard> list1, List<NumericColoredCard> list2,
-            bool isCheckOrder)
+        private static bool IsCardListEqual(List<NumericColoredCard> list1, List<NumericColoredCard> list2)
         {
-            if (list1.Count != list2.Count)
+            if (list2.Count != list1.Count)
                 return false;
-
-            if (!isCheckOrder)
-            {
-                list1 = list1.OrderBy(p => p.Id).ToList();
-                list2 = list2.OrderBy(p => p.Id).ToList();
-            }
 
             for (int i = 0; i < list1.Count; i++)
             {
-                if (!list1[i].Equals(list2[i]))
+                if (list1[i] is JokerCard)
                 {
-                    return false;
+                    if (list2[i] is not JokerCard)
+                        return false;
+                }
+                else
+                {
+                    if (list1[i].Color != list2[i].Color || list1[i].No != list2[i].No)
+                    {
+                        return false;
+                    }
                 }
             }
 
